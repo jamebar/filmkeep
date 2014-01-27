@@ -12,7 +12,7 @@
   <title>{{$page_title or ""}} : FilmKeep</title>
 
   <!-- Included CSS Files -->
-  
+  @section('styles')
   <link rel="stylesheet" href="{{ URL::asset('css/normalize.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/foundation.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/foundation-icons.css') }}">
@@ -21,7 +21,8 @@
   <link rel="stylesheet" href="{{ URL::asset('css/jquery.nouislider.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/custom-theme/jquery-ui-1.10.3.custom.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/custom.css?nocache=<?php echo rand(100,10000);?>') }}">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  @show
   <script src="{{ URL::asset('js/vendor/custom.modernizr.js') }}"></script>
     <script>
         var username = "";
@@ -174,7 +175,7 @@
 	</footer>
 
 <!-- <script src="http://code.jquery.com/jquery-1.9.1.js') }}"></script> -->
-
+	@section('scripts')
 	<script src="{{ URL::asset('js/vendor/jquery.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/jquery-ui-1.10.3.custom.min.js') }}"></script> 
 	<script src="{{ URL::asset('js/foundation.min.js') }}"></script> 
@@ -184,6 +185,7 @@
 	<!--<script src="{{ URL::asset('js/add_film.js?nocache=<?php echo rand(100,10000);?> ') }}"></script>-->
 	<script src="{{ URL::asset('js/watchlist.js') }}"></script>
 	<script src="{{ URL::asset('js/vendor/jquery.spin.js') }}"></script>
+	@show
 	<script>
 	
 	var user_id = "";

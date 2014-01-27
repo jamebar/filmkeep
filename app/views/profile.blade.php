@@ -106,7 +106,7 @@ select{
             <ul class="small-block-grid-3 large-block-grid-6" data-bind="foreach: items">
                                 
                     <li>
-                        <a data-bind="attr:{href: '/{{ $page_user['username'] }}/r/' + review_id() + '-' + slug()}" href="">
+                        <a data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
                         <img data-bind="attr:{src: poster_base + poster_path()}" src="" />
                         </a>
                         
@@ -124,4 +124,16 @@ select{
     </div>
 </div>
 
+@stop
+
+@section('scripts')
+    @parent
+    <script src="{{ URL::asset('js/vendor/knockout-3.0.0.js') }}"></script>
+    <script src="{{ URL::asset('js/vendor/jquery.simplePagination.js') }}"></script>
+    <script src="{{ URL::asset('js/myfilmkeep.js') }}"></script>
+@stop
+
+@section('styles')
+    @parent
+    <link rel="stylesheet" href="css/simplePagination.css" >
 @stop

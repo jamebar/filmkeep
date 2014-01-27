@@ -86,9 +86,5 @@ App::missing(function($exception)
 
 Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 
-Route::get('tmdb', function () {
-    $t = new Review();
-    $t->getReview(7);
-    dd($t->title);
-});
+Route::controller('ajax', 'ajax');
 Route::get('{username}', 'profileController@view');

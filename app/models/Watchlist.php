@@ -45,19 +45,7 @@ class Watchlist extends Eloquent {
         {
             $result->where('w.id', $id);
         }               
-        /*
-
-        $this->db->select('w.id as w_id, w.user_id as user_id, f.id as film_id, f.title as title, f.poster_path as poster_path');
-        $this->db->from('watchlist as w');
-        $this->db->join('films as f', 'f.id = w.film_id');
-        $this->db->where('w.user_id',$user_id);
-        if($id){
-            $this->db->where('w.id',$id);
-        }
-        $this->db->order_by('w.list_order ASC, w.created_at ASC');
-        $result = $this->db->get();
-        return $result->result_array();
-        */
+        
         return $result->get();
 
     }

@@ -7,7 +7,7 @@
 <div class="row">
 	<div class='small-12 medium-8 columns'>
 	    <div class="film_cover">
-	       <h2 class=""><a  href="/{{ Auth::user()->username }}">{{ Auth::user()->name }}</a> / {{ $review['title'] }}</h2>
+	       <h2 class=""><a  href="{{ url(Auth::user()->username) }}">{{ Auth::user()->name }}</a> / {{ $review['title'] }}</h2>
 	       
            @if(strlen($review['backdrop_path']) > 1)
 		  <img class="" src="{{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}" />

@@ -59,7 +59,7 @@ var sort_dir = "desc";
 		self.feedData = ko.observable();
 		self.loadData = function(){
 			$('.spinner').spin('flower');
-			$.getJSON('/ajax/get_filtered_reviews' , {num:num_per_page, page_user_id: page_user_id, page:current_page, search_query: search_query, sort_dir: sort_dir}, function (data) {
+			$.getJSON('ajax/filtered-reviews' , {num:num_per_page, page_user_id: page_user_id, page:current_page, search_query: search_query, sort_dir: sort_dir}, function (data) {
 				var items = new Array();
 				total_items = data.total;
 				$('.total').text(total_items);

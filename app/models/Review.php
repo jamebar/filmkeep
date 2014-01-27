@@ -66,7 +66,51 @@ class Review extends Eloquent {
         
     }
 
+    public function getReviewsFull($user_id, $num=20,$page = 0,$search="", $sort_dir = "desc")
+    {
+        //Get data for all films from user
+        $reviews = DB::table('reviews as rev')
+                    ->select('rev.id as review_id','rev.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
+                    ->where('rev.user_id', '=', $user_id)
+                    ->join('films as f', 'f.id', '=' , 'rev.film_id')
+                    ->orderBy('rev.created_at', $sort_dir);
 
+        if( strlen($search) > 0 )
+        {
+            $reviews = $reviews->where('rev.title', 'LIKE' , '%'.$search.'%');
+        }
+
+        if($num)
+        {
+            
+            $reviews = $reviews->take($num);
+            $reviews = $reviews->skip($num * $page);
+        }
+
+        $reviews = $reviews->get();
+        
+        foreach($reviews as &$review)
+        {
+            $result = DB::table('ratings')
+                        ->select('rating_type','rating')
+                        ->where('review_id', '=' , $review->review_id)
+                        ->get();
+
+            $ratings = array();           
+            
+            foreach($result as $res)
+            {
+               $ratings[$res->rating_type] =  $res->rating;
+            }
+
+            $review->ratings = $ratings;
+            $review->slug = Str::slug( $review->title );
+
+        }
+        
+
+        return $reviews;
+    }
 
     private function string_to_date($string)
     {

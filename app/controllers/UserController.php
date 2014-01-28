@@ -221,8 +221,23 @@ class UserController extends BaseController
 		$r = new Review();
 		$data['review'] = $r->getReview($review_id);
 		$data['page_user'] = $r::find($review_id)->user;
-		$data['watchlist'] = Watchlist::getWatchlist(1);
+		$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);
+
+		
+
 		return View::make('review', $data);
+
+	}
+
+	public function showWatchlist($username)
+	{	
+		$data['page_user'] = User::where('username' , $username)->first();
+		$data['watchlist'] = Watchlist::getWatchlist($data['page_user']['id']);
+		if(Auth::user()->username === $data['page_user']['username'])
+		{
+			$data['same_user'] = true;
+		}
+		return View::make('watchlist', $data);
 
 	}
 

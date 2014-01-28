@@ -43,13 +43,53 @@ class Watchlist extends Eloquent {
                         ->orderBy('w.created_at', 'asc');
         if($id)
         {
-            $result->where('w.id', $id);
+            $result = $result->where('w.id', $id);
         }               
         
-        return $result->get();
+        $watchlist = $result->get();
+
+        $wlist = array();
+        foreach($watchlist as $w)
+        {
+            $wlist[$w->film_id] = $w;
+        }
+
+        return $wlist;
+    }
+
+    public function addWatchlist()
+    {
+        
+
+        $film_id = Input::get('film_id');
+        $user_id = Input::get('user_id');
+        
+        //check to see if it's already on the watchlist
+        $result = $this::where('user_id', $user_id)->where( 'film_id' , $film_id)->first();
+        
+        
+        if(!$result)
+        {
+            $new_watchlist_item = new Watchlist;
+            $new_watchlist_item->film_id = $film_id;
+            $new_watchlist_item->user_id = $user_id;
+            $new_watchlist_item->save();
+
+            return $new_watchlist_item->id;
+        }
+        
+        return 'duplicate';
 
     }
 
+    public function removeWatchlist()
+    {
+        
+        $film_id = Input::get('film_id');
+        $user_id = Input::get('user_id');
+        
+        return $this::where('user_id', $user_id)->where( 'film_id' , $film_id)->delete();
+    }
 
 
 }

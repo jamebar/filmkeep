@@ -38,7 +38,7 @@ $(function(){
 		
 		$.ajax({
 		    method:'post',
-			url: '/ajax/add_remove_watchlist',
+			url: '/ajax/add-remove-watchlist',
 			data: { film_id: film_id , user_id: this_user_id, action:my_action },
 			dataType:'json',
 			success: function( data ) {

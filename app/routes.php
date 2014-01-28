@@ -88,3 +88,4 @@ Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 
 Route::controller('ajax', 'ajax');
 Route::get('{username}', 'profileController@view');
+Route::get('{username}/watchlist', 'userController@showWatchlist');

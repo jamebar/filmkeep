@@ -11,7 +11,7 @@ class Film extends Eloquent {
      */
      
     // protected $table = 'dates';
-     
+     protected $guarded = array();
     
      
     

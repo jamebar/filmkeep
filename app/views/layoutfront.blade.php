@@ -199,6 +199,179 @@
 		
 	});
 
+	$(document).ready(function(){
+		var user_reviews = "";
+		
+		$.fn.spin.presets.flower = {
+		  lines: 11,
+		  length: 10,
+		  width: 3,
+		  radius: 5,
+		  color: '#aaa'
+		}
+		
+
+		/*
+		* Clear Notifications when viewed
+		*/
+		$('.notif_top').on('click',function(){
+			
+			if($('.notif').length>0)
+			{
+				$.ajax({
+					type: "POST",
+					url: '/ajax/clear_notif',
+					dataType: 'json',
+					data: {user_id: user_id},
+
+					success: function(data) { 
+						if(data === true)
+						{
+							$('.notif_top_num').remove();
+						}
+						
+					}
+
+				});
+			}
+
+			
+		});
+
+		/*
+		* Initialize scroll bar
+		*/
+
+		if ( $.isFunction($.fn.nanoScroller) ) {
+			var num_c = $('.nano .content').children().length;
+			if(num_c <4)
+			{
+				$('.nano').height(num_c * 90);
+			}
+
+			$(".nano").nanoScroller({ 
+
+				preventPageScrolling: true,
+				alwaysVisible: true
+			});
+		}
+
+		
+
+
+		/*
+		* Load the trailer in the feed via ajax from tmdb.com 
+		*/
+		$('#activity-feed-items').on('click','.load-trailer', function(){
+			loadTrailer($(this));
+			return false;
+		});
+		
+		$(".load-trailer").on('click',function(){
+			loadTrailer($(this));
+			return false;
+		});
+		
+		function loadTrailer(context){
+			
+			var tmdb_id = context.attr('id');
+
+			var con = context.parent().find(".trailer-con");
+			if(con.length <1){
+				con = $('.trailer-con');
+			}
+			var frame_width = con.width();
+			var frame_height = frame_width/1.7;
+			con.height(frame_height+80);
+			
+			if (con.find('iframe').length <1){
+				var spin_con = con.parent();
+				spin_con.spin('flower');
+			
+				$.ajax({
+					type: "POST",
+					url: '/ajax/film-trailer',
+					dataType: 'json',
+					data: {tmdb_id: tmdb_id},
+
+					success: function(data) { 
+
+						spin_con.spin(false);
+						if(data.youtube.length > 0)
+						{
+
+							con.slideDown('fast', function(){
+								$('html, body').animate({
+								        scrollTop: con.offset().top - 50
+								    }, 1000, function(){
+								    	con.html('<hr><a href="javascript:;" style="margin-bottom:1em;" class="right close-trailer"><i class="step fi-x" style="font-size:20px;color:#aaa;"></i> close trailer</a><iframe width="'+frame_width+'" height="'+ frame_height +'" src="//www.youtube.com/embed/'+data.youtube[0].source+'" frameborder="0" allowfullscreen></iframe>');
+								    });
+								
+
+							});
+							
+						}
+						
+					}
+
+				});
+			}else{
+				con.slideDown('fast', function(){
+					$('html, body').animate({
+					        scrollTop: con.offset().top - 50
+					    }, 1000);
+				});
+			}
+
+			
+		};
+
+	});
+
+	$('.row').on('click','.close-trailer',function(){
+		$(this).parents('.trailer-con').slideUp('fast');
+		return false;
+	})
+	
+	var compare_num = 1;
+	
+	$(function(){
+		$('.compare').on('click',function(){
+			
+			var t_con = $(this).parent();
+			t_con.spin('flower');
+			
+			$.ajax({
+				type: "POST",
+				url: '/ajax/get_review',
+				dataType: 'json',
+				data:{id:$(this).attr('id')},
+				success: function(data) { 
+
+					t_con.spin(false);
+
+					$('.ratings').each(function(index,item){
+						for(var i = 0, m=null;i<data.ratings.length;i++)
+						{
+							if(data.ratings[i].type_id == $(this).data('typeid'))
+							{
+								m = data.ratings[i];
+							}
+						}
+						
+						var t = '<div class="progress compare'+compare_num+' radius"><span class="meter" style="width: '+m.rating+'%;"></span></div>';
+						$(this).append(t);
+					});
+
+					compare_num++;
+				}
+
+			});
+
+			return false; 
+		});
+	});
+
 	</script>
 </body>
 </html>

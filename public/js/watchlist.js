@@ -5,7 +5,7 @@ $(function(){
 			var sorted = $( "#sortable" ).sortable( "serialize", { } );
 			$.ajax({
 			    method:'post',
-				url: '/ajax/sort_watchlist',
+				url: '/ajax/sort-watchlist',
 				data: sorted,
 				dataType:'json',
 				success: function( data ) {
@@ -54,7 +54,7 @@ $(function(){
 		
 		$.ajax({
 		    method:'post',
-			url: '/ajax/remove_from_watchlist',
+			url: '/ajax/remove-from-watchlist',
 			data: { id: w_id  },
 			dataType:'json',
 			success: function( data ) {
@@ -85,7 +85,7 @@ $(function(){
 
 			$.ajax({
 			        method:'post',
-			        url: '/ajax/search_tmdb',
+			        url: '/ajax/search-tmdb',
 			      	data: { query:request.term },
 			      	dataType:'json',
 			        success: function( data ) {
@@ -117,7 +117,7 @@ $(function(){
 	         
 	          $.ajax({
 			        method:'post',
-			        url: '/ajax/add_watchlist_search',
+			        url: '/ajax/add-watchlist-search',
 			      	data: { tmdb_id: ui.item.tmdb_id, user_id: user_id },
 			      	dataType:'json',
 			        success: function( data ) {

@@ -11,7 +11,7 @@ class TheMovieDb {
         	$this->tmdb = new TMDb($apikey,'en');
 	}
     
-	public function get_film_trailer($tmdb_id)
+	public function getFilmTrailer($tmdb_id)
 	{
 		
        
@@ -27,9 +27,8 @@ class TheMovieDb {
 	 * Handles the Ajax call to search tmdb for films 
 	 * 
 	 */
-	public function get_film_tmdb($tmdb_id)
+	public function getFilmTmdb($tmdb_id)
 	{
-
 
 		$results = $this->tmdb->getMovie($tmdb_id, 'en');
 
@@ -37,7 +36,7 @@ class TheMovieDb {
 
 	}
 	
-	public function get_img_path()
+	public function getImgPath()
 	{
 		
 		//get image path configuration
@@ -52,6 +51,19 @@ class TheMovieDb {
 		
 		
 		return $image_path_config;
+	}
+
+	/**
+	* Film Search tmdb
+	* 
+	* Handles the Ajax call to search tmdb for films 
+	* 
+	*/
+	public function searchTmdb($query)
+	{
+
+		return $this->tmdb->searchMovie($query, 1,'ngram');
+
 	}
     
 }

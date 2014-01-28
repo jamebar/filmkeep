@@ -27,6 +27,10 @@ class Ajax extends BaseController
         return Response::json(array('total'=> $total_reviews, 'items'=>$filtered_reviews));
     }
 
+    /*
+    *   Removes or adds item from the watchlist via the feed or a review page
+    *   accepts the action (add or remove) and the film id
+    */
     public function postAddRemoveWatchlist()
     {
         
@@ -45,7 +49,7 @@ class Ajax extends BaseController
             }
             else 
             {
-                return Response::json( $watchlist->removeWatchlist() );
+                return Response::json( $watchlist->removeWatchlist(Auth::user()->id, $film_id, TRUE) );
             }
             
         }
@@ -54,5 +58,63 @@ class Ajax extends BaseController
             return Response::json( "0" );
         }
         
+    }
+
+    /*
+    *   Sorts the watchlist
+    *   accepts an array of watchlist id's in the desired order
+    */
+    public function postSortWatchlist()
+    {
+        
+        $list = Input::get('list');
+
+        if(count($list)>0)
+        {
+            $watchlist = new Watchlist();
+            return Response::json( $watchlist->sortWatchlist() );
+        }
+        else
+        {
+            return Response::json( "false" );
+        }
+    }
+
+    /*
+    *   Remove item from the watchlist via the watchlist page
+    *   accepts watchlist item id
+    */
+    public function postRemoveFromWatchlist()
+    {
+      
+        $w_id = Input::get('id');
+        $watchlist = new Watchlist();
+        return Response::json( $watchlist->removeWatchlist( Auth::user()->id, $w_id, FALSE) ); 
+        
+    }
+
+
+    public function postSearchTmdb()
+    {
+        $query = Input::get('query');
+        $search = new TheMovieDb();
+        return Response::json( $search->searchTmdb( $query ) );
+
+    }
+
+    public function postAddWatchlistSearch()
+    {
+        $watchlist = new Watchlist();
+        $results = $watchlist->addWatchlistSearch();
+        return Response::json( $results );
+            
+    }
+
+    public function postFilmTrailer()
+    {    
+        $tmdb_id = Input::get('tmdb_id');
+        $TheMovieDb = new TheMovieDb();
+        $trailer = $TheMovieDb->getFilmTrailer($tmdb_id);
+        return Response::json( $trailer );
     }
 }

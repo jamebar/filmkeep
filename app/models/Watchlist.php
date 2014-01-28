@@ -11,8 +11,7 @@ class Watchlist extends Eloquent {
      */
      
     protected $table = 'watchlist';
-     
-    
+    protected $guarded = array();
      
     /*
      * A Watchlist belongs to a user
@@ -82,14 +81,103 @@ class Watchlist extends Eloquent {
 
     }
 
-    public function removeWatchlist()
+    public function removeWatchlist($user_id , $id, $film_id = TRUE)
     {
         
-        $film_id = Input::get('film_id');
-        $user_id = Input::get('user_id');
-        
-        return $this::where('user_id', $user_id)->where( 'film_id' , $film_id)->delete();
+        if($film_id)
+        {
+            return $this::where('user_id', $user_id)->where( 'film_id' , $id)->delete();
+        }
+        else
+        {
+            return $this::where( 'id' , $id)->delete();
+        }
     }
 
+    public function sortWatchlist()
+    {
+        
+        $list = Input::get('list');
+        
+
+        $i = 1;
+        foreach($list as $list_id)
+        {
+            
+            $this::where( 'id' , $list_id )
+                    ->update(array('list_order' => $i));
+            
+            $i++;
+        }
+
+        return "success";
+    }
+
+    public function addWatchlistSearch()
+    {
+        
+
+        $tmdb_id = Input::get('tmdb_id');
+        $user_id = Auth::user()->id;
+
+        if(strlen($tmdb_id) < 2)
+        {
+            return false;
+        }
+        
+        
+        //get full film info from tmdb.com
+        $TheMovieDb = new TheMovieDb();
+        $tmdb_info = $TheMovieDb->getFilmTmdb($tmdb_id);
+
+        if(is_array($tmdb_info)){
+            $poster_path = (isset($tmdb_info['poster_path'])) ? $tmdb_info['poster_path'] : "";
+            $backdrop_path = (isset($tmdb_info['backdrop_path'])) ? $tmdb_info['backdrop_path'] : "";
+            $imdb_id = (isset($tmdb_info['imdb_id'])) ? $tmdb_info['imdb_id'] : "";
+        }
+        
+
+        $film_data = array(
+            'title' => $tmdb_info['title'],
+            'tmdb_id' => $tmdb_id,
+            'poster_path' => $poster_path,
+            'backdrop_path' => $backdrop_path,
+            'imdb_id' => $imdb_id
+        );
+
+        $film = Film::firstOrCreate( $film_data );
+
+        $film_id = $film->id;
+
+        
+        //check to see if it's already on the watchlist
+        $result = Watchlist::where('user_id' , $user_id)->where('film_id' , $film_id)->exists();
+        
+        
+        if(!$result)
+        {
+            $data = array(
+                    'film_id' => $film_id,
+                    'user_id' => $user_id
+                );
+            
+            $w = Watchlist::create($data);
+            $t = new TheMovieDb();
+            $image_path_config = $t->getImgPath();
+
+            
+            $new_film = array (
+                'watchlist_id' => $w->id,
+                "film_id" => $film_id,
+                "poster_path" => $image_path_config['images']['base_url'].$image_path_config['images']['poster_sizes'][1].$poster_path,
+                "title" => $tmdb_info['title']
+            );
+
+            return $new_film;
+        }
+        
+        return 'duplicate';
+
+    }
 
 }

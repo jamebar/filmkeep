@@ -117,4 +117,116 @@ class Ajax extends BaseController
         $trailer = $TheMovieDb->getFilmTrailer($tmdb_id);
         return Response::json( $trailer );
     }
+
+
+    /**
+     * Get Comments
+     * 
+     * Handles the Ajax call to get  comments
+     * 
+     */
+    public function postGetComments()
+    {
+       
+        
+        $object_id = Input::get('object_id');
+        $type = Input::get('object_type');
+        $num = Input::get('num');
+        if(strlen($object_id) > 0)
+        {
+            
+            $c = Comment::getComments($object_id, $type, $num);
+            foreach($c as &$com)
+            {
+                if(strlen($com->profile_pic) < 1)
+                    $com->profile_pic = DEFAULT_PROFILE_PIC;
+            }
+            return Response::json($c);
+        }
+        else
+        {
+            return Response::json('false');   
+        }
+        
+        
+    }
+
+    /**
+     * add Comment
+     * 
+     * Handles the Ajax call to add  comments
+     * 
+     */
+    public function postAddComment()
+    {
+       
+        
+        $user_id = Input::get('user_id');
+        $object_id = Input::get('object_id');
+        $object_type = Input::get('object_type');
+        $comment = Input::get('comment');
+        $spoiler = 0;
+        if(Input::has('spoiler'))
+        {
+            $spoiler = 1;
+        }
+        if(strlen($user_id) > 0)
+        {
+
+            $c = Comment::addComment($user_id, $object_id, $object_type, $comment, $spoiler);
+            return Response::json(array('result'=> $c,
+                                        'username' => Auth::user()->username, 
+                                        'name' => Auth::user()->name,
+                                        'profile_pic' => Auth::user()->profile_pic 
+                                         ));
+        }
+        else
+        {
+            return Response::json(array('result' => 'false'));   
+        }
+        
+        
+    }
+
+    /**
+     * Delete Comments
+     * 
+     * Handles the Ajax call to delete  comments
+     * 
+     */
+    public function postDeleteComment()
+    {
+       
+        
+        $id = Input::get('id');
+        $user_id = Input::get('user_id');
+        
+        if(Auth::user()->id === $user_id)
+        {
+            $c  = new Comment();
+            return Response::json( $c->deleteComment( $id )); 
+        }
+        else
+        {
+            echo json_encode('false');   
+        }
+        
+        
+    }
+
+    public function postClearNotifications()
+    {
+        $user_id = Input::get('user_id');
+        $n = new Notification();
+        $result = $n->clearNotifications($user_id);
+        if($result)
+        {
+            return Response::json( array('result' => 'success' ) );
+        }
+        else
+        {
+            return Response::json( array( 'result' => 'false' ) );
+        }
+        
+    }
 }

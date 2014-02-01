@@ -829,3 +829,35 @@ Scrollbar
 #load-more{
 	
 }
+
+.spoiler-check{
+	float:left;
+}
+.spoiler-check label{
+	float:right;
+	margin-left:1em;
+}
+span.spoiler{
+	color:#000 ;
+	background-color:#000 ;
+	position:relative;
+}
+span.spoiler:hover{
+	color:inherit ;
+	background-color:inherit ;
+	
+}
+span.spoiler:after{
+	content: "spoiler";
+	position: absolute;
+	top: 0px;
+	left: 5px;
+	color: #fff;
+	font-size: 10px;
+	line-height: 18px;
+	text-transform: uppercase;
+}
+span.spoiler:hover:after{
+	content:"";
+	
+}

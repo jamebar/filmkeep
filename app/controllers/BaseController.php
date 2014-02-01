@@ -17,13 +17,32 @@ class BaseController extends Controller {
 		{
 			$button['text'] = "logout";
 			$button['url'] = route('logout');
+
+			$notif = new Notification();
+			$notifications = $notif->getNotifications(Auth::user()->id);
+			$new = 0;
+			foreach ($notifications as $not) {
+				if($not->seen == 0)
+				{
+					$new++;
+				}
+			}
+
+			View::share('notifications', $notifications);
+			View::share('new', $new);
+
 		}
+
 		View::share('button', $button);
 
 		//Get image path info for all poster and backdrop images
 		$t = new TheMovieDb();
     		$image_path_config = $t->getImgPath();
 		View::share('image_path_config', $image_path_config);
+
+
+		
+
 
 		if ( ! is_null($this->layout))
 		{

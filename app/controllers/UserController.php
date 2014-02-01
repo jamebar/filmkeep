@@ -222,7 +222,7 @@ class UserController extends BaseController
 		$data['review'] = $r->getReview($review_id);
 		$data['page_user'] = $r::find($review_id)->user;
 		$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);
-
+		$data['page_title'] = $data['review']['title'];
 		
 
 		return View::make('review', $data);

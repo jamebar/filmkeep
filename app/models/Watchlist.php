@@ -138,8 +138,8 @@ class Watchlist extends Eloquent {
         
 
         $film_data = array(
-            'title' => $tmdb_info['title'],
             'tmdb_id' => $tmdb_id,
+            'title' => $tmdb_info['title'],
             'poster_path' => $poster_path,
             'backdrop_path' => $backdrop_path,
             'imdb_id' => $imdb_id

@@ -1,5 +1,10 @@
 @extends('layoutfront')
 
+@section('scripts')
+@parent
+<script src="{{ URL::asset('js/comments.js') }}"></script>
+@stop
+
 @section('content')
 
 @if(isset($review))
@@ -111,6 +116,10 @@
                 <div class="small-12 columns">
                     <form class="comment_form" data-id="{{ $review['id']}}" data-type="reviews">
                         <textarea name="comment"  placeholder="Add a comment"></textarea>
+                        <div class="spoiler-check">
+                            <label><span class="show-for-medium-up">contains spoilers</span><span class="show-for-small">spoilers</span></label>
+                            <input type="checkbox" name="spoiler" >
+                        </div>
                         <input type="submit" id="submit_comment" class="right button" value="Comment"/>
                     </form>
                 </div>

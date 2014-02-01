@@ -25,7 +25,7 @@
   @show
   <script src="{{ URL::asset('js/vendor/custom.modernizr.js') }}"></script>
     <script>
-        var username = "";
+        var username = "{{ Auth::user()->username }}";
     </script>
 </head>
 <body>
@@ -54,28 +54,28 @@
 					<ul class="right">
 					@if (Auth::check())
 						<li>
-							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#fff;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span></a> @endif
+							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#fff;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
 						</li>
 						<div id="notif_list_large" class="f-dropdown content medium" data-dropdown-content>
 							@if(isset($notifications))
 
 							<h4><small>Notifications</small></h4>
-							<?php foreach($notifications as $notif):?>
+							@foreach($notifications as $notif)
 
 							<div class="m_list_item">
 								<div class="m_list_left">
-									<img  src="{{ $notif['profile_pic'] }}" >
+									<img  width="50" height="50" src="{{ $notif->profile_pic or DEFAULT_PROFILE_PIC }}" />
 								</div>
 								<div class="m_list_right">
-									@if($notif['notif_type'] === 'comments')
+									@if($notif->notif_type === 'comments')
 
-									<p>{{ $notif['name'] }} commented on</p>
-									<a href="/{{  $notif['review_username'] }}/r/{{ $notif['id'] }}"  id="">{{ $notif['title'] }}</a>
+									<p>{{ $notif->name }} commented on</p>
+									<a href="{{ url('/r/'.$notif->id) }}" >{{ $notif->title }}</a>
 
-									@elseif($notif['notif_type'] === 'recommendations')
+									@elseif($notif->notif_type === 'recommendations')
 
-									<p>{{ $notif['name'] }} recommends</p>
-									<a href="/film/{{ $notif['film_id'] }}"  id="">{{ $notif['title'] }}</a>
+									<p>{{ $notif->name }} recommends</p>
+									<a href="/film/{{ $notif->film_id }}"  >{{ $notif->title }}</a>
 
 									@endif
 								</div>
@@ -188,7 +188,7 @@
 	@show
 	<script>
 	
-	var user_id = "";
+	var user_id = "{{ Auth::user()->id or '' }}";
 	
 	$(document).foundation({
 		reveal:{
@@ -220,12 +220,12 @@
 			{
 				$.ajax({
 					type: "POST",
-					url: '/ajax/clear_notif',
+					url: '/ajax/clear-notifications',
 					dataType: 'json',
 					data: {user_id: user_id},
 
 					success: function(data) { 
-						if(data === true)
+						if(data.result === 'success')
 						{
 							$('.notif_top_num').remove();
 						}

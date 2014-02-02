@@ -66,7 +66,7 @@ class Review extends Eloquent {
         
     }
 
-    public function getReviewsFull($user_id, $num=20,$page = 0,$search="", $sort_dir = "desc")
+    public function getReviewsFull($user_id, $num=20, $page = 0, $search="", $sort_dir = "desc")
     {
         //Get data for all films from user
         $reviews = DB::table('reviews as rev')
@@ -110,6 +110,47 @@ class Review extends Eloquent {
         
 
         return $reviews;
+    }
+
+    public static function getReviewsBasic($user_id, $num=50)
+    {
+        //Get data for all films from user
+        $reviews = DB::table('reviews')
+                    ->select('id','title')
+                    ->where('user_id' , $user_id)
+                    ->orderBy('created_at' , 'desc');
+
+        if($num)
+        {
+            $reviews = $reviews->take($num);
+        }
+
+        $reviews = $reviews->get();
+        
+        foreach($reviews as &$review)
+        {
+            $result = DB::table('ratings')
+                        ->select('rating_type','rating')
+                        ->where('review_id', '=' , $review->id)
+                        ->get();
+
+            $ratings = array();           
+            
+            foreach($result as $res)
+            {
+               $ratings[$res->rating_type] =  $res->rating;
+            }
+
+            $review->ratings = $ratings;
+
+        }
+
+        return $reviews;
+    }
+
+    public static function getRatingTypes()
+    {
+        return RatingType::all();
     }
 
     private function string_to_date($string)

@@ -229,4 +229,12 @@ class Ajax extends BaseController
         }
         
     }
+
+
+    public function getAllUserReviews()
+    {
+       
+        $user_id = Input::get('user_id');
+        return Response::json( Review::getReviewsBasic($user_id,50) );
+    }
 }

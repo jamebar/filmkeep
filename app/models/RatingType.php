@@ -1,6 +1,6 @@
 <?php
   
-class Rating_type extends Eloquent {
+class RatingType extends Eloquent {
     /**
      * The database table used by the model.
      * If the name of your days table is some thing other than days, 

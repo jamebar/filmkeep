@@ -1,7 +1,7 @@
 $(function(){
     var request_active = false;
     if(user_id.length >0){
-    	$.get("/ajax/get_all_user_reviews", {user_id: user_id}, 
+    	$.get("/ajax/all-user-reviews", {user_id: user_id}, 
 		function(data){
 			user_reviews = data;
 			
@@ -26,7 +26,7 @@ $(function(){
 
 			$.ajax({
 			        method:'post',
-			        url: '/ajax/search_tmdb',
+			        url: '/ajax/search-tmdb',
 			      	data: { query:request.term },
 			      	dataType:'json',
 			        success: function( data ) {

@@ -28,9 +28,12 @@ class BaseController extends Controller {
 				}
 			}
 
+			$rating_types = Review::getRatingTypes();
+
 			View::share('notifications', $notifications);
 			View::share('new', $new);
-
+			View::share('rating_types', $rating_types);
+			View::share('logged_in_user', Auth::user());
 		}
 
 		View::share('button', $button);

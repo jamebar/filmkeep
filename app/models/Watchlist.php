@@ -126,26 +126,32 @@ class Watchlist extends Eloquent {
         }
         
         
-        //get full film info from tmdb.com
-        $TheMovieDb = new TheMovieDb();
-        $tmdb_info = $TheMovieDb->getFilmTmdb($tmdb_id);
+        $film = Film::where('tmdb_id', $tmdb_id)->first();
+        
+        if(empty($film))
+        {
+            //get full film info from tmdb.com
+            $TheMovieDb = new TheMovieDb();
+            $tmdb_info = $TheMovieDb->getFilmTmdb($tmdb_id);
 
-        if(is_array($tmdb_info)){
-            $poster_path = (isset($tmdb_info['poster_path'])) ? $tmdb_info['poster_path'] : "";
-            $backdrop_path = (isset($tmdb_info['backdrop_path'])) ? $tmdb_info['backdrop_path'] : "";
-            $imdb_id = (isset($tmdb_info['imdb_id'])) ? $tmdb_info['imdb_id'] : "";
+            if(is_array($tmdb_info)){
+                $poster_path = (isset($tmdb_info['poster_path'])) ? $tmdb_info['poster_path'] : "";
+                $backdrop_path = (isset($tmdb_info['backdrop_path'])) ? $tmdb_info['backdrop_path'] : "";
+                $imdb_id = (isset($tmdb_info['imdb_id'])) ? $tmdb_info['imdb_id'] : "";
+            }
+            
+
+            $film_data = array(
+                'tmdb_id' => $tmdb_id,
+                'title' => $tmdb_info['title'],
+                'poster_path' => $poster_path,
+                'backdrop_path' => $backdrop_path,
+                'imdb_id' => $imdb_id
+            );
+
+            $film = Film::Create( $film_data );
         }
         
-
-        $film_data = array(
-            'tmdb_id' => $tmdb_id,
-            'title' => $tmdb_info['title'],
-            'poster_path' => $poster_path,
-            'backdrop_path' => $backdrop_path,
-            'imdb_id' => $imdb_id
-        );
-
-        $film = Film::firstOrCreate( $film_data );
 
         $film_id = $film->id;
 
@@ -169,8 +175,8 @@ class Watchlist extends Eloquent {
             $new_film = array (
                 'watchlist_id' => $w->id,
                 "film_id" => $film_id,
-                "poster_path" => $image_path_config['images']['base_url'].$image_path_config['images']['poster_sizes'][1].$poster_path,
-                "title" => $tmdb_info['title']
+                "poster_path" => $image_path_config['images']['base_url'].$image_path_config['images']['poster_sizes'][1].$film->poster_path,
+                "title" => $film->title
             );
 
             return $new_film;

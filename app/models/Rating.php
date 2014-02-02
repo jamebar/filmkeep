@@ -23,9 +23,9 @@ class Rating extends Eloquent {
     /*
      * A Rating belongs to a Rating Type
      */
-    public function rating_type()
+    public function ratingType()
     {
-        return $this->belongsTo('Rating_type');
+        return $this->belongsTo('RatingType');
     }
     
       

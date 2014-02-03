@@ -11,7 +11,7 @@ class Review extends Eloquent {
      */
      
     // protected $table = 'dates';
-     
+    protected $guarded = array();
     
      
     /*
@@ -38,24 +38,159 @@ class Review extends Eloquent {
         return $this->hasMany('Rating');
     }
       
+    public function addReview()
+    {
+        
+        $poster_path =  "";
+        $backdrop_path = "";
+        $imdb_id = "";
+        $date_watched = $this->string_to_date(Input::get('date_watched'));
+        $title = Input::get('title');
+        
+        //get full film info from tmdb.com
+        $TheMovieDb = new TheMovieDb();
+        $tmdb_info = $TheMovieDb->getFilmTmdb(Input::get('tmdb_id'));
+        
+        if(is_array($tmdb_info)){
+            $poster_path = (isset($tmdb_info['poster_path'])) ? $tmdb_info['poster_path'] : "";
+            $backdrop_path = (isset($tmdb_info['backdrop_path'])) ? $tmdb_info['backdrop_path'] : "";
+            $imdb_id = (isset($tmdb_info['imdb_id'])) ? $tmdb_info['imdb_id'] : "";
+            if(isset($tmdb_info['title']))
+            {
+                $title = $tmdb_info['title'];
+            }
+        }
+        
+        $own = (Input::get('own') === "on") ? 1 : 0;
+        $hide  = (Input::get('hide') === "on") ? true : false;
+        $user_id = Input::get('user_id');
 
-    public function getReview($review_id = FALSE)
+        $review_data = array(
+            'title' => Input::get('title'),
+            'source' => Input::get('source'),
+            'tmdb_id' => Input::get('tmdb_id'),
+            'user_id' => $user_id,
+            'date_watched' => $date_watched->format( 'c' ),
+            'own' => $own,
+            'comments' => Input::get('comments'),
+            
+        );
+
+        $film_data = array(
+            'title' => Input::get('title'),
+            'tmdb_id' => Input::get('tmdb_id'),
+            'poster_path' => $poster_path,
+            'backdrop_path' => $backdrop_path,
+            'imdb_id' => $imdb_id
+        );
+    
+        
+        // check to see if film is already in database
+        $result = Film::where('tmdb_id', $film_data['tmdb_id'])->first();
+
+        if(empty($result))
+        {
+           
+            $film = Film::create( $film_data );
+            $film_id = $film->id;
+
+        }
+        else
+        {
+            $film_id = $result->id;
+        }
+        
+        //check to see if review already exists
+        $result = Review::where('film_id', $film_id)->where('user_id' , $user_id)->first();
+
+        if(empty($result))
+        {
+
+            $review_data['film_id'] = $film_id;
+            $review_insert = Review::Create( $review_data );
+            
+            $review_id = $review_insert->id;
+
+            $ratings = Input::get('rating');
+            
+            foreach($ratings as $key =>$val)
+            {
+                Rating::create(array('review_id'=>$review_id,'rating_type'=>$key,'rating'=>$val));
+               
+            }
+
+            
+            //add the event if hide is false
+            if(!$hide)
+            {
+                $data = array(
+                    'user_id' => $user_id,
+                    'related_id' => $review_id,
+                    'type' => 'reviews'
+                    
+                );
+                
+                Activity::create($data);
+            }
+            
+
+
+        }
+        else
+        {
+            $review_id = $result->id;
+        }
+        
+
+        /*
+        * add recommendation if set
+        */
+        $recommendations = Input::get('recommend');
+
+        if(strlen($recommendations) >0)
+        {
+            $recommendations = explode(",", $recommendations);
+            foreach($recommendations as $rec)
+            {
+                if( $rec >0)
+                {
+                        $data = array(
+                        'user_id_to' => $rec,
+                        'user_id_from' => $user_id,
+                        'film_id' => $film_id,
+                        'comments' => ""
+                        
+                        
+                    );
+                    
+                    Recommendation::addRecommendation($data);
+                }
+                
+            }
+        }
+        
+        return $review_id;
+    }
+
+    public static function getReview($review_id = FALSE)
     {
         if($review_id)
         {
 
-            //Get all data for a specified film by film id
+            //Get all data for a specified review by review id
           
-            $review = $this::find($review_id);
-            $film = $this::find($review_id)->film;
+            $review = Review::select('*','id as review_id')->where('id' , $review_id)->first()->toArray();
+            $film = Review::find($review_id)->film->toArray();
             
             //$ratings = Review::find($review_id)->ratings;
             $ratings = DB::table('ratings as rat')
-                        ->select('rat.*','type.*')
+                        ->select('rat.*', 'rat.id as rating_id','type.*', 'type.id as type_id')
                         ->where('rat.review_id', '=' ,$review_id)
                         ->leftJoin('rating_type as type', 'type.id', '=', 'rat.rating_type')
                         ->get();
-            $r = $review->toArray() + $film->toArray() + array('ratings'=> $ratings);
+
+            $review['date_string'] = self::date_to_string( $review['date_watched'] );
+            $r = $review + $film + array('ratings'=> $ratings);
             
 
             return $r;
@@ -63,6 +198,97 @@ class Review extends Eloquent {
         }  
 
 
+        
+    }
+
+    public static function getReviewByFilmId($user_id, $film_id)
+    {
+          
+        $review = Review::select('*','reviews.id as review_id')
+                    ->where('reviews.user_id', '=', $user_id)
+                    ->where('reviews.film_id', $film_id)
+                    ->join('films as f', 'f.id', '=' , 'reviews.film_id')
+                    ->orderBy('reviews.created_at', 'desc')
+                    ->first();
+                    
+
+        if(!empty($review))
+        {
+            
+            $ratings = DB::table('ratings as rat')
+                        ->select('rat.*', 'rat.id as rating_id','type.*', 'type.id as type_id')
+                        ->where('rat.review_id' , $review->id )
+                        ->leftJoin('rating_type as type', 'type.id', '=', 'rat.rating_type')
+                        ->get();
+
+            $review['date_string'] = self::date_to_string( $review['date_watched'] );
+            $r = $review->toArray() + array('ratings'=> $ratings);
+            
+
+            return $r;
+        }
+        
+        return $review->toArray();
+        
+    }
+
+
+    public function updateReview()
+    {
+        
+        
+        $date_watched = $this->string_to_date(Input::get('date_watched'));
+        
+        $own = (Input::get('own') === "on") ? 1 : 0;
+
+        $review_data = array(
+            'source' => Input::get('source'),
+            'user_id' => Input::get('user_id'),
+            'date_watched' => $date_watched->format( 'c' ),
+            'own' => $own,
+            'comments' => Input::get('comments'),
+            
+        );
+
+    
+        /* update if id already set 
+        *
+        */
+        
+
+        if(Input::has('review_id')){
+           
+            $id = Input::get('review_id');
+            $update_review = Review::find( $id );
+            $update_review->update( $review_data );
+            
+            $ratings = Input::get('rating');
+            
+            foreach($ratings as $key =>$val)
+            {
+                $ids = explode("-", $key);
+                $rating_id = $ids[0];
+                $type_id = $ids[1];
+                $query = Rating::find( $rating_id );
+                
+                if(isset($val) && strlen($val)>1)
+                {
+                    if($query->count() == 0) {
+
+                        Rating::create(array('review_id'=>$id,'rating_type'=>$type_id,'rating'=>$val) );
+                    
+                    } else{
+
+                        $query->update(array('rating'=>$val) ,array('id'=>$rating_id) );
+                        
+                    }
+                }
+                
+              
+            }
+            return true;
+        }
+        
         
     }
 
@@ -153,7 +379,7 @@ class Review extends Eloquent {
         return RatingType::all();
     }
 
-    private function string_to_date($string)
+    private static function string_to_date($string)
     {
         $current_date = getdate();
         $current_year = $current_date['year'];
@@ -184,7 +410,7 @@ class Review extends Eloquent {
 
     }
 
-    private function date_to_string($date)
+    private static function date_to_string($date)
     {
         $watch_date = strtotime($date);
         $d = getdate($watch_date);

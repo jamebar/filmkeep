@@ -237,4 +237,140 @@ class Ajax extends BaseController
         $user_id = Input::get('user_id');
         return Response::json( Review::getReviewsBasic($user_id,50) );
     }
+
+    /**
+     * Get Film
+     * 
+     * Handles the Ajax call to fetch a single review 
+     * 
+     */
+    public function postGetReview()
+    {
+
+        $id = Input::get('id');
+        $f = Review::getReview( $id );
+        
+        echo json_encode($f);
+        
+    }
+
+    /**
+     * Create
+     * 
+     * Handles the Ajax call to create individual film data 
+     * 
+     */
+    public function postCreateReview()
+    {
+        
+        $new_review = new Review();
+        $new_id = $new_review->addReview();
+        
+        if($new_id)
+        {
+            
+           return Response::json( $new_id );
+        }
+        else
+        {
+            return Response::json("fail");
+        }
+        
+    }
+
+    /**
+     * Update Review
+     * 
+     * Handles the Ajax call to update individual review data 
+     * 
+     */
+    public function postUpdateReview()
+    {
+        
+        $update_review = new Review();
+        
+        if( $update_review->updateReview() )
+        {
+
+            return Response::json("success");
+        }
+        else
+        {
+            return Response::json("fail");
+        }
+        
+    }
+
+    /**
+     * Search Users
+     * 
+     * Handles the Ajax call to autocomplete users recommendations
+     * 
+     */
+    public function postSearchUsers()
+    {
+        
+        
+        $q = Input::get('q');
+        $f = User::where( 'name' , 'LIKE' , '%'.$q.'%' )->get();
+        
+       return Response::json( $f );
+        
+    }
+
+    /**
+     * Get Activity Feed
+     * 
+     *  
+     * 
+     */
+    public function postGetFeed()
+    {
+        $logged_in_user = Auth::user()->toArray();
+        $date_from = null;
+
+        
+        if(Input::has('last_date')){
+            $date_from = Input::get('last_date');
+        }
+        
+        //$friendIds = $this->session->userdata('friendIds');
+        $friendIds[] = $logged_in_user['id'];
+        $activity = Activity::getActivity($friendIds, $logged_in_user['id'], $date_from['date']);
+        
+        $watchlist = Watchlist::getWatchlist( $logged_in_user['id'] );
+        $wlist = array();
+
+        foreach($watchlist as $w)
+        {
+            $wlist[$w->film_id] = $w;
+        }
+        
+        
+        $feed_items  = array(); 
+        $last_date = '';  
+        if(!empty($activity))
+        {   
+
+            
+            foreach($activity as $e)
+            {
+                 $e['image_path_config']  = $this->image_path_config;
+                 $e['logged_in_user'] = $logged_in_user;
+                 $e['watchlist'] = $wlist;
+
+                 //check to see if logged in user has reviewed this film
+                 $user_review = Review::getReviewByFilmId($logged_in_user['id'], $e['film_id']);
+                 if(!empty($user_review))
+                    $e['user_review'] = $user_review;
+
+                 $feed_items[] = View::make('activity.'.$e['event_type'], $e)->render();
+                
+                    $last_date = $e['created_at'];
+            }
+             //$feed_items;
+        }
+        
+        return Response::json( array('items'=>$feed_items, 'last_date'=> $last_date));
+    }
 }

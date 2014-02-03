@@ -100,14 +100,14 @@ $(function(){
         
 	        $.ajax({
 	             	method:'post',
-			url: '/ajax/create_review',
+			url: '/ajax/create-review',
 			data: $('#add_film_form').serialize(),
 			dataType:'json',
 			success: function( data ) {
 				
 				$('#rt_results').spin(false);
 				//$('.ajax-message').html("Your film has been added. <a href='/"+username+"/r/"+data+"'>View it here</a>");
-				window.location = '/'+username+'/r/'+data;
+				window.location = '/r/'+data;
 			}
               	});
 	       
@@ -224,7 +224,7 @@ $(function(){
 
 			$.ajax({
 			        method:'post',
-			        url: '/ajax/search_users',
+			        url: '/ajax/search-users',
 			      	data: { q:request.term },
 			      	dataType:'json',
 			        success: function( data ) {

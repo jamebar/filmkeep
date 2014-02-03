@@ -1,4 +1,3 @@
-
 $(function(){
 	var request_running = false;
 	
@@ -19,7 +18,7 @@ $(function(){
 		request_running = true;
          $.ajax({
             method:'post',
-            url: '/ajax/get_review',
+            url: '/ajax/get-review',
             data: {id:context.data('id')},
             dataType:'json',
             success: function( data ) {
@@ -33,7 +32,7 @@ $(function(){
     {
         
         $('#edit-film h2').html('Edit your review of "'+ data['title'] + '"');
-        $('#edit_film_form #review_id').val(data['review_id']);
+        $('#edit_film_form #review_id').val(data['id']);
         $("#edit_film_form input[name='user_id']").val(user_id);
 
         var selectValues = new Array('Just recently', "Sometime this year", "Last year", "Several years ago");
@@ -63,35 +62,39 @@ $(function(){
 
         var r_text = "";
         $.each(data['ratings'], function(index, val){
-            var v_rating = (val['rating'] === null) ? "" : val['rating'];
-            var v_rating_id = (val['rating_id'] === null) ? "" : val['rating_id'];
-
-            var label = val['label'];
-            var label_short = val['label_short'];
-
-            if(val['label'].indexOf('|') >-1)
+            if(val['id'] != null)
             {
-                var s = label.split('|');
-                label = s[0] + "<span class='label-right'>" + s[1] + "</span>";
-            }
-            if(val['label_short'].indexOf('|') >-1)
-            {
-                var s = label_short.split('|');
-                label_short = s[0] + "<span class='label-right'>" + s[1] + "</span>";
-            }
+                var v_rating = (val['rating'] === null) ? "" : val['rating'];
+                var v_rating_id = (val['rating_id'] === null) ? "" : val['rating_id'];
 
-            if(val['rating']===null)
-            {
-                r_text+='<div class="small-12 columns  not-yet-rated">';
-                r_text+='<div class="new-rating">Not yet rated</div>';
-            }else{
-                r_text+='<div class="small-12 columns">';
+                var label = val['label'];
+                var label_short = val['label_short'];
+
+                if(val['label'].indexOf('|') >-1)
+                {
+                    var s = label.split('|');
+                    label = s[0] + "<span class='label-right'>" + s[1] + "</span>";
+                }
+                if(val['label_short'].indexOf('|') >-1)
+                {
+                    var s = label_short.split('|');
+                    label_short = s[0] + "<span class='label-right'>" + s[1] + "</span>";
+                }
+
+                if(val['rating']===null)
+                {
+                    r_text+='<div class="small-12 columns  not-yet-rated">';
+                    r_text+='<div class="new-rating">Not yet rated</div>';
+                }else{
+                    r_text+='<div class="small-12 columns">';
+                }
+                r_text += '<label class="show-for-medium-up">'+ label+'</label>\
+                            <label class="show-for-small">'+ label_short+'</label>\
+                            <div class="noUiSlider" data-start="'+ v_rating+'" data-rtype="'+ val['type_id']+'" ></div>\
+                            <input name="rating['+ v_rating_id + '-'+ val['type_id'] +']" type="hidden" value="'+ v_rating+'" >\
+                            </div>';
             }
-            r_text += '<label class="show-for-medium-up">'+ label+'</label>\
-                        <label class="show-for-small">'+ label_short+'</label>\
-                        <div class="noUiSlider" data-start="'+ v_rating+'" data-rtype="'+ val['type_id']+'" ></div>\
-                        <input name="rating['+ v_rating_id + '-'+ val['type_id'] +']" type="hidden" value="'+ v_rating+'" >\
-                        </div>';
+            
             
         });
         $('.edit-ratings').html(r_text);
@@ -179,7 +182,7 @@ $(function(){
             
             $.ajax({
                     method:'post',
-                url: '/ajax/update_review',
+                url: '/ajax/update-review',
                 data: $('#edit_film_form').serialize(),
                 dataType:'json',
                 success: function( data ) {

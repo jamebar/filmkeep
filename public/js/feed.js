@@ -15,7 +15,7 @@ $(function(){
 			
 			$.ajax({
 				type: "POST",
-				url: '/ajax/get_feed',
+				url: '/ajax/get-feed',
 				dataType: 'json',
 				data:{last_date: last_date},
 				success: function(data) { 

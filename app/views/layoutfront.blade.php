@@ -25,7 +25,7 @@
   @show
   <script src="{{ URL::asset('js/vendor/custom.modernizr.js') }}"></script>
     <script>
-        var username = "{{ $logged_in_user->username or ''}} ";
+        var username = "{{ $logged_in_user->username or ''}}";
     </script>
 </head>
 <body>
@@ -348,6 +348,7 @@
 		 	<div class="dot-con"><div class="film-dot"></div></div>
 		</div>
 	</div>
+	@include('edit_film')
   @endif
 </div>
 </div><!-- end off canvas wrap-->
@@ -360,7 +361,10 @@
 	<script src="{{ URL::asset('js/vendor/jquery.hammer.min.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/jquery.nouislider.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/spin.min.js') }}"></script>
-	<script src="{{ URL::asset('js/add_film.js?nocache='.rand(100,10000) ) }}"></script>
+	<script src="{{ URL::asset('js/add-film.js?nocache='.rand(100,10000) ) }}"></script>
+	@if(Auth::check())
+	<script src="{{ URL::asset('js/edit-film.js?nocache='.rand(100,10000) ) }}"></script>
+	@endif
 	<script src="{{ URL::asset('js/watchlist.js') }}"></script>
 	<script src="{{ URL::asset('js/vendor/jquery.spin.js') }}"></script>
 	@show

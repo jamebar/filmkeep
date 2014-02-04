@@ -565,6 +565,36 @@ img.round-image{
 	content:' watchlist';
 	
 }
+
+.add-remove-follow, .add-this{
+	margin-bottom:0px;
+}
+.add-remove-follow.following{
+	background-color: #5da423;
+	border-color: #457a1a;
+}
+.add-remove-follow .fi-check{
+	display:none;
+}
+
+.add-remove-follow .fi-plus{
+	display:inline;
+}
+.add-remove-follow.following .fi-check{
+	display:inline;
+}
+
+.add-remove-follow.following .fi-plus{
+	display:none;
+}
+.add-remove-follow.following span:after{
+	content:' following';
+	
+}
+.add-remove-follow span:after{
+	content:' follow';
+	
+}
 .rm.watchlist{
 	background:#178FE1;
 }

@@ -335,9 +335,11 @@ class Ajax extends BaseController
         }
         
         //$friendIds = $this->session->userdata('friendIds');
+        $friendIds = Follow::getFollowingIds($logged_in_user['id']);
+        //return Response::json( $friendIds );
         $friendIds[] = $logged_in_user['id'];
         $activity = Activity::getActivity($friendIds, $logged_in_user['id'], $date_from['date']);
-        
+
         $watchlist = Watchlist::getWatchlist( $logged_in_user['id'] );
         $wlist = array();
 
@@ -364,13 +366,36 @@ class Ajax extends BaseController
                  if(!empty($user_review))
                     $e['user_review'] = $user_review;
 
-                 $feed_items[] = View::make('activity.'.$e['event_type'], $e)->render();
+                if($e['event_type'] == 'reviews')
+                {
+                     $feed_items[] = View::make('activity.'.$e['event_type'], $e)->render();
                 
                     $last_date = $e['created_at'];
+                }
+                
             }
              //$feed_items;
         }
         
         return Response::json( array('items'=>$feed_items, 'last_date'=> $last_date));
+    }
+
+    function postAddRemoveFollow()
+    {
+        $follow_user_id = Input::get('follow_user_id');
+        $action = Input::get('action');
+
+
+        if($action == "add")
+        {
+
+            return Response::json( follow::addFollow(Auth::user()->id, $follow_user_id) );
+
+        }
+        else 
+        {
+            return Response::json( follow::removeFollow(Auth::user()->id, $follow_user_id) );
+        }
+
     }
 }

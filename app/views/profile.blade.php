@@ -35,13 +35,17 @@ select{
 
 <div class="row" style="margin-bottom:1em;">
     <div class="small-12 medium-6 columns">
-    <h3><img class="round-image"  src="{{ $page_user['profile_pic'] }}" height="100" width="100"> @if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h3>
-
+    <h3><img class="round-image"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"> @if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h3>
+    @if(Auth::check() && $page_user['id'] != $logged_in_user['id'])
+    <a href="javascript:;" class="button tiny right add-remove-follow @if(in_array($page_user['id'], $following)) {{"following"}} @endif" data-user_id="{{ $page_user['id']}}"> <i class="step fi-check size-14" style="font-size:14px;color:#fff;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#fff;"></i> <span></span></a>
+    @endif
     </div>
     <div class="medium-6 columns ">
         <div class="row">
-            <div class="small-6 medium-3 medium-offset-5 columns"><span class="stat"><i class="step fi-video" style="font-size:40px;color:#888;" ></i> <em class="total"></em><br>films</span></div>
-            <div class="small-6  medium-3 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database" style="font-size:40px;color:#888;" ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
+            <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-video" style="font-size:40px;color:#888;" ></i> <em class="total"></em><br>films</span></div>
+            
+            <div class="small-4  medium-4 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database" style="font-size:40px;color:#888;" ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
+            <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-torsos-all" style="font-size:40px;color:#888;" ></i> <em>{{ count($page_user_following) }}</em><br>following</span></div>
         </div>
     </div>
 </div>

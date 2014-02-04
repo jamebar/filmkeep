@@ -14,11 +14,17 @@ class TheMovieDb {
 	public function getFilmTrailer($tmdb_id)
 	{
 		
-       
-        	$trailer = $this->tmdb->getMovieTrailers($tmdb_id,'en');
-		//$trailer = file_get_contents("http://api.themoviedb.org/3/movie/tt$imdb_id?api_key=f39589d9c877cecbe4032052979da1aa&append_to_response=trailers"); 
-		//$trailer = json_decode($trailer);
-        	return $trailer;
+       		if ( ! $film_trailer =  Cache::get("film_trailer-".$tmdb_id))
+		{
+			
+			$film_trailer = $this->tmdb->getMovieTrailers($tmdb_id,'en');
+		
+			// Save into the cache for 1 month
+			Cache::put("film_trailer-".$tmdb_id, $film_trailer,  40320);
+		}
+        	
+		
+        	return $film_trailer;
 	}
 	
 	 /**
@@ -30,9 +36,19 @@ class TheMovieDb {
 	public function getFilmTmdb($tmdb_id)
 	{
 
-		$results = $this->tmdb->getMovie($tmdb_id, 'en');
+		
+		if ( ! $film_info =  Cache::get("film_info-".$tmdb_id))
+		{
+			
+			$film_info = $this->tmdb->getMovie($tmdb_id, 'en');
+		
+			// Save into the cache for 1 month
+			Cache::put("film_info-".$tmdb_id, $film_info,  40320);
+		}
 
-		return $results;
+		
+
+		return $film_info;
 
 	}
 	
@@ -45,7 +61,7 @@ class TheMovieDb {
 			
 			$image_path_config = $this->tmdb->getConfiguration();
 		
-			// Save into the cache for 1 week
+			// Save into the cache for 2 week
 			Cache::put('image_path_config', $image_path_config, 20160);
 		}
 		

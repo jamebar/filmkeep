@@ -4,7 +4,7 @@
 				<div class="row">
 					<div class="small-10 columns">
 						<a class="fa-user left" href="/{{ $username }}">
-							<img width="50" height="50" class="round-image"  src="{{ $logged_in_user['profile_pic'] }}">
+							<img width="50" height="50" class="round-image"  src="{{ (strlen($profile_pic)>1) ? $profile_pic : url(DEFAULT_PROFILE_PIC) }}">
 						</a>
 						<div>
 							<h6 class="subheader">{{ $name }} </h6>

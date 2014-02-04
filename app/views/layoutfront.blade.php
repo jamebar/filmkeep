@@ -364,6 +364,7 @@
 	<script src="{{ URL::asset('js/add-film.js?nocache='.rand(100,10000) ) }}"></script>
 	@if(Auth::check())
 	<script src="{{ URL::asset('js/edit-film.js?nocache='.rand(100,10000) ) }}"></script>
+	<script src="{{ URL::asset('js/follow.js') }}"></script>
 	@endif
 	<script src="{{ URL::asset('js/watchlist.js') }}"></script>
 	<script src="{{ URL::asset('js/vendor/jquery.spin.js') }}"></script>

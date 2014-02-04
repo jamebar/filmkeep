@@ -31,7 +31,7 @@ class Activity extends Eloquent {
      */
     public static function getActivity($user_ids, $current_user_id, $date_from = null, $num = 10)
     {
-        $activity = Activity::select('*', 'activity.created_at as created_at')
+        $activity = Activity::select('*', 'u.*' , 'activity.created_at as created_at')
                             ->whereIn('activity.user_id', $user_ids)
                             ->join('users as u','u.id', '=' , 'activity.user_id')
                             ->orderBy('activity.created_at','desc')
@@ -57,6 +57,7 @@ class Activity extends Eloquent {
                     case 'reviews':
                     $res = Review::getReview( $row['related_id'] );
                     $res['username'] = $row->username;
+                    $res['profile_pic'] = $row->profile_pic;
                     $res['name'] = $row->name;
                    
                     
@@ -70,6 +71,7 @@ class Activity extends Eloquent {
                         $res = Review::getReviewByFilmId($r['user_id_from'],$r['film_id']);
                         $res['username'] = $row['username'];
                         $res['name'] = $row['name'];
+                        $res['profile_pic'] = $row->profile_pic;
                         $res['recommendation_id'] = $r['id'];
                     }
                     else

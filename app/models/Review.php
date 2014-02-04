@@ -228,7 +228,7 @@ class Review extends Eloquent {
             return $r;
         }
         
-        return $review->toArray();
+        return $review;
         
     }
 

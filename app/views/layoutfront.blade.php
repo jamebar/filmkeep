@@ -29,6 +29,8 @@
     </script>
 </head>
 <body>
+
+    
 <div class="off-canvas-wrap">
   <div class="inner-wrap">
 
@@ -180,7 +182,14 @@
 		</section><!-- End Header and Nav --> 
 	    </div>
 	</div><!-- end header_all -->
-	
+	<!-- check for login error flash var -->
+    @if (Session::has('flash_error'))
+        <div id="flash_error" class="alert-box warning">{{ Session::get('flash_error') }}</div>
+    @endif
+
+    @if (Session::has('flash_notice'))
+        <div id="flash_notice" data-alert data-options="animation_speed:500;" class="alert-box ">{{ Session::get('flash_notice') }} <a href="#" class="close">&times;</a></div>
+    @endif
 	
 @yield('content')
 
@@ -284,29 +293,29 @@
 			  </div>
 			  @if (isset($rating_types))  
 					@foreach($rating_types as $r)
-						 @if ($r->id !== '3')
-							  <div class="small-12 columns">
-								<label class="show-for-medium-up"><?php 
-								
-								if(strpos($r->label, '|') >-1){
-									$l = explode("|",$r->label);
-									echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-								}else {
-									echo $r->label;  
-								}?></label>
-								<label class="show-for-small"><?php 
-								
-								if(strpos($r->label_short, '|') >-1){
-									$l = explode("|",$r->label_short);
-									echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-								}else {
-									echo $r->label_short; 
-								}?></label>
-								<div class="noUiSlider" data-rtype="{{ $r->id }}" name="rating[{{$r->id }}]"></div>
-								<input name="rating[{{ $r->id }}]" type="hidden" value="50" >
+						 	
+						  <div class="small-12 columns">
+							<label class="show-for-medium-up"><?php 
+							
+							if(strpos($r->label, '|') >-1){
+								$l = explode("|",$r->label);
+								echo $l[0]."<span class='label-right'>".$l[1]."</span>";
+							}else {
+								echo $r->label;  
+							}?></label>
+							<label class="show-for-small"><?php 
+							
+							if(strpos($r->label_short, '|') >-1){
+								$l = explode("|",$r->label_short);
+								echo $l[0]."<span class='label-right'>".$l[1]."</span>";
+							}else {
+								echo $r->label_short; 
+							}?></label>
+							<div class="noUiSlider" data-rtype="{{ $r->id }}" name="rating[{{$r->id }}]"></div>
+							<input name="rating[{{ $r->id }}]" type="hidden" value="50" >
 
-							  </div>
-						  @endif
+						  </div>
+						  
 						  
 			   		@endforeach        
 			   @endif
@@ -351,6 +360,14 @@
 	@include('edit_film')
   @endif
 </div>
+
+<div id="myTrailer" class="reveal-modal" data-reveal>
+  <h2>Awesome. I have it.</h2>
+  <p class="lead">Your couch.  It is mine.</p>
+  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
 </div><!-- end off canvas wrap-->
 
 <!-- <script src="http://code.jquery.com/jquery-1.9.1.js') }}"></script> -->
@@ -447,6 +464,7 @@
 		*/
 		$('#activity-feed-items').on('click','.load-trailer', function(){
 			loadTrailer($(this));
+			
 			return false;
 		});
 		

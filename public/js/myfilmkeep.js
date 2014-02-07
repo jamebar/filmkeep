@@ -65,7 +65,7 @@ var sort_dir = "desc";
 				$('.total').text(total_items);
 				$.each(data.items,function(index,item){
 					var c = new content_item(
-						item.review_id,
+						item.id,
 						item.title,
 						item.poster_path,
 						item.slug

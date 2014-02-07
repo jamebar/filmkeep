@@ -22,5 +22,17 @@ class RatingType extends Eloquent {
         return $this->belongsTo('Rating');
     }
     
+    public static function getRatingTypes($user_id = FALSE)
+    {
+
+        $rating_types =  RatingType::where('user_id', 0 );
+        
+        if($user_id)
+        {
+            $rating_types = $rating_types->orWhere('user_id',$user_id);
+        }
+
+        return $rating_types->get();
+    }
       
 }

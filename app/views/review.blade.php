@@ -77,7 +77,7 @@
         <div class="feed-padding">
         	
         	@foreach($review['ratings'] as $r) 
-        			@if( $r->label != null )
+        			@if( $r->label != null  && $r->rating != null)
         		
         		
         	   <div class="ratings" data-typeid="{{ $r->type_id }}">

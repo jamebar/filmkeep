@@ -11,8 +11,39 @@
 |
 */
 
+/*Event::listen('illuminate.query', function($sql){
+    var_dump($sql);
+});*/
 
-Route::group(array('before' => 'auth'), function()
+Route::get('test', function(){
+    $review = new Review();
+    dd($review->getReviewsFull(1));
+    $reviews = Review::with('ratings')->select('reviews.id as id','reviews.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
+                    ->where('reviews.user_id', '=', 1)
+                    ->join('films as f', 'f.id', '=' , 'reviews.film_id')
+                    ->orderBy('reviews.created_at', 'DESC')
+                    ->take(5)
+                    ->get()->toArray();
+                    
+        
+        foreach($reviews as &$review)
+        {
+            
+            $ratings = array();
+            foreach($review['ratings'] as $res)
+            {
+              $ratings[$res['rating_type']] =  $res['rating'];    
+            }
+
+            $review['ratings'] = $ratings;
+            $review['slug'] = Str::slug( $review['title'] );
+
+        }
+
+        dd($reviews);
+});
+
+Route::group(array('before' => 'Auth'), function()
 {
 	Route::get('/', array('as' => 'home', 'uses' => 'MainController@getIndex'));
 	Route::get('admin/profile',  array('as' => 'profile', 'uses' => 'ProfileController@getIndex'));
@@ -45,7 +76,7 @@ Route::filter('guest', function()
 
 
 
-Route::filter('auth', function()
+Route::filter('Auth', function()
 {
         if (Auth::guest())
                 return Redirect::route('login')->with('flash_error', 'You must be logged in to view that page!');

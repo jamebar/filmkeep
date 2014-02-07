@@ -35,7 +35,7 @@ class Review extends Eloquent {
      */
     public function ratings()
     {
-        return $this->hasMany('Rating');
+        return $this->hasMany('Rating','review_id');
     }
       
     public function addReview()
@@ -176,17 +176,23 @@ class Review extends Eloquent {
     {
         if($review_id)
         {
-
+            $review_id = explode('-', $review_id)[0];
             //Get all data for a specified review by review id
           
             $review = Review::select('*','id as review_id')->where('id' , $review_id)->first()->toArray();
             $film = Review::find($review_id)->film->toArray();
-            
+
+            $user_id = $review['user_id'];
             //$ratings = Review::find($review_id)->ratings;
-            $ratings = DB::table('ratings as rat')
-                        ->select('rat.*', 'rat.id as rating_id','type.*', 'type.id as type_id')
-                        ->where('rat.review_id', '=' ,$review_id)
-                        ->leftJoin('rating_type as type', 'type.id', '=', 'rat.rating_type')
+            $ratings = DB::table('rating_type as type')
+                        ->select('type.*', 'type.id as type_id', 'rat.*', 'rat.id as rating_id')
+                        ->leftJoin('ratings as rat', function($join) use ($review_id)
+                        {
+                            $join->on('rat.rating_type', '=', 'type.id')
+                            ->where('rat.review_id', '=', $review_id);
+                        })
+                        ->where('type.user_id' , 0)
+                        ->orWhere('type.user_id' , $user_id)
                         ->get();
 
             $review['date_string'] = self::date_to_string( $review['date_watched'] );
@@ -273,7 +279,7 @@ class Review extends Eloquent {
                 
                 if(isset($val) && strlen($val)>1)
                 {
-                    if($query->count() == 0) {
+                    if(empty($query)) {
 
                         Rating::create(array('review_id'=>$id,'rating_type'=>$type_id,'rating'=>$val) );
                     
@@ -295,15 +301,15 @@ class Review extends Eloquent {
     public function getReviewsFull($user_id, $num=20, $page = 0, $search="", $sort_dir = "desc")
     {
         //Get data for all films from user
-        $reviews = DB::table('reviews as rev')
-                    ->select('rev.id as review_id','rev.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
-                    ->where('rev.user_id', '=', $user_id)
-                    ->join('films as f', 'f.id', '=' , 'rev.film_id')
-                    ->orderBy('rev.created_at', $sort_dir);
+        $reviews = Review::with('ratings')->select('reviews.id as id','reviews.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
+                    ->where('reviews.user_id', '=', $user_id)
+                    ->join('films as f', 'f.id', '=' , 'reviews.film_id')
+                    ->orderBy('reviews.created_at', $sort_dir);
 
+        
         if( strlen($search) > 0 )
         {
-            $reviews = $reviews->where('rev.title', 'LIKE' , '%'.$search.'%');
+            $reviews = $reviews->where('reviews.title', 'LIKE' , '%'.$search.'%');
         }
 
         if($num)
@@ -317,16 +323,12 @@ class Review extends Eloquent {
         
         foreach($reviews as &$review)
         {
-            $result = DB::table('ratings')
-                        ->select('rating_type','rating')
-                        ->where('review_id', '=' , $review->review_id)
-                        ->get();
-
-            $ratings = array();           
             
-            foreach($result as $res)
+            $ratings = array();
+
+            foreach($review->ratings as $res)
             {
-               $ratings[$res->rating_type] =  $res->rating;
+              $ratings[$res->rating_type] =  $res->rating;    
             }
 
             $review->ratings = $ratings;
@@ -374,10 +376,7 @@ class Review extends Eloquent {
         return $reviews;
     }
 
-    public static function getRatingTypes()
-    {
-        return RatingType::all();
-    }
+    
 
     private static function string_to_date($string)
     {

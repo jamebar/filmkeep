@@ -62,7 +62,7 @@ $(function(){
 
         var r_text = "";
         $.each(data['ratings'], function(index, val){
-            if(val['id'] != null)
+            if(val['type_id'] != null)
             {
                 var v_rating = (val['rating'] === null) ? "" : val['rating'];
                 var v_rating_id = (val['rating_id'] === null) ? "" : val['rating_id'];

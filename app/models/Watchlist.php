@@ -31,7 +31,7 @@ class Watchlist extends Eloquent {
 
       
 
-    public static function getWatchlist($user_id, $id = FALSE)
+    public static function getWatchlist($user_id, $id = FALSE, $num = FALSE)
     {
        
         $result = DB::table('watchlist as w')
@@ -43,7 +43,12 @@ class Watchlist extends Eloquent {
         if($id)
         {
             $result = $result->where('w.id', $id);
-        }               
+        } 
+
+        if($num)
+        {
+            $result = $result->take($num);
+        }              
         
         $watchlist = $result->get();
 

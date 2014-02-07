@@ -18,7 +18,7 @@ class Rating extends Eloquent {
      */
     public function review()
     {
-        return $this->belongsTo('Review');
+        return $this->belongsTo('Review', 'review_id');
     }
      
     /*

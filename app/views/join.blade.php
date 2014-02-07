@@ -5,11 +5,6 @@
     <div class="small-12 large-6 columns">
     <h3>Join</h3>
 
-    <!-- check for login error flash var -->
-    @if (Session::has('flash_error'))
-        <div id="flash_error" class="alert-box warning">{{ Session::get('flash_error') }}</div>
-    @endif
-
     @foreach ($errors->all() as $message)
     
     <p>{{ $message }}</p>

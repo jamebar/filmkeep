@@ -24,7 +24,7 @@ class Ajax extends BaseController
         $total_reviews = Review::where('user_id', $user_id)->count();
         
            
-        return Response::json(array('total'=> $total_reviews, 'items'=>$filtered_reviews));
+        return Response::json(array('total'=> $total_reviews, 'items'=>$filtered_reviews->toArray()));
     }
 
     /*

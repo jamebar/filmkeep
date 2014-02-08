@@ -380,7 +380,7 @@ class Ajax extends BaseController
         return Response::json( array('items'=>$feed_items, 'last_date'=> $last_date));
     }
 
-    function postAddRemoveFollow()
+    public function postAddRemoveFollow()
     {
         $follow_user_id = Input::get('follow_user_id');
         $action = Input::get('action');
@@ -397,5 +397,21 @@ class Ajax extends BaseController
             return Response::json( follow::removeFollow(Auth::user()->id, $follow_user_id) );
         }
 
+    }
+
+    /*** CUSTOM CRITERIA/TYPE METHODS ****/
+    
+    public function postAddCustomType()
+    {
+        $name = Input::get('name');
+
+        return RatingType::addCustomType($this->logged_in_user->id, $name);
+    }
+
+    public function postDeleteCustomType()
+    {
+        $id = Input::get('id');
+
+        return RatingType::deleteCustomType($this->logged_in_user->id, $id);
     }
 }

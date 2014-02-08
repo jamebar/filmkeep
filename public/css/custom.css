@@ -891,3 +891,27 @@ span.spoiler:hover:after{
 	content:"";
 	
 }
+
+.custom-type-form{
+	margin-bottom:0px;
+	margin-top:1em;
+}
+ul.custom-types{
+	padding:0px;
+	margin:0px;
+}
+ul.custom-types > li{
+	padding:0px;
+	list-style: none;
+	display: block;
+	margin-bottom: .5em;
+	overflow: hidden;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: .5em;
+	line-height: 2em;
+}
+
+ul.custom-types > li a:not(.add-type){
+	margin-left:1em;
+}
+

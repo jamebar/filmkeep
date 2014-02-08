@@ -67,4 +67,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	return $this->hasMany('Watchlist');
 	}
 
+	/*
+	* A user has many rating types
+	*/
+	public function ratingTypes()
+	{
+	return $this->hasMany('RatingType');
+	}
+
 }

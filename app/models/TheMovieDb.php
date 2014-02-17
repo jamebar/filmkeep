@@ -30,7 +30,7 @@ class TheMovieDb {
 	 /**
 	 * Get film by tmdb id
 	 * 
-	 * Handles the Ajax call to search tmdb for films 
+	 * Handles the Ajax call to get tmdb info for film 
 	 * 
 	 */
 	public function getFilmTmdb($tmdb_id)

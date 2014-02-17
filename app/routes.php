@@ -114,7 +114,7 @@ App::missing(function($exception)
     return Response::view('404', array(), 404);
 });
 
-
+Route::get('film/{film_id}',  array('uses' => 'FilmController@film'));
 Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 
 Route::controller('ajax', 'ajax');

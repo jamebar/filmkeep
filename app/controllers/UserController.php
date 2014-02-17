@@ -221,9 +221,26 @@ class UserController extends BaseController
 		$r = new Review();
 		$data['review'] = $r->getReview($review_id);
 		$data['page_user'] = $r::find($review_id)->user;
-		$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);
-		$data['page_title'] = $data['review']['title'];
+
+		if(Auth::check())
+		{
+			$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);
+		}
 		
+		$data['page_title'] = $data['review']['title'];
+		$data['all_reviews'] = $r->getReviewsFull($data['page_user']['id'], 50)->toArray();
+
+		$imdb_id = $data['review']['imdb_id'];
+
+		if(strpos($imdb_id , 'tt') !== false)
+		{
+			$imdb_id = explode('tt', $data['review']['imdb_id'])[1];
+		}
+		
+		$data['rotten'] = Rotten::getMovie( $imdb_id );
+
+		$tmdb = new TheMovieDb();
+		$data['tmdb_info'] = $tmdb->getFilmTmdb($data['review']['tmdb_id']);
 
 		return View::make('review', $data);
 

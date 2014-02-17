@@ -1,31 +1,40 @@
 @extends('layoutfront')
 
 @section('content')
-<div class="row">
-    <div class="small-12 large-6 columns">
-    <h3>Login</h3>
+<style>
+body{
+    background:url(/img/bg/bg-jimmy-stewart-1600.jpg);
+    background-size: cover;
+}
+</style>
+<div class="login-box small-12 medium-8 large-6 centered">
+    <div class="row">
+        <div class="small-12 medium-12 columns">
+        
+        <p><a class="button fb-btn medium-8 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a></p>
+             <p><a class="button tw-btn medium-8 small-12" href="{{ route('twitterlogin') }}"><i class="fi-social-twitter"></i> Login with twitter</a></p>
+             <span class="login-or">or</span>
+            {{ Form::open(array('route'=>'login')) }}
 
-        {{ Form::open(array('route'=>'login')) }}
+            <!-- username field -->
+            <p>
+                {{ Form::label('email', 'Email' ) }}
+                {{ Form::text('email', '' , array('placeholder' => 'email') ) }}
+            </p>
 
-        <!-- username field -->
-        <p>
-            {{ Form::label('email', 'Email' ) }}
-            {{ Form::text('email', '' , array('placeholder' => 'email') ) }}
-        </p>
+            <!-- password field -->
+            <p>
+                {{ Form::label('password', 'Password') }}
+                {{ Form::password('password', '' , array('placeholder' => 'password')) }}
+            </p>
 
-        <!-- password field -->
-        <p>
-            {{ Form::label('password', 'Password') }}
-            {{ Form::password('password', '' , array('placeholder' => 'password')) }}
-        </p>
+            <!-- submit button -->
+            <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
 
-        <!-- submit button -->
-        <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
-
-        {{ Form::close() }}
-        <a href="{{ route('join') }}">Need to signup?</a><br>
-        <a href="{{ route('facebooklogin') }}">login with facebook</a><br>
-        <a href="{{ route('twitterlogin') }}">login with twitter</a>
+            {{ Form::close() }}
+            <p>Don't have an account yet? <a href="{{ route('join') }}" class="">Signup</a></p>
+           
+        </div>
     </div>
 </div>
 @stop

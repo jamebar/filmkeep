@@ -83,6 +83,7 @@ class RatingType extends Eloquent {
     */
     public static function deleteCustomType($user_id, $id)
     {
-        return RatingType::where( 'id' , $id)->where('user_id', $user_id)->delete();
+        RatingType::where( 'id' , $id)->where('user_id', $user_id)->delete();
+        return Rating::where( 'rating_type' , $id)->delete();
     }
 }

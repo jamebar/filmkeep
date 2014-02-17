@@ -30,7 +30,7 @@
 </head>
 <body>
 
-    
+
 <div class="off-canvas-wrap">
   <div class="inner-wrap">
 
@@ -56,7 +56,7 @@
 					<ul class="right">
 					@if (Auth::check())
 						<li>
-							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#fff;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
+							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#f38f7f;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
 						</li>
 						<div id="notif_list_large" class="f-dropdown content medium" data-dropdown-content>
 							@if(isset($notifications))
@@ -100,11 +100,11 @@
 						<li>
 							<div class="login-info">
 								<a href="#" data-dropdown="login-info-menu" ><img  src="{{ $logged_in_user->profile_pic }}" width="30" height="30">
-								<i class="step fi-widget " style="font-size:22px;color:#888;" ></i></a>
+								<i class="step fi-widget " style="font-size:22px;color:#f38f7f;" ></i></a>
 								<div id="login-info-menu" data-dropdown-content class="f-dropdown ">
-								  	<a href="/{{ $logged_in_user->username }}/watchlist"><i class="step fi-list-thumbnails " style="font-size:18px;color:#178FE1;" ></i> Watchlist</a>
-								  	<a href="{{ route('profile') }}">Edit profile</a>
-								  	<a href="{{ $button['url'] }}"><i class="step fi-minus-circle " style="font-size:18px;color:#178FE1;" ></i> {{ ucwords($button['text']) }}</a>
+								  	<a href="/{{ $logged_in_user->username }}/watchlist"><i class="step fi-list-thumbnails " style="font-size:18px;color:#f38f7f;" ></i> Watchlist</a>
+								  	<a href="{{ route('profile') }}"><i class="step fi-wrench " style="font-size:18px;color:#f38f7f;" ></i>  Settings</a>
+								  	<a href="{{ $button['url'] }}"><i class="step fi-minus-circle " style="font-size:18px;color:#f38f7f;" ></i> {{ ucwords($button['text']) }}</a>
 								  	
 								  
 								</div>
@@ -184,14 +184,35 @@
 	</div><!-- end header_all -->
 	<!-- check for login error flash var -->
     @if (Session::has('flash_error'))
-        <div id="flash_error" class="alert-box warning">{{ Session::get('flash_error') }}</div>
+        <div id="flash_error" data-alert data-options="animation_speed:500;" class="alert-box warning">{{ Session::get('flash_error') }} <a href="#" class="close">&times;</a></div>
     @endif
 
     @if (Session::has('flash_notice'))
         <div id="flash_notice" data-alert data-options="animation_speed:500;" class="alert-box ">{{ Session::get('flash_notice') }} <a href="#" class="close">&times;</a></div>
     @endif
 	
-@yield('content')
+	@if(Auth::guest() && Route::currentRouteName() !== 'join' && Route::currentRouteName() !== 'login')
+	<style>
+	body{
+		background-position: 0px 160px !important;
+	}
+	</style>
+	<div class="join-banner">
+		<div class="row">
+			<div class="small-12 medium-5 medium-offset-2 columns">
+			<h3>Rate. Compare. Discover</h3>
+				<p>Join now to start filmkeeping</p>
+
+			</div>
+			<div class="small-12 medium-5 columns">
+				<a href="{{ route('join') }}" class="button alert">Join Now</a>
+			</div>
+		</div>
+	</div>
+	@endif	
+	<div id="content">
+		@yield('content')
+	</div>
 
 <!-- Footer -->
 
@@ -393,9 +414,11 @@
 	$(document).foundation({
 		reveal:{
 			close_on_background_click: false,
-			
+			animation: 'fade',
 		}
 		
+
+
 		
 	});
 
@@ -410,6 +433,15 @@
 		  color: '#aaa'
 		}
 		
+		/*
+		*  Auto Close alert boxes
+		*/
+		window.setTimeout(function() {
+		    $(".alert-box").fadeTo(500, 0).slideUp(500, function(){
+		        $(this).remove(); 
+		    });
+		}, 3000);
+
 
 		/*
 		* Clear Notifications when viewed

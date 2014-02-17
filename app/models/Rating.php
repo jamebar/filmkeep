@@ -13,6 +13,7 @@ class Rating extends Eloquent {
     // protected $table = 'dates';
     protected $guarded = array();
     public $timestamps = false;
+
     /*
      * A Rating belongs to a Review
      */
@@ -28,6 +29,7 @@ class Rating extends Eloquent {
     {
         return $this->belongsTo('RatingType');
     }
+    
     
       
 }

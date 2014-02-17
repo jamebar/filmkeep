@@ -7,6 +7,16 @@ class ProfileController extends BaseController
 	{
 		$data['custom_types'] = RatingType::getCustomTypes($this->logged_in_user->id);
 		
+		// calculate time as member
+		/*$join_date = strtotime($date);
+	        $d = getdate($watch_date);
+	        $today_date = getdate();
+
+	        
+	        $today = time();
+	        $diff = $today - $watch_date;
+	        $week = 60 * 60 * 24 *7;*/
+
 		return View::make('admin.profile', $data);
 
 	}
@@ -15,7 +25,11 @@ class ProfileController extends BaseController
 	{
 		$data['page_user'] = User::where('username' , $username)->first();
 		$data['watchlist_total'] = Watchlist::where('user_id', $data['page_user']['id'])->count();
-		$data['following'] = Follow::getFollowingIds(Auth::user()->id);
+		if(Auth::check())
+		{
+			$data['following'] = Follow::getFollowingIds(Auth::user()->id);
+		}
+		
 		$data['page_user_following'] = Follow::getFollowingIds($data['page_user']['id']);
 
 		if(!isset($data['page_user']))

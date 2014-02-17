@@ -8,19 +8,26 @@
 @section('content')
 
 @if(isset($review))
-
+<style>
+body{
+    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$review['backdrop_path'] }}) 0px 40px  no-repeat;
+    background-size:contain;
+}
+</style>
 <div class="row">
-	<div class='small-12 medium-8 columns'>
-	    <div class="film_cover">
-	       <h2 class=""><a  href="{{ url($page_user->username) }}">{{ $page_user->name }}</a> / {{ $review['title'] }}</h2>
+	<div class='small-12 medium-12 columns'>
+	    <div class="film_cover" style="padding:15%">
+        
 	       
            @if(strlen($review['backdrop_path']) > 1)
-		  <img class="" src="{{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}" />
+
+		  
             @else
             <img class="" src="{{ $image_path_config['images']['base_url'].$image_path_config['images']['poster_sizes'][2].$review['poster_path'] }}" />
             @endif
 	    </div>
         <div class="row">
+
             <div class="small-12 columns ">
                 <div class="film_actions_bar">
                     
@@ -61,59 +68,105 @@
        <div class="feed-padding">
        		<div class="row" >
 			
-		        <div class="small-7 columns">
+		        <div class="small-12 columns">
 		        	
-		        	<h4 class="subheader">Review</h4>
+		        	<h2><a  href="{{ url($page_user->username) }}"><img class="round-image"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"></a> / {{ $review['title'] }}</h2>
 		        		
 		        </div>
 		        <div class="small-5 columns">
 		        	@if(Auth::check() && $page_user['username'] === Auth::user()->username)
-				    		<a style="line-height: 2em;" class="right edit-review"  data-id="{{ $review['id'];?>" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
+				    		<a style="line-height: 2em;" class="right edit-review"  data-id="{{ $review['id'] }}" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
 				    @endif	
 		        </div>
     		</div>
     		<hr style="margin:0em;">
     	</div>
         <div class="feed-padding">
-        	
-        	@foreach($review['ratings'] as $r) 
-        			@if( $r->label != null  && $r->rating != null)
-        		
-        		
-        	   <div class="ratings" data-typeid="{{ $r->type_id }}">
-        		 <label class="sliders show-for-medium-up"><?php 
+        	<div class="row">
+                <div class="small-12 medium-4 large-4 columns">
+                    
+                    <div class="medium-12 columns ">
+                            
+                            @if($rotten && isset($rotten->ratings->critics_rating))
+                                <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
+                            @endif
                         
-                        if(strpos($r->label, '|') >-1){
-                            $l = explode("|",$r->label);
-                            echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-                        }else {
-                            echo $r->label;  
-                        }?></label>
-                        <label class="sliders show-for-small"><?php 
+                            <p></p>
+                            <p> {{ $tmdb_info['overview'] }} </p>
+
+                            @if(isset($tmdb_info['budget']) && $tmdb_info['budget'] > 0)
+                                <h3>Budget</h3>
+                                {{ number_format( $tmdb_info['budget'] )  }}
+                            @endif
+
+                            @if(isset($tmdb_info['revenue']) && $tmdb_info['revenue'] > 0)
+                                <h3>Revenue</h3>
+                                {{ number_format( $tmdb_info['revenue'] ) }}
+                            @endif
+
+                            @if(isset($tmdb_info['release_date']) )
+                                <h3>Release Date</h3>
+                                {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}
+                            @endif
                         
-                        if(strpos($r->label_short, '|') >-1){
-                            $l = explode("|",$r->label_short);
-                            echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-                        }else {
-                            echo $r->label_short; 
-                        }?></label>
-        	         <div class="progress  info radius"><span class="meter" style="width: {{ $r->rating }}%"></span></div>
-        	   </div>
-        	
-						@endif
-        		@endforeach
-        	@if(isset($review['comments']) && strlen($review['comments'])>1) 
-        	     <hr><label>Notes:</label>
-        	   
-        	    <p>{{ nl2br($review['comments'])}}</p>
-        	@endif	
+                        
+                    </div>
+                </div>
+                <div class="small-12 medium-8 large-8 columns">
+                	@foreach($review['ratings'] as $r) 
+                			@if( $r->label != null  && $r->rating != null)
+                		
+                		
+                	   <div class="ratings" data-typeid="{{ $r->type_id }}">
+                		 <label class="sliders show-for-medium-up"><?php 
+                                
+                                if(strpos($r->label, '|') >-1){
+                                    $l = explode("|",$r->label);
+                                    echo $l[0]."<span class='label-right'>".$l[1]."</span>";
+                                }else {
+                                    echo $r->label;  
+                                }?></label>
+                                <label class="sliders show-for-small"><?php 
+                                
+                                if(strpos($r->label_short, '|') >-1){
+                                    $l = explode("|",$r->label_short);
+                                    echo $l[0]."<span class='label-right'>".$l[1]."</span>";
+                                }else {
+                                    echo $r->label_short; 
+                                }?></label>
+
+                            <div class="rating-line">
+                                <span class="rating-line-dot current-dot" style="left:{{ floor($r->rating) }}%;"></span>
+                                @foreach( $all_reviews as $item )
+                                    @foreach( $item['ratings'] as $all )
+                                        @if($all['rating_type'] == $r->type_id)
+                                        <span class="rating-line-dot" style="left:{{ floor($all['rating']) }}%"></span>
+                                        
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                                <span class="base-line"></span>
+                                <span class="active-line" style="width:{{ floor($r->rating)  }}%"></span>
+                            </div>
+                	         <!--<div class="progress info radius"><span class="meter" style="width: {{ $r->rating }}%"></span></div>-->
+                	   </div>
+                	
+        						@endif
+                		@endforeach
+                	@if(isset($review['comments']) && strlen($review['comments'])>1) 
+                	     <hr><label>Notes:</label>
+                	   
+                	    <p>{{ nl2br($review['comments'])}}</p>
+                	@endif	
+                </div>
+            </div>
         </div><!-- end feed padding -->
         <div class="feed-padding">
             <div class="row comment-section">
-                <div class="small-12 columns"><h4 class="subheader">Comments</h4></div>
-                <div class="small-12 columns comment-box" id="reviews-{{ $review['id']}}"></div>
+                <div class="small-12  columns"><h4 class="subheader">Comments</h4></div>
+                <div class="small-12  columns comment-box" id="reviews-{{ $review['id']}}"></div>
                 @if(Auth::check())
-                <div class="small-12 columns">
+                <div class="small-12  columns">
                     <form class="comment_form" data-id="{{ $review['id']}}" data-type="reviews">
                         <textarea name="comment"  placeholder="Add a comment"></textarea>
                         <div class="spoiler-check">
@@ -127,24 +180,7 @@
             </div>
         </div>
     </div>
-    <div class="medium-4 columns  show-for-medium-up">
-	    	<div >
-		    	<div class="rm ">
-                
-		    	</div>
-                
-		    	<div class="rm">
-		    		<h5>Friends also rated this</h5>
-		    		
-		    	</div>
-                <div class="rm">
-                    <h5>Recommend this to a friend</h5>
-                    
-                </div>
-		    	
-		    	
-	    	</div>
-	    </div>
+        
 </div>
 @endif
 @stop

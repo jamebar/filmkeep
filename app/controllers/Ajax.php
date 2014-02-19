@@ -408,6 +408,14 @@ class Ajax extends BaseController
         return RatingType::addCustomType($this->logged_in_user->id, $name);
     }
 
+    public function postUpdateCustomType()
+    {
+        $name = Input::get('name');
+        $id = Input::get('id');
+
+        return Response::json( RatingType::updateCustomType($this->logged_in_user->id, $name, $id) );
+    }
+
     public function postDeleteCustomType()
     {
         $id = Input::get('id');

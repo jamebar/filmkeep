@@ -11,13 +11,13 @@
 
 	<li class="c-item">
 		<span>{{ $custom->label }}</span>
-		<div class="right">
-		<a href="javascript:;" class="edit-type" data-typeid="{{ $custom->id }}"><i class="step fi-pencil size-36" style="font-size:22px;color:#178FE1;" ></i></a>
-		<a href="javascript:;" data-dropdown="drop{{ $custom->id }}" class=" dropdown" ><i class="step fi-x size-36" style="font-size:22px;color:#178FE1;" ></i></a>
-		<ul id="drop{{ $custom->id }}" data-dropdown-content class="f-dropdown">
-		  <li><a class="delete-type" data-typeid="{{ $custom->id }}" href="javascript:;">Yes, delete <i class="step fi-trash " style="font-size:18px;color:#d50606;margin-left:1em" ></i></a></li>
-		  <li><a href="javascript:;">no, nevermind</a></li>
-		</ul>
+		<div class="right custom_type_controls">
+			<a href="javascript:;" class="edit-type" data-typeid="{{ $custom->id }}"><i class="step fi-pencil size-36" style="font-size:22px;color:#178FE1;" ></i></a>
+			<a href="javascript:;" data-dropdown="drop{{ $custom->id }}" class="dropdown" ><i class="step fi-x size-36" style="font-size:22px;color:#178FE1;" ></i></a>
+			<ul id="drop{{ $custom->id }}" data-dropdown-content class="f-dropdown">
+				<li><a class="delete-type" data-typeid="{{ $custom->id }}" href="javascript:;">Yes, delete <i class="step fi-trash " style="font-size:18px;color:#d50606;margin-left:1em" ></i></a></li>
+				<li><a href="javascript:;">no, nevermind</a></li>
+			</ul>
 		</div>
 	</li>
 

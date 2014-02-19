@@ -77,6 +77,23 @@ class RatingType extends Eloquent {
         return RatingType::create($data);
     }
 
+
+    /*
+    *   add custom rating types for a user
+    *   
+    */
+    public static function updateCustomType($user_id, $label, $id)
+    {   
+        $label = strip_tags($label);
+
+        $data = array(
+            'label' => ucfirst($label), 
+            'label_short' => ucfirst($label)
+            );
+
+        return RatingType::find($id)->update($data);
+    }
+
     /*
     *   delete custom rating types for a user
     *   

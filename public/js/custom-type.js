@@ -25,7 +25,7 @@
 				        success: function( data ) {
 				        	if(data.id)
 				        	{
-				        		$('.custom-type-form input[name="type_name"]').val('') ;
+				        		$('.custom-type-form input[name="type_name"]').val('');
 				        		
 
 				        		$(typeTemplate(data)).appendTo('ul.custom-types').fadeIn('fast');
@@ -38,6 +38,73 @@
 			
 			return false;
 		});
+
+		$(this).find('ul.custom-types').on('click' , '.edit-type', function(){
+
+
+	 		var this_item = $(this);
+	 		var type_id = this_item.data('typeid');
+	 		
+	 		if(type_id)
+	 		{
+		 		//close any open forms
+		 		$('.c-item').each(function(){
+
+		 			var val = $(this);
+
+		 			val.find('span').html( val.find('form').data('value'));
+		 			val.find('.custom_type_controls').show();
+		 		});
+
+	 		
+	 			var c_item = this_item.parents('.c-item');
+	 			var c_value = c_item.find('span').text();
+
+	 			var ht = "<div class='row'><div class='medium-8 columns'>\
+	 				<form  data-value='" + c_value + "' id='update-custom-type' >\
+	 				<input type='text' name='type_name' value='" + c_value + "' />\
+	 				<input type='hidden' name='type_id' value='" + this_item.data('typeid') + "' />\
+	 				</div>\
+	 				<div class='medium-4 columns'>\
+	 				<input type=submit class='custom_type_save button tiny' value='save'/>\
+	 				</div></form></div>";
+	 			c_item.find('span').html( ht );
+	 			c_item.find('.custom_type_controls').hide();
+
+	 			//capture the form on submit handler, trigger a click on the save button
+	 			$('form#update-custom-type').on('submit', function(){
+
+		 			var c_item = $(this).parents('.c-item');
+	 				var type_name = $('form#update-custom-type input[name="type_name"]').val();
+	 				var type_id = $('form#update-custom-type input[name="type_id"]').val();
+
+
+	 				$.ajax({
+					        method:'post',
+					        url: '/ajax/update-custom-type',
+					      	data: {name: type_name, id: type_id},
+					      	dataType:'json',
+					        success: function( data ) {
+					        	if(data)
+					        	{
+					        		c_item.find('span').html( type_name );
+		 						c_item.find('.custom_type_controls').show();
+					        		
+					        		//$(document).foundation();
+					        	}
+					            	
+					  	}
+					});
+					
+		 			return false;
+		 		});
+
+	 			
+
+	 		}
+	 		
+
+	 	});
 
 	 	$(this).find('ul.custom-types').on('click' , '.delete-type', function(){
 

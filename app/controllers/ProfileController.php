@@ -8,14 +8,31 @@ class ProfileController extends BaseController
 		$data['custom_types'] = RatingType::getCustomTypes($this->logged_in_user->id);
 		
 		// calculate time as member
-		/*$join_date = strtotime($date);
-	        $d = getdate($watch_date);
-	        $today_date = getdate();
+		$join_date = strtotime($this->logged_in_user->created_at);
+
+	        $today = time();
+	        $diff = $today - $join_date;
+	        $week = 60 * 60 * 24 * 7;
+
+	        $diff = $diff  / 60 / 60 / 24;
+	        $unit = "days";
+
+	        if( $diff > 30 )
+	        {
+	        	$diff = $diff / 30;
+	        	$unit = "months";
+
+	        	if( $diff > 12 )
+		        {
+		        	$diff = $diff / 12;
+		        	$unit = "years";
+		        }
+	        }
 
 	        
-	        $today = time();
-	        $diff = $today - $watch_date;
-	        $week = 60 * 60 * 24 *7;*/
+
+	        $data['diff'] = floor( $diff );
+	        $data['unit'] = $unit;
 
 		return View::make('admin.profile', $data);
 

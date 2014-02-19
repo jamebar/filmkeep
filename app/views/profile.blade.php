@@ -12,7 +12,7 @@ label{
     margin-bottom:0px;
 }
 .stat{
-    width:100px;
+    width:135px;
     height:100px;
     text-align:center;
     border-radius:50px;

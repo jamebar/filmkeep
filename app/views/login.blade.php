@@ -14,24 +14,25 @@ body{
         <p><a class="button fb-btn medium-8 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a></p>
              <p><a class="button tw-btn medium-8 small-12" href="{{ route('twitterlogin') }}"><i class="fi-social-twitter"></i> Login with twitter</a></p>
              <span class="login-or">or</span>
-            {{ Form::open(array('route'=>'login')) }}
+             
+                {{ Form::open(array('route'=>'login')) }}
 
-            <!-- username field -->
-            <p>
-                {{ Form::label('email', 'Email' ) }}
-                {{ Form::text('email', '' , array('placeholder' => 'email') ) }}
-            </p>
+                <!-- username field -->
+                <p>
+                    {{ Form::label('email', 'Email' ) }}
+                    {{ Form::text('email', '' , array('placeholder' => 'email' ) ) }}
+                </p>
 
-            <!-- password field -->
-            <p>
-                {{ Form::label('password', 'Password') }}
-                {{ Form::password('password', '' , array('placeholder' => 'password')) }}
-            </p>
+                <!-- password field -->
+                <p>
+                    {{ Form::label('password', 'Password') }}
+                    {{ Form::password('password', '' , array('placeholder' => 'password')) }}
+                </p>
 
-            <!-- submit button -->
-            <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
+                <!-- submit button -->
+                <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
 
-            {{ Form::close() }}
+                {{ Form::close() }}
             <p>Don't have an account yet? <a href="{{ route('join') }}" class="">Signup</a></p>
            
         </div>

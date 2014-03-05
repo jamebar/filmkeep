@@ -250,7 +250,7 @@ class UserController extends BaseController
 	{	
 		$data['page_user'] = User::where('username' , $username)->first();
 		$data['watchlist'] = Watchlist::getWatchlist($data['page_user']['id']);
-		if(Auth::user()->username === $data['page_user']['username'])
+		if( Auth::check() && Auth::user()->username === $data['page_user']['username'])
 		{
 			$data['same_user'] = true;
 		}

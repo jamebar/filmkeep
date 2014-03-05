@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="small-12 medium-6 columns">
-         <h3><img class="round-image" width="100" height="100" src="{{ $page_user['profile_pic'] }}"> @if(isset($same_user)) My @else {{ explode(' ',$page_user['name'])[0] }}'s @endif Watchlist</h3>
+         <h3><img class="round-image" width="100" height="100" src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}"> @if(isset($same_user)) My @else {{ explode(' ',$page_user['name'])[0] }}'s @endif Watchlist</h3>
          @if(isset($same_user))
         <p class="hide-for-small" >Re-order your watchlist by dragging the <i class=" step fi-thumbnails size-14" style="font-size:14px;color:#888;"></i> icon</p>
         @endif

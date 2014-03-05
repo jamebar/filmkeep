@@ -10,8 +10,14 @@
 @if(isset($film))
 <style>
 body{
-    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$film['backdrop_path'] }}) 0px 40px  no-repeat;
+    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$film['backdrop_path'] }}) 0px 40px  no-repeat;
     background-size:contain;
+}
+
+@media only screen and (min-width: 768px) {
+    body{
+        background-image:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$film['backdrop_path'] }});
+    }
 }
 </style>
 <div class="row">

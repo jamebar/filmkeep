@@ -10,12 +10,17 @@
 @if(isset($review))
 <style>
 body{
-    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$review['backdrop_path'] }}) 0px 40px  no-repeat;
+    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}) 0px 40px  no-repeat;
     background-size:contain;
 }
+
+@media only screen and (min-width: 768px) {
+    body{
+        background-image:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$review['backdrop_path'] }});
+    }
+}
 </style>
-<div class="row">
-	<div class='small-12 medium-12 columns'>
+
 	    <div class="film_cover" style="padding:15%">
         
 	       
@@ -65,7 +70,7 @@ body{
             </div>
             
         </div>
-       <div class="feed-padding">
+       <div class="full-width-section theme-beige">
        		<div class="row" >
 			
 		        <div class="small-12 columns">
@@ -81,13 +86,11 @@ body{
     		</div>
     		<hr style="margin:0em;">
     	</div>
-        <div class="feed-padding">
-        	<div class="row">
-                <div class="small-12 medium-4 large-4 columns">
-                    
-                    <div class="medium-12 columns ">
-                            
-                            @if($rotten && isset($rotten->ratings->critics_rating))
+        <div class="full-width-section theme-beige">
+            <div class="row">
+                
+                <div class="small-12  columns">
+                             @if($rotten && isset($rotten->ratings->critics_rating))
                                 <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
                             @endif
                         
@@ -108,11 +111,13 @@ body{
                                 <h3>Release Date</h3>
                                 {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}
                             @endif
-                        
-                        
-                    </div>
                 </div>
-                <div class="small-12 medium-8 large-8 columns">
+            </div>
+        </div>
+        <div class="full-width-section theme-red">
+        	<div class="row">
+                
+                <div class="small-12  columns">
                 	@foreach($review['ratings'] as $r) 
                 			@if( $r->label != null  && $r->rating != null)
                 		
@@ -153,15 +158,23 @@ body{
                 	
         						@endif
                 		@endforeach
-                	@if(isset($review['comments']) && strlen($review['comments'])>1) 
-                	     <hr><label>Notes:</label>
-                	   
-                	    <p>{{ nl2br($review['comments'])}}</p>
-                	@endif	
+                	
                 </div>
             </div>
         </div><!-- end feed padding -->
-        <div class="feed-padding">
+
+        @if(isset($review['comments']) && strlen($review['comments'])>1) 
+        <div class="full-width-section theme-orange notes">
+            <div class="row">
+                <div class="small-12 columns">
+                    
+                        <p><span><em class="quote-open">&ldquo;</em></span>{{ nl2br($review['comments'])}}<span><em class="quote-close">&rdquo;</em></span></p>
+                     
+                </div>
+            </div>
+        </div>
+        @endif 
+        <div class="full-width-section theme-toast">
             <div class="row comment-section">
                 <div class="small-12  columns"><h4 class="subheader">Comments</h4></div>
                 <div class="small-12  columns comment-box" id="reviews-{{ $review['id']}}"></div>
@@ -179,8 +192,6 @@ body{
                 @endif
             </div>
         </div>
-    </div>
-        
-</div>
+    
 @endif
 @stop

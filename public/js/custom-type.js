@@ -70,6 +70,7 @@
 	 				</div></form></div>";
 	 			c_item.find('span').html( ht );
 	 			c_item.find('.custom_type_controls').hide();
+	 			c_item.find(('form#update-custom-type input[name="type_name"]')).focus();
 
 	 			//capture the form on submit handler, trigger a click on the save button
 	 			$('form#update-custom-type').on('submit', function(){
@@ -95,7 +96,7 @@
 					            	
 					  	}
 					});
-					
+
 		 			return false;
 		 		});
 

@@ -3,6 +3,19 @@
 @section('scripts')
 @parent
 <script src="{{ URL::asset('js/comments.js') }}"></script>
+<script src="{{ URL::asset('js/vendor/jquery.sticky.js') }}"></script>
+<script src="{{ URL::asset('js/vendor/jquery.scrollTo.min.js') }}"></script>
+<script>
+    $(function(){
+        $(".sub-menu").sticky({topSpacing:50});
+
+        $('.sub-menu a').on('click', function(){
+            console.log("hello");
+            $.scrollTo( $(this).attr('href'), 800, { offset:{ top:-90 } });
+            return false;
+        })
+    });
+    </script>
 @stop
 
 @section('content')
@@ -10,8 +23,8 @@
 @if(isset($review))
 <style>
 body{
-    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}) 0px 40px  no-repeat;
-    background-size:contain;
+    background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}) 0px 0px  no-repeat;
+    background-size:100%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -21,16 +34,38 @@ body{
 }
 </style>
 
-	    <div class="film_cover" style="padding:15%">
-        
-	       
-           @if(strlen($review['backdrop_path']) > 1)
-
-		  
-            @else
-            <img class="" src="{{ $image_path_config['images']['base_url'].$image_path_config['images']['poster_sizes'][2].$review['poster_path'] }}" />
-            @endif
+	    <div class="film_cover" style="padding:13%;min-height:225px;">
+            <div class="fc-title">
+                <div class="fc-profile">
+                    <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"></a>
+                </div>
+                <div class="fc-content">
+                     @if(Auth::check())
+                    
+                    <a href="javascript:;" class="add-remove-watchlist @if(array_key_exists($review['film_id'], $watchlist)) {{"onlist"}} @endif" data-film_id="{{ $review['film_id'] }}" data-user_id="{{ Auth::user()->id}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
+                    
+                    @endif
+                    <h2>{{ $review['title'] }}</h2>
+                    @if(Auth::check() && $page_user['username'] === Auth::user()->username)
+                            <a style="margin-bottom:0em;" class="edit-review"  data-id="{{ $review['id'] }}" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
+                    @endif  
+                </div>
+            </div> 
+           
 	    </div>
+
+        <div class="sub-menu">
+            <div class="row">
+                <ul class="small-block-grid-4">
+                    <li class="sub-menu-1"><a href="#section-overview"><i class="step fi-info"></i> <span>Overview</span></a></li>
+                    <li class="sub-menu-2"><a href="#section-ratings"><i class="step fi-star"></i> <span>My Ratings</span></a></li>
+                    <li class="sub-menu-3"><a href="#section-notes"><i class="step fi-page-edit"></i> <span>My Notes</span></a></li>
+                    <li class="sub-menu-4"><a href="#section-comments"><i class="step fi-comment"></i> <span>Comments</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--
         <div class="row">
 
             <div class="small-12 columns ">
@@ -69,52 +104,41 @@ body{
                 </div>
             </div>
             
-        </div>
-       <div class="full-width-section theme-beige">
-       		<div class="row" >
-			
-		        <div class="small-12 columns">
-		        	
-		        	<h2><a  href="{{ url($page_user->username) }}"><img class="round-image"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"></a> / {{ $review['title'] }}</h2>
-		        		
-		        </div>
-		        <div class="small-5 columns">
-		        	@if(Auth::check() && $page_user['username'] === Auth::user()->username)
-				    		<a style="line-height: 2em;" class="right edit-review"  data-id="{{ $review['id'] }}" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
-				    @endif	
-		        </div>
-    		</div>
-    		<hr style="margin:0em;">
-    	</div>
-        <div class="full-width-section theme-beige">
+        </div>-->
+       
+        <div class="full-width-section theme-beige" id="section-overview">
             <div class="row">
                 
-                <div class="small-12  columns">
-                             @if($rotten && isset($rotten->ratings->critics_rating))
-                                <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
-                            @endif
-                        
-                            <p></p>
-                            <p> {{ $tmdb_info['overview'] }} </p>
-
-                            @if(isset($tmdb_info['budget']) && $tmdb_info['budget'] > 0)
-                                <h3>Budget</h3>
-                                {{ number_format( $tmdb_info['budget'] )  }}
-                            @endif
-
-                            @if(isset($tmdb_info['revenue']) && $tmdb_info['revenue'] > 0)
-                                <h3>Revenue</h3>
-                                {{ number_format( $tmdb_info['revenue'] ) }}
-                            @endif
-
-                            @if(isset($tmdb_info['release_date']) )
-                                <h3>Release Date</h3>
-                                {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}
-                            @endif
+                <div class="small-12 medium-2  columns">
+                 @if(isset($tmdb_info['release_date']) )
+                        <p><span>Released </span>
+                        {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}</p>
+                    @endif
+                    @if($rotten && isset($rotten->ratings->critics_rating))
+                        <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
+                    @endif
+                    
                 </div>
+                <div class="small-12 medium-6  columns">
+                    <p> {{ Str::limit($tmdb_info['overview'], 200) }} </p>
+                </div>
+                <div class="small-12 medium-4 columns f_stats">
+                    @if(isset($tmdb_info['budget']) && $tmdb_info['budget'] > 0)
+                        <p><span>Budget</span>
+                        {{ number_format( $tmdb_info['budget'] )  }}</p>
+                    @endif
+                    @if(isset($tmdb_info['revenue']) && $tmdb_info['revenue'] > 0)
+                        <p><span>Revenue</span>
+                        {{ number_format( $tmdb_info['revenue'] ) }}</p>
+                    @endif
+                    
+                </div>
+                
+                             
+                   
             </div>
         </div>
-        <div class="full-width-section theme-red">
+        <div class="full-width-section theme-red" id="section-ratings">
         	<div class="row">
                 
                 <div class="small-12  columns">
@@ -164,7 +188,7 @@ body{
         </div><!-- end feed padding -->
 
         @if(isset($review['comments']) && strlen($review['comments'])>1) 
-        <div class="full-width-section theme-orange notes">
+        <div class="full-width-section theme-orange notes" id="section-notes">
             <div class="row">
                 <div class="small-12 columns">
                     
@@ -174,7 +198,7 @@ body{
             </div>
         </div>
         @endif 
-        <div class="full-width-section theme-toast">
+        <div class="full-width-section theme-toast" id="section-comments">
             <div class="row comment-section">
                 <div class="small-12  columns"><h4 class="subheader">Comments</h4></div>
                 <div class="small-12  columns comment-box" id="reviews-{{ $review['id']}}"></div>

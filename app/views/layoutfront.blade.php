@@ -14,7 +14,7 @@
   <!-- Included CSS Files -->
   @section('styles')
   <link rel="stylesheet" href="{{ URL::asset('css/normalize.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('css/foundation.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('css/foundation.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/foundation-icons.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/mmenu.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('css/mmenu-positioning.css') }}">
@@ -36,7 +36,7 @@
   <div class="inner-wrap">
 
 	<div id="header_all" >
-		<div class="fixed">
+		<div class="fixed header-bg">
 		<div class="contain-to-grid sticky">
 	  		<nav class="top-bar hide-for-small" >
 	  			<ul class="title-area">
@@ -57,7 +57,7 @@
 					<ul class="right">
 					@if (Auth::check())
 						<li>
-							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#f38f7f;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
+							<a  href="javascript:;" data-dropdown='notif_list_large' class="notif_parent notif_large notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#f4e8d0;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
 						</li>
 						<div id="notif_list_large" class="f-dropdown content medium" data-dropdown-content>
 							@if(isset($notifications))
@@ -101,7 +101,7 @@
 						<li>
 							<div class="login-info">
 								<a href="#" data-dropdown="login-info-menu" ><img  src="{{ $logged_in_user->profile_pic }}" width="30" height="30">
-								<i class="step fi-widget " style="font-size:22px;color:#f38f7f;" ></i></a>
+								<i class="step fi-widget " style="font-size:22px;color:#f4e8d0;" ></i></a>
 								<div id="login-info-menu" data-dropdown-content class="f-dropdown ">
 								  	<a href="/{{ $logged_in_user->username }}/watchlist"><i class="step fi-list-thumbnails " style="font-size:18px;color:#f38f7f;" ></i> Watchlist</a>
 								  	<a href="{{ route('profile') }}"><i class="step fi-wrench " style="font-size:18px;color:#f38f7f;" ></i>  Settings</a>
@@ -139,7 +139,7 @@
 				    @if (Auth::check())
 				     <ul class="right inline-list">
 				         <li>
-				         <a  href="javascript:;" data-dropdown='notif_list' class="notif_parent notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#fff;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
+				         <a  href="javascript:;" data-dropdown='notif_list' class="notif_parent notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#f4e8d0;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
 				          
 				         </li>
 				         <li> <a href="javascript:;" data-reveal-id="add-film"> <i class="step fi-plus size-36" style="font-size:28px;color:#fff;" ></i></a></li>
@@ -417,9 +417,6 @@
 			close_on_background_click: false,
 			animation: 'fade',
 		}
-		
-
-
 		
 	});
 

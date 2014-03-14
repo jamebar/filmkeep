@@ -34,24 +34,27 @@ body{
 }
 </style>
 
-	    <div class="film_cover" style="padding:13%;min-height:225px;">
-            <div class="fc-title">
-                <div class="fc-profile">
-                    <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"></a>
+	    <div class="film_cover" >
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="fc-title">
+                        <div class="fc-profile">
+                            <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>
+                        </div>
+                        <div class="fc-content">
+                             @if(Auth::check())
+                            
+                            <a href="javascript:;" class="add-remove-watchlist @if(array_key_exists($review['film_id'], $watchlist)) {{"onlist"}} @endif" data-film_id="{{ $review['film_id'] }}" data-user_id="{{ Auth::user()->id}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
+                            
+                            @endif
+                            <h2>{{ $review['title'] }}</h2>
+                            @if(Auth::check() && $page_user['username'] === Auth::user()->username)
+                                    <a style="margin-bottom:0em;" class="edit-review"  data-id="{{ $review['id'] }}" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
+                            @endif  
+                        </div>
+                    </div> 
                 </div>
-                <div class="fc-content">
-                     @if(Auth::check())
-                    
-                    <a href="javascript:;" class="add-remove-watchlist @if(array_key_exists($review['film_id'], $watchlist)) {{"onlist"}} @endif" data-film_id="{{ $review['film_id'] }}" data-user_id="{{ Auth::user()->id}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
-                    
-                    @endif
-                    <h2>{{ $review['title'] }}</h2>
-                    @if(Auth::check() && $page_user['username'] === Auth::user()->username)
-                            <a style="margin-bottom:0em;" class="edit-review"  data-id="{{ $review['id'] }}" href="javascript:;"><i class="step fi-pencil size-14" style="font-size:14px;color:#ccc;"></i> Edit</a>
-                    @endif  
-                </div>
-            </div> 
-           
+            </div>
 	    </div>
 
         <div class="sub-menu">

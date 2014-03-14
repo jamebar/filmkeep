@@ -243,13 +243,16 @@ label.sliders{
 	background-size:cover;
 	overflow: hidden;
 	position: relative;
+	min-height: 225px;
 }
-
 .fc-title{
-	position:absolute;
-	bottom:1.5em;
+	margin-top:100px;
 	width:100%;
 }
+
+
+
+
 .fc-content{
 	float:left;
 }
@@ -271,9 +274,26 @@ label.sliders{
 	padding-right:1em;
 	margin-right:1em;
 }
+.fc-profile img{
+	width:50px;
+}
+
+@media only screen and (min-width: 40em) {
+
+	.film_cover{
+		min-height:325px;
+	}
+	.fc-title{
+		margin-top:200px;
+	}
+	.fc-profile img{
+		width:100px;
+	}
+
+}
+
 #add-film.reveal-modal, #edit-film.reveal-modal{
-	margin-left:-45%;
-	width:90%;
+	
 
 }
 .top_bg{
@@ -292,6 +312,12 @@ label.sliders{
 .reveal-modal .close-reveal-modal{
 	top: 0.3em;
 	right: 0.4875em;
+}
+@media only screen and (max-width: 40em){
+	dialog, .reveal-modal {
+	height: initial;
+	min-height: initial;
+	}
 }
 
 @media only screen and (min-width: 768px) {

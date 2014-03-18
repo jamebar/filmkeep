@@ -52,6 +52,21 @@ class ProfileController extends BaseController
 		if(!isset($data['page_user']))
 			App::abort(404);
 
+		$r = new Review();
+		$latest_review = $r->getReviewsFull($data['page_user']['id'], $num=1);
+		
+		if(count($latest_review) <1)
+		{
+			$data['latest_review_backdrop_large'] = DEFAULT_BACKGROUND_PIC;
+			$data['latest_review_backdrop_small'] = DEFAULT_BACKGROUND_PIC;
+		}
+		else
+		{
+			$data['latest_review_backdrop_large'] = $this->image_path_config['images']['base_url'].$this->image_path_config['images']['backdrop_sizes'][2].$latest_review[0]['backdrop_path'];
+			$data['latest_review_backdrop_small'] = $this->image_path_config['images']['base_url'].$this->image_path_config['images']['backdrop_sizes'][1].$latest_review[0]['backdrop_path'];
+
+		}
+		
 		return View::make('profile', $data);
 
 	}

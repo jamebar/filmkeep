@@ -7,7 +7,8 @@
 <script src="{{ URL::asset('js/vendor/jquery.scrollTo.min.js') }}"></script>
 <script>
     $(function(){
-        $(".sub-menu").sticky({topSpacing:50});
+       // console.log($(".header-bg").height());
+        $(".sub-menu").sticky({topSpacing:$(".header-bg").height() + 1});
 
         $('.sub-menu a').on('click', function(){
             console.log("hello");
@@ -25,6 +26,7 @@
 body{
     background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}) 0px 0px  no-repeat;
     background-size:100%;
+    padding-top:0px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -61,8 +63,8 @@ body{
             <div class="row">
                 <ul class="small-block-grid-4">
                     <li class="sub-menu-1"><a href="#section-overview"><i class="step fi-info"></i> <span>Overview</span></a></li>
-                    <li class="sub-menu-2"><a href="#section-ratings"><i class="step fi-star"></i> <span>My Ratings</span></a></li>
-                    <li class="sub-menu-3"><a href="#section-notes"><i class="step fi-page-edit"></i> <span>My Notes</span></a></li>
+                    <li class="sub-menu-2"><a href="#section-ratings"><i class="step fi-star"></i> <span>Ratings</span></a></li>
+                    <li class="sub-menu-3"><a href="#section-notes"><i class="step fi-page-edit"></i> <span>Notes</span></a></li>
                     <li class="sub-menu-4"><a href="#section-comments"><i class="step fi-comment"></i> <span>Comments</span></a></li>
                 </ul>
             </div>
@@ -112,20 +114,26 @@ body{
         <div class="full-width-section theme-beige" id="section-overview">
             <div class="row">
                 
-                <div class="small-12 medium-2  columns">
-                 @if(isset($tmdb_info['release_date']) )
-                        <p><span>Released </span>
-                        {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}</p>
-                    @endif
-                    @if($rotten && isset($rotten->ratings->critics_rating))
-                        <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
-                    @endif
+                <div class="small-12 medium-3  columns">
+                 
+                 <a class="radius trailer-thumb" href="javascript:;" style="backround:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][0].$review['backdrop_path'] }}) no-repeat; background-size:cover;">
+                    <img class="radius" src="{{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][0].$review['backdrop_path'] }}"/>
+                    <span></span>
+                 </a>
+                   
                     
                 </div>
                 <div class="small-12 medium-6  columns">
+                    @if(isset($tmdb_info['release_date']) )
+                        <p><span>Released </span>
+                        {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}</p>
+                    @endif
                     <p> {{ Str::limit($tmdb_info['overview'], 200) }} </p>
                 </div>
-                <div class="small-12 medium-4 columns f_stats">
+                <div class="small-12 medium-3 columns f_stats">
+                     @if($rotten && isset($rotten->ratings->critics_rating))
+                        <span class="rotten-score"><i class="{{ Str::slug($rotten->ratings->critics_rating) }}"></i> {{ $rotten->ratings->critics_score }}%</span>
+                    @endif
                     @if(isset($tmdb_info['budget']) && $tmdb_info['budget'] > 0)
                         <p><span>Budget</span>
                         {{ number_format( $tmdb_info['budget'] )  }}</p>
@@ -190,21 +198,23 @@ body{
             </div>
         </div><!-- end feed padding -->
 
-        @if(isset($review['comments']) && strlen($review['comments'])>1) 
+        
         <div class="full-width-section theme-orange notes" id="section-notes">
             <div class="row">
                 <div class="small-12 columns">
-                    
+                    @if(isset($review['comments']) && strlen($review['comments'])>1) 
                         <p><span><em class="quote-open">&ldquo;</em></span>{{ nl2br($review['comments'])}}<span><em class="quote-close">&rdquo;</em></span></p>
-                     
+                    @else    
+                        <p>There are no notes about this review</p>
+                    @endif 
                 </div>
             </div>
         </div>
-        @endif 
+        
         <div class="full-width-section theme-toast" id="section-comments">
             <div class="row comment-section">
                 <div class="small-12  columns"><h4 class="subheader">Comments</h4></div>
-                <div class="small-12  columns comment-box" id="reviews-{{ $review['id']}}"></div>
+                <div class="small-12  columns comment-box" id="reviews-{{ $review['id']}}"><span class="filler"><p>@if(Auth::check()) Be the first to comment @else You must be logged in to comment  @endif</p></span></div>
                 @if(Auth::check())
                 <div class="small-12  columns">
                     <form class="comment_form" data-id="{{ $review['id']}}" data-type="reviews">
@@ -213,7 +223,7 @@ body{
                             <label><span class="show-for-medium-up">contains spoilers</span><span class="show-for-small">spoilers</span></label>
                             <input type="checkbox" name="spoiler" >
                         </div>
-                        <input type="submit" id="submit_comment" class="right button" value="Comment"/>
+                        <input type="submit" id="submit_comment" class="right button radius" value="Comment"/>
                     </form>
                 </div>
                 @endif

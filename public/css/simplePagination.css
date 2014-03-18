@@ -36,7 +36,7 @@ ul.simple-pagination {
 
 .light-theme a, .light-theme span {
 	float: left;
-	color: #666;
+	color: #f4e8d0;
 	font-size:14px;
 	line-height:24px;
 	font-weight: normal;
@@ -45,25 +45,25 @@ ul.simple-pagination {
 	padding: 0 7px;
 	margin: 0 5px 0 0;
 	border-radius: 3px;
-	background: #efefef; /* Old browsers */
+	background: #bf4942; /* Old browsers */
 	
 }
 
 .light-theme a:hover {
 	text-decoration: none;
-	background: #FCFCFC;
+	background: #d47d55;
 }
 
 .light-theme .current {
-	background: #666;
-	color: #FFF;
+	background: #d47d55;
+	color: #f4e8d0;
 	
 	
 	cursor: default;
 }
 .light-theme .current.prev, .light-theme .current.next{
-	background: #efefef;
-	color:#999;
+	background: #d47d55;
+	color:#c8bba1;
 }
 
 .light-theme .ellipse {

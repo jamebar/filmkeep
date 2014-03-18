@@ -34,7 +34,7 @@
 		max-height: 100%;
 		border: 0px solid #BFBFBF;
 		z-index: 1;
-		border-radius:20px;
+		border-radius:3px;
 	}
 
 /*	Handles + active state;
@@ -67,10 +67,10 @@
  *		for various states of the slider.
  */
 	.noUi-connect {
-		background: #178FE1;
+		background: #c8bba1;
 	}
 	.noUi-background {
-		background: #DDD;
+		background: #d47d55;
 	}
 
 /*	Functional styles for handle positioning;

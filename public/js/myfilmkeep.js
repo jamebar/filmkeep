@@ -5,6 +5,13 @@ var total_items = 10;
 var search_query = "";
 var sort_dir = "desc";
 
+//check for pagination
+if(window.location.hash) {
+  var hash = window.location.hash;
+  current_page = hash.substr(hash.indexOf('-') +1) -1;
+  console.log(current_page);
+} 
+
 	$(document).ready(function(){
 		
 		contentModel = new contentViewModel();
@@ -14,12 +21,15 @@ var sort_dir = "desc";
 		$('.my_pagination').pagination({
 		        items: total_items,
 		        itemsOnPage: num_per_page,
+		        currentPage: current_page +1,
 		        cssStyle: 'light-theme',
 		        onPageClick:function(pageNumber, event){
 		        	current_page = pageNumber -1;
 		        	contentModel.loadData();
 		        }
 		});
+
+
 
 		$('#search_myfilmkeep').on('keyup',function()
 		{
@@ -44,11 +54,12 @@ var sort_dir = "desc";
 	});
 
 	
-	function content_item(review_id,title,poster_path,slug) {
+	function content_item(review_id,title,poster_path,slug, created_at) {
 		this.review_id 		= ko.observable(review_id);
 	    	this.title 		= ko.observable(title);
 	    	this.poster_path 	= ko.observable(poster_path);
 	    	this.slug 		= ko.observable(slug);
+	    	this.created_at		= ko.observable(created_at);
 	};
 	
 	
@@ -68,7 +79,8 @@ var sort_dir = "desc";
 						item.id,
 						item.title,
 						item.poster_path,
-						item.slug
+						item.slug,
+						item.created_at
 					
 					);
 					items.push(c);

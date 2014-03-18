@@ -96,7 +96,7 @@
 						
 
 						<li class="has-form">
-							<a class="button tiny" data-reveal-id="add-film" href="javascript:;"><i class="step fi-plus size-14" style="font-size:14px;color:#fff;" ></i> REVIEW</a>
+							<a class="button tiny radius" data-reveal-id="add-film" href="javascript:;"><i class="step fi-plus size-14" style="font-size:14px;color:#fff;" ></i> REVIEW</a>
 						</li>
 						<li>
 							<div class="login-info">
@@ -191,7 +191,7 @@
     @if (Session::has('flash_notice'))
         <div id="flash_notice" data-alert data-options="animation_speed:500;" class="alert-box ">{{ Session::get('flash_notice') }} <a href="#" class="close">&times;</a></div>
     @endif
-	
+	<!--
 	@if(Auth::guest() && Route::currentRouteName() !== 'join' && Route::currentRouteName() !== 'login')
 	<style>
 	body{
@@ -211,6 +211,7 @@
 		</div>
 	</div>
 	@endif	
+	-->
 	<div id="content">
 		@yield('content')
 	</div>
@@ -344,7 +345,7 @@
 			   <div class="small-12 columns">
 			  <label for="hide_checkbox">
 			    <input name="hide" type="checkbox" id="hide_checkbox" >
-			    <span class="custom checkbox"></span> Hide from feed? <a data-options="disable-for-touch:true" data-tooltip class='has-tip ' title="If checked, your review will not appear in your friends' feed but will still be visible in your filmkeep"><i class="step fi-info size-36" style="font-size:22px;color:#178FE1;" ></i></a>
+			    <span class="custom checkbox"></span> Hide from feed? <a data-options="disable-for-touch:true" data-tooltip class='has-tip ' title="If checked, your review will not appear in your friends' feed but will still be visible in your filmkeep"><i class="step fi-info size-36" style="font-size:22px;color:#c8bba1;" ></i></a>
 			  </label>
 				
 			  </div>
@@ -410,6 +411,16 @@
 	@show
 	<script>
 	
+	$(window).scroll(function(){
+		var myper = ($(this).scrollTop() / 200 ) + .3;
+		
+		if(myper >1)
+			myper = 1;
+
+		$('.header-bg').css('background', 'rgba(50,50,50, ' +  myper +')');
+	});
+
+
 	var user_id = "{{ $logged_in_user->id or '' }}";
 	
 	$(document).foundation({

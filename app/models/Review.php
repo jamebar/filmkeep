@@ -301,7 +301,7 @@ class Review extends Eloquent {
     public function getReviewsFull($user_id, $num=20, $page = 0, $search="", $sort_dir = "desc")
     {
         //Get data for all films from user
-        $reviews = Review::with('ratings')->select('reviews.id as id','reviews.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
+        $reviews = Review::with('ratings')->select('reviews.id as id','reviews.film_id as film_id',  'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
                     ->where('reviews.user_id', '=', $user_id)
                     ->join('films as f', 'f.id', '=' , 'reviews.film_id')
                     ->orderBy('reviews.created_at', $sort_dir);

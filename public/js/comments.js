@@ -19,6 +19,11 @@
 		        success: function( data ) {
 		        	if(data)
 		        	{
+		        		if(data.length>0)
+		        		{
+		        			this_box.find('.filler').hide();
+		        		}
+		        		
 		        		$.each(data, function(index,val){
 		        			var c = {
 		        				id: val.id,
@@ -83,7 +88,10 @@
 				        success: function( data ) {
 				        	if(data.result)
 				        	{
-				        		
+				        		if(data.length>0)
+				        		{
+				        			this_box.find('.filler').hide();
+				        		}
 				        		this_form[0].reset();
 				        		var c = {
 				        			id: data.result,

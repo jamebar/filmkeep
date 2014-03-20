@@ -10,7 +10,8 @@
 		
 		<style>
 	   	body{
-			background:#e8e8e8;
+			 background:#f4e8d0 url({{ DEFAULT_BACKGROUND_PIC }}) 0px 0px  no-repeat;
+    background-size:cover;
 			
 		}
 		</style>

@@ -92,7 +92,8 @@ $(function(){
 	    if($('#tmdb_id').val().length > 0 && !request_active)
 	    {
 	    	
-	        
+	    	//make sure to hide initially
+	        $('#on-watchlist').hide();
 	        $('#rt_results').spin('flower');
 	        
         	request_active = true;
@@ -106,8 +107,28 @@ $(function(){
 			success: function( data ) {
 				
 				$('#rt_results').spin(false);
+				
+
+				if(data.on_watchlist != null)
+				{
+					$('#on-watchlist a').data('film_id', data.film_id);
+					$('#on-watchlist a').data('user_id', user_id);
+					$('#on-watchlist').show();
+				}
+				$('#add-film-result .result-title').html('"' + data.title + '"');
+
+				$('#add-film').foundation('reveal','close');
+				
+				$('#add-film').on('closed', function(){
+					setTimeout(function(){
+						$('#add-film-result').foundation('reveal', 'open');
+					},500);
+
+					$('#add-film').off('closed');
+				});
+				
 				//$('.ajax-message').html("Your film has been added. <a href='/"+username+"/r/"+data+"'>View it here</a>");
-				window.location = '/r/'+data;
+				//window.location = '/r/'+data;
 			}
               	});
 	       
@@ -195,10 +216,8 @@ $(function(){
 		
 	});
 
-	$('#add-film').bind('opened', function(){
+	$('#add-film').on('open', function(){
 			if(add_this == false){
-				$('.rtautocomplete').focus();
-				
 				$('#add-film h2').text($('#add-film h2').attr('alt'));
 				$('#add-film .rtautocomplete').val("");
 				$('#add_film_step2').hide();
@@ -207,6 +226,13 @@ $(function(){
 			$('#recommend_values').val('');
 			$('.recautocomplete').val('');
 			add_this = false;
+	});
+
+	$('#add-film').on('opened', function(){
+			if(add_this == false){
+				$('.rtautocomplete').focus();
+			}
+			
 	});
 
 

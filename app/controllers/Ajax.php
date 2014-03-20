@@ -264,17 +264,11 @@ class Ajax extends BaseController
     {
         
         $new_review = new Review();
-        $new_id = $new_review->addReview();
+        $response = $new_review->addReview();
         
-        if($new_id)
-        {
-            
-           return Response::json( $new_id );
-        }
-        else
-        {
-            return Response::json("fail");
-        }
+        
+        return Response::json( $response );
+         
         
     }
 

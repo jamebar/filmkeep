@@ -9,13 +9,16 @@ poster_base = "<?php echo $image_path_config['images']['base_url'].$image_path_c
 </script>
 <style>
 body{
-    background:url({{ $latest_review_backdrop_small }}) 0px 0px  no-repeat;
-    background-size:100%;
     padding-top:0px;
+}
+.film_cover_bg{
+    background:url({{ $latest_review_backdrop_small }}) 0px 0px  no-repeat;
+    background-size:cover;
+    
 }
 
 @media only screen and (min-width: 768px) {
-    body{
+    .film_cover_bg{
         background-image:url({{ $latest_review_backdrop_large }});
     }
 }
@@ -27,32 +30,33 @@ select{
     font-size:12px;
 }
 </style>
-<div class="film_cover">
-    <div class="row">
-        <div class="small-12 medium-6 columns">
-            <div class="fc-title">
-                <div class="fc-profile">
-                    <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>
-                </div>
-                <div class="fc-content">
-                     
-                    <h2>@if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h2>
-                    
-                </div>
+<div class="film_cover_bg">
+    <div class="film_cover">
+        <div class="row">
+            <div class="small-12 medium-6 columns">
+                <div class="fc-title">
+                    <div class="fc-profile">
+                        <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>
+                    </div>
+                    <div class="fc-content">
+                         
+                        <h2>@if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h2>
+                        
+                    </div>
+                </div> 
             </div> 
-        </div> 
-            
+                
+        </div>
     </div>
 </div>
 <div class="full-width-section theme-beige remove-padding" >
     <div class="row">
         <div class="small-12 medium-6 columns"></div>
-        <div class="medium-6 columns ">
+        <div class="small-12 medium-6 columns ">
             <div class="row">
-                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-video" style="font-size:40px;color:#7b7171;" ></i> <em class="total"></em><br>films</span></div>
-                
-                <div class="small-4  medium-4 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database" style="font-size:40px;color:#7b7171;" ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
-                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-torsos-all" style="font-size:40px;color:#7b7171;" ></i> <em>{{ count($page_user_following) }}</em><br>following</span></div>
+                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-video"  ></i> <em class="total"></em><br>films</span></div>
+                <div class="small-4  medium-4 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database"  ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
+                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-torsos-all"  ></i> <em>{{ count($page_user_following) }}</em><br>following</span></div>
             </div>
         </div>
     </div>
@@ -61,9 +65,9 @@ select{
 
     <div class="row">
         <div class="small-12 medium-4  columns ">
-        <div class="row collapse">
+        <div class="row collapse search">
                     <div class="small-2 large-2 columns">
-                      <span class="prefix"><i class=" step fi-magnifying-glass " style="font-size:18px;color:#888;"></i></span>
+                      <span class="prefix"><i class=" step fi-magnifying-glass " style="font-size:18px;color:#f4e8d0;"></i></span>
                     </div>
                     <div class="small-10 large-10 columns">
                       <input type="text" id="search_myfilmkeep" placeholder="search @if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0] }}'s @endif Filmkeep"/>
@@ -118,16 +122,25 @@ select{
                 <ul id="myfilmkeep" data-bind="foreach: items">
                                     
                         <li>
-                           
-                            <a data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
-                            <img data-bind="attr:{src: poster_base + poster_path()}" src="" />
-                            </a>
-                           
-                            <div clas="">
-                                <p data-bind="text:title"></p>
-                            </div>
-                            <div clas="">
-                               
+                           <div class="row">
+                                <div class="small-3 medium-2 large-1 columns">
+                                    <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
+                                    <img data-bind="attr:{src: poster_base + poster_path()}" src="" />
+                                    </a>
+                               </div>
+
+                                <div class="small-9 medium-10 large-11 columns">
+                                    <p data-bind="text:title"></p>
+                                
+                                    <div class="" >
+                                       <div class="rating-line">
+                                            <!--<span class="rating-line-dot current-dot" data-bind="style:{'left':'10%'}" style="left:1%;"></span>-->
+                                            
+                                            <span class="base-line"></span>
+                                            <span class="active-line" data-bind="style:{'width': rating() + '%'}" style="width:1%"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         

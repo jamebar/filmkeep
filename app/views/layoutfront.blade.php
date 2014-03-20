@@ -384,10 +384,16 @@
   @endif
 </div>
 
-<div id="myTrailer" class="reveal-modal" data-reveal>
-  <h2>Awesome. I have it.</h2>
-  <p class="lead">Your couch.  It is mine.</p>
-  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
+<div id="myTrailer" class="reveal-modal" data-reveal style="background-color:#f4e8d0">
+  <span></span>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="add-film-result" class="reveal-modal" data-reveal style="background-color:#f4e8d0">
+  <h3><span class="result-title"></span> was added to your filmkeep</h3>
+  <div id="on-watchlist" style="display:none">
+  	<p>We noticed it is on your watchlist, would you like to remove it?</p>
+  	<a href="#" class="add-remove-watchlist button" data-film_id="" data-user_id="" >remove from watchlist</a>
+  </div>
   <a class="close-reveal-modal">&#215;</a>
 </div>
 
@@ -408,16 +414,23 @@
 	@endif
 	<script src="{{ URL::asset('js/watchlist.js') }}"></script>
 	<script src="{{ URL::asset('js/vendor/jquery.spin.js') }}"></script>
+	<script src="{{ URL::asset('js/trailer.js') }}"></script>
 	@show
 	<script>
 	
 	$(window).scroll(function(){
-		var myper = ($(this).scrollTop() / 200 ) + .3;
+		var scrolltop = $(this).scrollTop();
+		var maxscroll = 200;
+
+		var myper = (scrolltop / maxscroll ) + .3;
 		
 		if(myper >1)
 			myper = 1;
 
+
 		$('.header-bg').css('background', 'rgba(50,50,50, ' +  myper +')');
+		
+		
 	});
 
 
@@ -503,6 +516,7 @@
 		/*
 		* Load the trailer in the feed via ajax from tmdb.com 
 		*/
+		//$('#activity-feed-items')$('.trailer').trailer();
 		$('#activity-feed-items').on('click','.load-trailer', function(){
 			loadTrailer($(this));
 			

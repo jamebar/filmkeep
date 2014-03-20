@@ -168,8 +168,14 @@ class Review extends Eloquent {
                 
             }
         }
+
+        /*
+        * check to see if it's on the watchlist
+        */
+        $on_watchlist = Watchlist::where('user_id', $user_id)->where( 'film_id' , $film_id)->first();
+
         
-        return $review_id;
+        return array('review_id' => $review_id, 'on_watchlist' => $on_watchlist, 'film_id'=> $film_id, 'title' => $title);
     }
 
     public static function getReview($review_id = FALSE)

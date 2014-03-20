@@ -8,7 +8,7 @@
 <script>
     $(function(){
        // console.log($(".header-bg").height());
-        $(".sub-menu").sticky({topSpacing:$(".header-bg").height() + 1});
+        $(".sub-menu").sticky({topSpacing:$(".header-bg").height() });
 
         $('.sub-menu a').on('click', function(){
             console.log("hello");
@@ -24,18 +24,21 @@
 @if(isset($review))
 <style>
 body{
+     padding-top:0px;
+}
+.film_cover_bg{
     background:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][1].$review['backdrop_path'] }}) 0px 0px  no-repeat;
-    background-size:100%;
-    padding-top:0px;
+    background-size:cover;
+   
 }
 
 @media only screen and (min-width: 768px) {
-    body{
+    .film_cover_bg{
         background-image:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$review['backdrop_path'] }});
     }
 }
 </style>
-
+    <div class="film_cover_bg">
 	    <div class="film_cover" >
             <div class="row">
                 <div class="small-12 columns">
@@ -58,7 +61,7 @@ body{
                 </div>
             </div>
 	    </div>
-
+    </div>
         <div class="sub-menu">
             <div class="row">
                 <ul class="small-block-grid-4">
@@ -116,7 +119,7 @@ body{
                 
                 <div class="small-12 medium-3  columns">
                  
-                 <a class="radius trailer-thumb" href="javascript:;" style="backround:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][0].$review['backdrop_path'] }}) no-repeat; background-size:cover;">
+                 <a class="radius trailer-thumb trailer" id="{{ $review['tmdb_id'] }}" data-id="{{ $review['id'] }}" href="javascript:;" style="backround:url({{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][0].$review['backdrop_path'] }}) no-repeat; background-size:cover;">
                     <img class="radius" src="{{$image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][0].$review['backdrop_path'] }}"/>
                     <span></span>
                  </a>

@@ -35,7 +35,7 @@ class Watchlist extends Eloquent {
     {
        
         $result = DB::table('watchlist as w')
-                        ->select('w.id as w_id' , 'w.user_id as user_id', 'f.id as film_id', 'f.title as title', 'f.poster_path as poster_path')
+                        ->select('w.id as w_id' , 'w.user_id as user_id','w.watched_at as watched_at', 'f.id as film_id', 'f.title as title', 'f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
                         ->where('w.user_id', '=' ,$user_id)
                         ->join('films as f', 'f.id', '=', 'w.film_id')
                         ->orderBy('w.list_order', 'asc')

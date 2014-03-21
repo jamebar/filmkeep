@@ -1,5 +1,5 @@
 var contentModel;
-var num_per_page = 12;
+var num_per_page = 24;
 var current_page=0;
 var total_items = 10;
 var search_query = "";

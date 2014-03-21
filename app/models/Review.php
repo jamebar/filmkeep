@@ -170,12 +170,13 @@ class Review extends Eloquent {
         }
 
         /*
-        * check to see if it's on the watchlist
+        * update watchist item if exists
         */
-        $on_watchlist = Watchlist::where('user_id', $user_id)->where( 'film_id' , $film_id)->first();
+        $date = new DateTime();
+        Watchlist::where('user_id', $user_id)->where( 'film_id' , $film_id)->update(array('watched_at' => $date->format('Y-m-d H:i:s') ) );
 
         
-        return array('review_id' => $review_id, 'on_watchlist' => $on_watchlist, 'film_id'=> $film_id, 'title' => $title);
+        return array('review_id' => $review_id,  'film_id'=> $film_id, 'title' => Str::slug($title));
     }
 
     public static function getReview($review_id = FALSE)

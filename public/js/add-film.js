@@ -109,7 +109,7 @@ $(function(){
 				$('#rt_results').spin(false);
 				
 
-				if(data.on_watchlist != null)
+				/*if(data.on_watchlist != null)
 				{
 					$('#on-watchlist a').data('film_id', data.film_id);
 					$('#on-watchlist a').data('user_id', user_id);
@@ -125,10 +125,10 @@ $(function(){
 					},500);
 
 					$('#add-film').off('closed');
-				});
+				});*/
 				
 				//$('.ajax-message').html("Your film has been added. <a href='/"+username+"/r/"+data+"'>View it here</a>");
-				//window.location = '/r/'+data;
+				window.location = '/r/'+data.review_id + "-" + data.title;
 			}
               	});
 	       

@@ -117,35 +117,21 @@ select{
     </div>
     <div class="row">
         <div class="small-12 medium-12 columns spinner" >
-            
             <span data-bind="with: feedData">
-                <ul id="myfilmkeep" data-bind="foreach: items">
-                                    
-                        <li>
-                           <div class="row">
-                                <div class="small-3 medium-2 large-1 columns">
-                                    <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
+            <ul  class="small-block-grid-3 large-block-grid-6" data-bind="foreach: items">
+                                
+                    <li>
+                        <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
                                     <img data-bind="attr:{src: poster_base + poster_path()}" src="" />
                                     </a>
-                               </div>
-
-                                <div class="small-9 medium-10 large-11 columns">
-                                    <p data-bind="text:title"></p>
-                                
-                                    <div class="" >
-                                       <div class="rating-line">
-                                            <!--<span class="rating-line-dot current-dot" data-bind="style:{'left':'10%'}" style="left:1%;"></span>-->
-                                            
-                                            <span class="base-line"></span>
-                                            <span class="active-line" data-bind="style:{'width': rating() + '%'}" style="width:1%"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
                         
-                </ul>
-            </span>
+                    </li>
+                    
+                                
+                    
+            </ul>
+        </span>
+            
             <div class="row">
                 <div class="small-12 medium-12 columns">
                     <div class="my_pagination right"></div>

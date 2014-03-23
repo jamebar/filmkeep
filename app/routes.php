@@ -54,6 +54,9 @@ Route::group(array('before' => 'Auth'), function()
 	    return Redirect::route('login')
 	        ->with('flash_notice', 'You are successfully logged out.');
 	}));
+
+    
+
 });
 
 Route::group(array('before' => 'guest'), function()
@@ -69,12 +72,32 @@ Route::filter('guest', function()
         if (Auth::check()) 
         {
         	$button['text'] = "logout";
-		$button['url'] = route('logout');
-                return Redirect::route('home')->with('flash_notice', 'You are already logged in!');
+            $button['url'] = route('logout');
+            return Redirect::route('home')->with('flash_notice', 'You are already logged in!');
         }
+
+
 });
 
+Route::get('password/reset', array(
+  'uses' => 'PasswordController@remind',
+  'as' => 'password.remind'
+));
 
+Route::post('password/reset', array(
+  'uses' => 'PasswordController@request',
+  'as' => 'password.request'
+));
+
+Route::get('password/reset/{token}', array(
+  'uses' => 'PasswordController@reset',
+  'as' => 'password.reset'
+));
+
+Route::post('password/reset/{token}', array(
+  'uses' => 'PasswordController@update',
+  'as' => 'password.update'
+));
 
 Route::filter('Auth', function()
 {

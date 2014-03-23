@@ -24,7 +24,7 @@ $(function(){
 					
 					last_date = data.last_date;
 					$("<div />").html(data.items.join('')).appendTo('#activity-feed-items').find('.comment-section').commentify();
-					
+					$('.trailer:not(.trailer-init)').trailer();
 					//$('.comment-section').commentify();
 					$('#load-more').css('display','block');
 				}

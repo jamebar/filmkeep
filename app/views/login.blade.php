@@ -33,6 +33,7 @@ body{
                 <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
 
                 {{ Form::close() }}
+            <p> <a href="{{ route('password.remind') }}" class="">Forgot your password?</a></p>
             <p>Don't have an account yet? <a href="{{ route('join') }}" class="">Signup</a></p>
            
         </div>

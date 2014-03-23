@@ -2,10 +2,11 @@
  
     $.fn.trailer = function() {
  	
- 	this.on('click', function(){
- 	
-        	
- 		var root = $(this);
+    	
+	this.on('click', function(){
+
+
+		var root = $(this);
 		var tmdb_id = root.attr('id');
 
 		
@@ -74,11 +75,13 @@
 
 		});
 	});
+    	
+ 	
 		
 		
 	
 
-	
+	this.addClass('trailer-init');
  	
  	return this;
     };

@@ -33,7 +33,7 @@ select{
 <div class="film_cover_bg">
     <div class="film_cover">
         <div class="row">
-            <div class="small-12 medium-6 columns">
+            <div class="small-12  columns">
                 <div class="fc-title">
                     <div class="fc-profile">
                         <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>

@@ -18,5 +18,13 @@ class Film extends Eloquent {
     {
         return Film::find($id);
     }
+
+    /*
+     * A Film belongsTo a ListFilm
+     */
+    public function listFilm()
+    {
+        return $this->belongsTo('ListFilm');
+    }
       
 }

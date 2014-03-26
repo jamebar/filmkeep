@@ -49,7 +49,7 @@ select{
         </div>
     </div>
 </div>
-<div class="full-width-section theme-beige remove-padding" >
+<div class="full-width-section theme-red remove-padding" >
     <div class="row">
         <div class="small-12 medium-6 columns"></div>
         <div class="small-12 medium-6 columns ">
@@ -61,7 +61,7 @@ select{
         </div>
     </div>
 </div>
-<div class="full-width-section theme-red" >
+<div class="full-width-section theme-beige" >
 
     <div class="row">
         <div class="small-12 medium-4  columns ">

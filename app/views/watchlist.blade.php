@@ -34,7 +34,7 @@ body{
             </div>
         </div>
     </div>
-<div class="full-width-section theme-beige" >
+<div class="full-width-section theme-red" >
     <div class="row">
         <div class="small-12 medium-6 columns">
              
@@ -65,7 +65,7 @@ body{
         @endif
     </div>
 </div>
-<div class="full-width-section theme-red" >
+<div class="full-width-section theme-beige" >
     <div class="row">
         <div class="small-12 columns">
             <ul id="sortable" class="my-watchlist">

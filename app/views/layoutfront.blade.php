@@ -511,83 +511,11 @@
 		}
 
 		
-
-
-		/*
-		* Load the trailer in the feed via ajax from tmdb.com 
-		*/
-		//$('#activity-feed-items')$('.trailer').trailer();
-		$('#activity-feed-items').on('click','.load-trailer', function(){
-			loadTrailer($(this));
-			
-			return false;
-		});
 		
-		$(".load-trailer").on('click',function(){
-			loadTrailer($(this));
-			return false;
-		});
-		
-		function loadTrailer(context){
-			
-			var tmdb_id = context.attr('id');
-
-			var con = context.parent().find(".trailer-con");
-			if(con.length <1){
-				con = $('.trailer-con');
-			}
-			var frame_width = con.width();
-			var frame_height = frame_width/1.7;
-			con.height(frame_height+80);
-			
-			if (con.find('iframe').length <1){
-				var spin_con = con.parent();
-				spin_con.spin('flower');
-			
-				$.ajax({
-					type: "POST",
-					url: '/ajax/film-trailer',
-					dataType: 'json',
-					data: {tmdb_id: tmdb_id},
-
-					success: function(data) { 
-
-						spin_con.spin(false);
-						if(data.youtube.length > 0)
-						{
-
-							con.slideDown('fast', function(){
-								$('html, body').animate({
-								        scrollTop: con.offset().top - 50
-								    }, 1000, function(){
-								    	con.html('<hr><a href="javascript:;" style="margin-bottom:1em;" class="right close-trailer"><i class="step fi-x" style="font-size:20px;color:#aaa;"></i> close trailer</a><iframe width="'+frame_width+'" height="'+ frame_height +'" src="//www.youtube.com/embed/'+data.youtube[0].source+'" frameborder="0" allowfullscreen></iframe>');
-								    });
-								
-
-							});
-							
-						}
-						
-					}
-
-				});
-			}else{
-				con.slideDown('fast', function(){
-					$('html, body').animate({
-					        scrollTop: con.offset().top - 50
-					    }, 1000);
-				});
-			}
-
-			
-		};
 
 	});
 
-	$('.row').on('click','.close-trailer',function(){
-		$(this).parents('.trailer-con').slideUp('fast');
-		return false;
-	})
+	
 	
 	var compare_num = 1;
 	

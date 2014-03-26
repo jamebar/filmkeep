@@ -2,7 +2,18 @@
 $(function(){
 		var last_date = "";
 		load_feed();
-		
+		$container = $('#activity-feed-items');
+		//Initialize isotope
+		$container.isotope({
+		  // options
+		  resizable: false, 
+		  	itemSelector : '.feed-item',
+		  	layoutMode : 'masonry',
+		  	masonry: {
+			    columnWidth: $container.width() / 2 
+			  }
+  			
+		});
 		
 		$('#load-more').on('click',function(){
 			load_feed();
@@ -23,15 +34,23 @@ $(function(){
 					$('.feed-loader').hide();
 					
 					last_date = data.last_date;
-					$("<div />").html(data.items.join('')).appendTo('#activity-feed-items').find('.comment-section').commentify();
+					var $newitems = $(data.items.join(''));
 					$('.trailer:not(.trailer-init)').trailer();
 					//$('.comment-section').commentify();
 					$('#load-more').css('display','block');
+					$container.append($newitems).isotope( 'appended', $newitems );
+					
 				}
 
 			});
 		}
-		
+	// update columnWidth on window resize
+$(window).smartresize(function(){
+  $container.isotope({
+    // update columnWidth to a percentage of container width
+    masonry: { columnWidth: $container.width() / 2 }
+  });
+});	
 
 	
 });

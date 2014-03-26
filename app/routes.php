@@ -143,3 +143,5 @@ Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 Route::controller('ajax', 'ajax');
 Route::get('{username}', 'profileController@view');
 Route::get('{username}/watchlist', 'userController@showWatchlist');
+Route::get('{username}/lists', 'listController@viewAll');
+Route::get('{username}/lists/{list_id}', 'listController@viewList');

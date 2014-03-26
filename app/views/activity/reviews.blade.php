@@ -8,12 +8,13 @@
 			<?php 
 				$date = new DateTime($created_at);
 				//$date->setTimestamp($modified_at);
-				echo $date->format('M d'); ?>
+				echo $date->format('\<\s\p\a\n\>M\<\/\s\p\a\n\> d'); ?>
 			</div>
 		</div>
 		<div class="small-12 medium-10 columns">
 			<div class=" feed-item-content-wrapper" style="background-image:url(/img/feed-bg-overlay.png), url({{ $image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$backdrop_path }}); background-repeat:repeat, no-repeat;background-size:cover;">
 				<div class="feed-item-content">
+				<a href="javascript:;" id="{{ $tmdb_id }}" data-id="{{ $review_id }}" class="trailer right"><i class="step fi-video " style="font-size:24px;color:#f4e8d0"></i></a>
 					<p class="notes notes-small">
 					@if(strlen($comments)>0)
 					<span><em class="quote-open">&ldquo;</em></span>{{ Str::limit($comments, 100) }}<span><em class="quote-close">&rdquo;</em></span>

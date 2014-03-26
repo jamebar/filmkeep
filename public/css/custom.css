@@ -1,5 +1,5 @@
 body{
-	background-color:#fff;
+	background-color:#f4e8d0 ;
 	font-family: 'Lato',"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	color:#7b7171;
 	padding-top:50px;
@@ -199,6 +199,15 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 }
 .activity-feed{
 	margin-top: 1em;
+}
+.activity-date{
+	color:#d2544c;
+	text-align: center;
+	font-size:2em;
+	font-family: 'Volkhov',"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+}
+.activity-date span{
+	font-size:.5em;
 }
 .feed-item{
 	margin-bottom: 1em;
@@ -1150,7 +1159,7 @@ Scrollbar
 	padding-top:15px;
 }
 #load-more{
-	
+	margin: 1em auto;
 }
 
 .spoiler-check{

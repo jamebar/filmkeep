@@ -11,7 +11,7 @@
 		
 		<style>
 	   	body{
-			 background:#f4e8d0 ;
+			 
 			
 		}
 		</style>
@@ -25,7 +25,7 @@
 			        <div class="activity-feed">
 				       <div id="activity-feed-items"></div>
 				       <div class="feed-loader"><p>Loading feed</p></div>
-				       <a href="javascript:;" class="button" style="display:none;" id="load-more">load more activity items</a>
+				       <a href="javascript:;" class="button small-12 medium-6 centered" style="display:none;" id="load-more">load more activity items</a>
 				</div> <!--end activity-feed -->
 		        </section> 
 	    	</div>

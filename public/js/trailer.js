@@ -5,11 +5,9 @@
     	
 	this.on('click', function(){
 
-
+		$('#myTrailer span').html('');
 		var root = $(this);
 		var tmdb_id = root.attr('id');
-
-		
 
 		var win_width = $(window).width();
 		var padding = 30 * 2;

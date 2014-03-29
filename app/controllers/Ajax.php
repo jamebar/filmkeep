@@ -235,7 +235,7 @@ class Ajax extends BaseController
     {
        
         $user_id = Input::get('user_id');
-        return Response::json( Review::getReviewsBasic($user_id,50) );
+        return Response::json( Review::getReviewsBasic($user_id, 100) );
     }
 
     /**

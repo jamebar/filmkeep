@@ -4,16 +4,7 @@ $(function(){
 		load_feed();
 		$container = $('#activity-feed-items');
 		//Initialize isotope
-		$container.isotope({
-		  // options
-		  resizable: false, 
-		  	itemSelector : '.feed-item',
-		  	layoutMode : 'masonry',
-		  	masonry: {
-			    columnWidth: $container.width() / 2 
-			  }
-  			
-		});
+		
 		
 		
 
@@ -40,19 +31,13 @@ $(function(){
 					
 					//$('.comment-section').commentify();
 					$('#load-more').css('display','block');
-					$container.append($newitems).isotope( 'appended', $newitems );
+					$container.append($newitems);
 					$('.trailer:not(.trailer-init)').trailer();
 				}
 
 			});
 		}
-	// update columnWidth on window resize
-$(window).smartresize(function(){
-  $container.isotope({
-    // update columnWidth to a percentage of container width
-    masonry: { columnWidth: $container.width() / 2 }
-  });
-});	
+	
 
 	
 });

@@ -203,10 +203,30 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 .feed-item{
 	margin-bottom: 1em;
 	color:#f4e8d0;
+
+}
+.feed-item-bar a{
+	color:#d2544c;
+	font-size:.8em;
+}
+.feed-item-bar i{
+	font-size: 1.5em;
+	top: 2px;
+	position: relative;
+}
+.feed-item-bar .right a{
+	margin-left:1em;
 }
 .feed-item h4{
-	color:#f4e8d0;
+	
 	font-size:44px;
+	margin-bottom: 2em;
+
+}
+.feed-item h4 a{
+	color:#f4e8d0;
+	
+
 }
 .feed-item h4.small{
 	font-size:30px;
@@ -219,21 +239,34 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 
 }
 .feed-item-content-wrapper{
-	border-radius:5px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	overflow: hidden;
+	padding:1.5em;	
 }
 .feed-item-content{
 	padding:15px;
+	background: #f4e8d0;
+	color:#d2544c;
+}
+.feed-item-content img{
+	width:95px;
+	border-radius: 80px;
+}
+.profile-info-center{
 	
+	text-align: center;
+	margin-top:-60px;
 }
 .feed-item-bar{
-	background:rgba(0,0,0, .5);
+	
 	padding:10px;
 }
 #feed p{
 	margin-bottom:0em;
 }
 #feed h6, #feed h4{
-	margin-bottom:0em;
+	
 	line-height: 1em;
 }
 .remove-right-padding{
@@ -1372,10 +1405,11 @@ hr{
 }
 .notes span em.quote-close{
 	top:28px;
+	right: -53px;
 }
 .notes span em.quote-open{
 	top:18px;
-	left:-40px;
+	left:-60px;
 }
 .notes-small  span em{
 	font-size:3em;
@@ -1383,7 +1417,9 @@ hr{
 .notes-small{
 	padding-left:2em;
 	padding-right:2em;
-	margin-bottom: 2em !important;
+	margin-bottom: 1.5em !important;
+	margin-top: 1.5em;
+	text-align: center;
 }
 .comment_form textarea{
 	background:transparent;

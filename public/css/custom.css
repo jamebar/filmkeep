@@ -7,6 +7,11 @@ body{
 body, input, select, textarea, button {
 -webkit-font-smoothing: antialiased;
 }
+.button{
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
 .button, button.secondary, .button.secondary{
 	border-width: 0px;
 	background:#d2544c;
@@ -47,7 +52,9 @@ h2{
 }
 
 
-	
+a{
+	color:#d2544c;
+}	
 
  header {
 
@@ -311,7 +318,7 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	color:#fff;
 }
 .google-btn{
-	background:#f42a27;
+	background:#dd4b39;
 	color:#fff;
 	padding: .5em 1em;
 	line-height: 2em;
@@ -764,6 +771,35 @@ a.notif_parent:hover span.notif{
 #feed .comment_form #submit_comment{
 	
 }
+#feed .comment-con{
+	background:#e2d6c0;
+	margin:0 10px;
+	color:#6b6459;
+	padding-top: 1em;
+}
+#feed .comment_form textarea{
+	border: 1px solid #a59b88;
+	color:#6b6459;
+}
+
+
+#feed .comment_form textarea::-webkit-input-placeholder {
+   color:#6b6459;
+}
+
+#feed .comment_form textarea:-moz-placeholder { /* Firefox 18- */
+   color:#6b6459; 
+}
+
+#feed .comment_form textarea::-moz-placeholder {  /* Firefox 19+ */
+   color:#6b6459;  
+}
+
+#feed .comment_form textarea:-ms-input-placeholder {  
+   color:#6b6459;  
+}
+
+
 .reveal-modal .close-reveal-modal{
 	font-size:2.375em;
 }

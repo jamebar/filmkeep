@@ -14,7 +14,7 @@ body{
                 <h3>Join with social</h3>
                 <p class="subheader">To get the most out of Filmkeep, use your Facebook or Twitter account to signup.</p>
                  <p><a class="button fb-btn medium-8 large-6 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Join with facebook</a></p>
-                 <p><a class="button tw-btn medium-8 large-6 small-12" href="{{ route('twitterlogin') }}"><i class="fi-social-twitter"></i> Join with twitter</a></p>
+                 <p><a class="button google-btn medium-8 large-6 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Join with google</a></p>
                  
             </div>
             <span class="login-or">or</span>

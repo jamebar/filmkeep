@@ -5,6 +5,7 @@
  	this.each(function() {
         	
  		var root = $(this);
+ 		root.addClass('comment-init');
 		var this_box = $(this).find('.comment-box');
 		var this_type = this_box.attr('id').split('-')[0];
 		var this_id = this_box.attr('id').split('-')[1];
@@ -38,7 +39,12 @@
 			        		this_box.append(comment_template(c));
 		        		});
 		        		if(data.length>0)
+		        		{
 		        			this_box.parents('.comment-con').show();
+		        			root.trigger('comments-added');
+		        			console.log("comment should be loaded");
+		        		}
+
 		        	}
 		            	
 		  	}
@@ -46,8 +52,9 @@
 		
 		$(this).parents('.feed-item').find('.comment-icon').on('click',function(){
 			var comment_con = root.parents('.comment-con');
-			comment_con.slideDown();
+			comment_con.show();
 			comment_con.find('.comment_form textarea').focus();
+			root.trigger('comments-form-show');
 
 		});
 
@@ -63,6 +70,7 @@
 				        	{
 				        		this_comment.parents('.m_list_item').slideUp('fast', function(){
 				        			$(this).remove();
+				        			root.trigger('comments-added');
 				        		});
 				        	}
 				            	
@@ -103,6 +111,7 @@
 				        			spoiler: 0
 				        		}
 				        		$('#'+ comment_div).append(comment_template(c));
+				        		root.trigger('comments-added');
 				        	}
 				            	
 				  	}

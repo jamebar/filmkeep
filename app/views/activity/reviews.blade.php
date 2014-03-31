@@ -21,17 +21,27 @@
 	                    		<span class="active-line" style="width: {{ $ratings[1]->rating }}%"></span>
 				</div>
 				<div class="feed-item-bar">
-					<a href=""><i class="fi-comment"></i> comments</a>
+					<a href="javascript:;" class="comment-icon"><i class="fi-comment"></i> comments</a>
 					<div class="right">
 						<a href=""><i class="fi-plus"></i>  watchlist</a>
 						<a href=""><i class="fi-page-add"></i> review</a>
-						<a href=""><i class="fi-eye"></i> full context</a>
+						<!--<a href=""><i class="fi-eye"></i> full context</a>-->
 
 					</div>
 				</div>
 			</div>
 			
-			
+			<div class="feed-padding hide comment-con">
+		            <div class="row comment-section">
+		                <div class="small-12 columns comment-box" data-ctype="tease" id="reviews-<?php echo $review_id;?>"></div>
+		                <div class="small-12 columns">
+		                    <form class="comment_form" data-id="<?php echo $review_id;?>" data-type="reviews">
+		                        <textarea name="comment"  placeholder="Add a comment"></textarea>
+		                        <input type="submit" id="submit_comment" class="right button tiny secondary" value="Add Comment"/>
+		                    </form>
+		                </div>
+		            </div>
+		        </div>
 		</div>
 	</div><!-- end row -->
 </div>

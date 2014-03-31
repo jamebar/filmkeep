@@ -141,7 +141,7 @@
 		}
 		var my_html = '<div class="m_list_item">\
 			<div class="m_list_left">\
-			<a href="/"  ><img  width="40" height="40" src="'+ data.profile_pic + '" ></a>\
+			<a href="/"  ><img  class="round-image-tiny" width="40" height="40" src="'+ data.profile_pic + '" ></a>\
 			</div>\
 			<div class="m_list_right">\
 				<p><a href="/'+ data.username + '">' + data.name + '</a> ' + data.comment + '</p>\

@@ -1422,10 +1422,18 @@ hr{
 }
 .notes span em.quote-close{
 	top:28px;
+	
+}
+.feed-item-content .notes span em.quote-close{
+	
 	right: -53px;
 }
 .notes span em.quote-open{
 	top:18px;
+	left:-40px;
+}
+.feed-item-content .notes span em.quote-open{
+	
 	left:-60px;
 }
 .notes-small  span em{

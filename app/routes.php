@@ -109,7 +109,7 @@ Route::filter('Auth', function()
 Route::post('user/join', array('uses' => 'UserController@store'));
 
 Route::get('user/loginWithFacebook', array('as' => 'facebooklogin', 'uses' => 'UserController@loginWithFacebook'));
-Route::get('user/loginWithTwitter', array('as' => 'twitterlogin', 'uses' => 'UserController@loginWithTwitter'));
+// Route::get('user/loginWithTwitter', array('as' => 'twitterlogin', 'uses' => 'UserController@loginWithTwitter'));
 Route::get('user/loginWithGoogle', array('as' => 'googlelogin', 'uses' => 'UserController@loginWithGoogle'));
 
 Route::post('user/login', function () {

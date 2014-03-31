@@ -53,19 +53,32 @@ class UserController extends BaseController
 				}
 				else
 				{
-					//add user to database
-					// store
-					$user = new User;
-					$user->name       	= $result['name'];
-					$user->username   	= $result['username'];
-					$user->email      	= $result['email'];
-					$user->fb_id 	  	= $result['id'];
-					$user->profile_pic  	= "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
-					$user->save();
+					
+					//check if email already exists
+					$user = User::where('email' , $result['email'] )->first();
 
-					//append id to username to assure it's unique
-					$user->username = $user->username . "_" . $user->id;
-					$user->save();
+					//if email exists, add the google id and login the user
+					if($user)
+					{
+						$user->fb_id 	  	= $result['id'];
+						$user->save();
+					}
+					else
+					{
+						//add user to database
+						// store
+						$user = new User;
+						$user->name       	= $result['name'];
+						$user->username   	= $result['username'];
+						$user->email      	= $result['email'];
+						$user->fb_id 	  	= $result['id'];
+						$user->profile_pic  	= "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
+						$user->save();
+
+						//append id to username to assure it's unique
+						$user->username = $user->username . "_" . $user->id;
+						$user->save();
+					}
 
 					Auth::login( $user , true);
 
@@ -116,7 +129,7 @@ class UserController extends BaseController
 
                         // Send a request with it
                         $result = json_decode( $twitterService->request( 'account/verify_credentials.json') );
-
+                        dd($result);
                         // try to login
                        // $user = User::where('fb_id' , $result['id'] )->first();
                         // get user by twitter_id
@@ -134,17 +147,30 @@ class UserController extends BaseController
                         else {
                                 // FIRST TIME TWITTER LOGIN
 
-                                // create new username
-                                $user = new User;
-				$user->name          = $result->name;
-				$user->username      = $result->screen_name;
-				$user->twitter_id    = $result->id;
-				$user->profile_pic    = $result->profile_image_url;
-				$user->save();
+                        	//check if email already exists
+				$user = User::where('email' , $result->email )->first();
 
-				//append id to username to assure it's unique
-				$user->username = $user->username . "_" . $user->id;
-				$user->save();
+				//if email exists, add the google id and login the user
+				if($user)
+				{
+					$user->twitter_id    = $result->id;
+					$user->save();
+				}
+				else
+				{
+
+					// create new username
+	                                $user = new User;
+					$user->name          = $result->name;
+					$user->username      = $result->screen_name;
+					$user->twitter_id    = $result->id;
+					$user->profile_pic    = $result->profile_image_url;
+					$user->save();
+
+					//append id to username to assure it's unique
+					$user->username = $user->username . "_" . $user->id;
+					$user->save();
+				}
 
                                 // login user
                                 Auth::login( $user , true);
@@ -216,19 +242,34 @@ class UserController extends BaseController
 			}
 			else
 			{
-				//add user to database
-				// store
-				$user = new User;
-				$user->name       	= $result['name'];
-				$user->username   	= $result['given_name']. "_" . $result['family_name'];
-				$user->email      	= $result['email'];
-				$user->google_id  	= $result['id'];
-				$user->profile_pic  	= $result['picture'];
-				$user->save();
+				//check if email already exists
+				$user = User::where('email' , $result['email'] )->first();
 
-				//append id to username to assure it's unique
-				$user->username = $user->username . "_" . $user->id;
-				$user->save();
+				//if email exists, add the google id and login the user
+				if($user)
+				{
+					$user->google_id  	= $result['id'];
+					$user->save();
+				}
+				else
+				{
+					//add user to database
+					// store
+					$user = new User;
+					$user->name       	= $result['name'];
+					$user->username   	= substr($result['email'], 0, strpos($result['email'], '@'));
+					$user->email      	= $result['email'];
+					$user->google_id  	= $result['id'];
+					$user->profile_pic  	= $result['picture'];
+					$user->save();
+
+					//append id to username to assure it's unique
+					$user->username = $user->username . "_" . $user->id;
+					$user->save();
+				}
+				
+
+				
 
 				Auth::login( $user , true);
 

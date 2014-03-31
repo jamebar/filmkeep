@@ -22,7 +22,7 @@ class UserController extends BaseController
 		// if code is provided get user data and sign in
 		if ( !empty( $code ) ) {
 
-			// This was a callback request from google, get the token
+			// This was a callback request from facebook, get the token
 			$token = $fb->requestAccessToken( $code );
 
 			// Send a request with it
@@ -61,6 +61,10 @@ class UserController extends BaseController
 					$user->email      	= $result['email'];
 					$user->fb_id 	  	= $result['id'];
 					$user->profile_pic  	= "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
+					$user->save();
+
+					//append id to username to assure it's unique
+					$user->username = $user->username . "_" . $user->id;
 					$user->save();
 
 					Auth::login( $user , true);
@@ -138,6 +142,10 @@ class UserController extends BaseController
 				$user->profile_pic    = $result->profile_image_url;
 				$user->save();
 
+				//append id to username to assure it's unique
+				$user->username = $user->username . "_" . $user->id;
+				$user->save();
+
                                 // login user
                                 Auth::login( $user , true);
 
@@ -164,6 +172,85 @@ class UserController extends BaseController
 
         }
 
+        public function loginWithGoogle() {
+
+	    // get data from input
+	    $code = Input::get( 'code' );
+
+	    // get google service
+	    $googleService = OAuth::consumer( 'Google' );
+
+	    // check if code is valid
+
+	    // if code is provided get user data and sign in
+	    if ( !empty( $code ) ) {
+
+	        // This was a callback request from google, get the token
+	        $token = $googleService->requestAccessToken( $code );
+
+	        // Send a request with it
+	        $result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo' ), true );
+
+	        //search for user in database by facebook id
+		if(isset($result['id']))
+		{
+			$user = User::where('google_id' , $result['id'] )->first();
+
+			//print_r($user);
+			//Auth::loginUsingId($user['id']);
+			if($user)
+			{
+				Auth::login( $user , true);
+		        
+			        if (Auth::check())
+				{
+					//add profile pic if doesn't exist
+					if( strlen($user->profile_pic) < 2)
+					{
+						$user->profile_pic = $result['picture'];
+						$user->save();
+					}
+				    	return Redirect::route('home')
+                			->with('flash_notice', 'You are successfully logged in.');
+				}
+			}
+			else
+			{
+				//add user to database
+				// store
+				$user = new User;
+				$user->name       	= $result['name'];
+				$user->username   	= $result['given_name']. "_" . $result['family_name'];
+				$user->email      	= $result['email'];
+				$user->google_id  	= $result['id'];
+				$user->profile_pic  	= $result['picture'];
+				$user->save();
+
+				//append id to username to assure it's unique
+				$user->username = $user->username . "_" . $user->id;
+				$user->save();
+
+				Auth::login( $user , true);
+
+				return Redirect::route('home')
+                			->with('flash_notice', 'Welcome to Filmkeep '.$result["name"]);
+			}
+			
+			
+			
+		}
+
+
+	    }
+	    // if not ask for permission first
+	    else {
+	        // get googleService authorization
+	        $url = $googleService->getAuthorizationUri();
+
+	        // return to facebook login url
+	        return Redirect::to( (string)$url );
+	    }
+	}
 
 	/**
 	 * Store a newly created user in storage.
@@ -198,6 +285,10 @@ class UserController extends BaseController
 				$user->name       = Input::get('fullname');
 				$user->email      = Input::get('email');
 				$user->password = Hash::make(Input::get('password'));
+				$user->save();
+
+				//append id to username to assure it's unique
+				$user->username = $user->name . "_" . $user->id;
 				$user->save();
 
 				Auth::login($user);

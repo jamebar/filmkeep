@@ -41,7 +41,9 @@ select{
                     <div class="fc-content">
                          
                         <h2>@if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h2>
-                        
+                        @if (Auth::check() && Auth::user()->username != $page_user['username'])
+                        <a href="javascript:;" class="add-remove-follow"><span></span></a>
+                        @endif
                     </div>
                 </div> 
             </div> 

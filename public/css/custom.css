@@ -286,7 +286,7 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	line-height: 2em;
 	color:#fff;
 }
-.fb-btn i, .tw-btn i{
+.fb-btn i, .tw-btn i, .google-btn i{
 	font-size: 34px;
 	float: left;
 	margin-right: .5em;
@@ -310,11 +310,28 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	background:#64d7ff !important;
 	color:#fff;
 }
+.google-btn{
+	background:#f42a27;
+	color:#fff;
+	padding: .5em 1em;
+	line-height: 2em;
+	
+}
+.google-btn i{
+	font-size:34px;
+}
+.google-btn:hover{
+	background:#e6201d !important;
+	color:#fff;
+}
 .login-box{
 	background:#fff;
 	text-align: center;
 	padding:2em;
 	margin:3em auto 7em auto;
+}
+.login-box input{
+	border:1px solid #ccc;
 }
 .login-or{
 	color: #fff;
@@ -1562,41 +1579,4 @@ ul#myfilmkeep li img{
   z-index: 1;
 }
 
-/**** Isotope CSS3 transitions ****/
 
-.isotope,
-.isotope .isotope-item {
-  -webkit-transition-duration: 0.8s;
-     -moz-transition-duration: 0.8s;
-      -ms-transition-duration: 0.8s;
-       -o-transition-duration: 0.8s;
-          transition-duration: 0.8s;
-}
-
-.isotope {
-  -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
-}
-
-.isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-     -moz-transition-property:    -moz-transform, opacity;
-      -ms-transition-property:     -ms-transform, opacity;
-       -o-transition-property:      -o-transform, opacity;
-          transition-property:         transform, opacity;
-}
-
-/**** disabling Isotope CSS3 transitions ****/
-
-.isotope.no-transition,
-.isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
-     -moz-transition-duration: 0s;
-      -ms-transition-duration: 0s;
-       -o-transition-duration: 0s;
-          transition-duration: 0s;
-}

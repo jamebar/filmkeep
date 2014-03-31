@@ -3,7 +3,7 @@
 @section('content')
 <style>
 body{
-    background:url(/img/bg/bg-jimmy-stewart-1600.jpg);
+    background:url({{ DEFAULT_BACKGROUND_PIC }});
     background-size: cover;
 }
 </style>
@@ -13,6 +13,7 @@ body{
         
         <p><a class="button fb-btn medium-8 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a></p>
              <p><a class="button tw-btn medium-8 small-12" href="{{ route('twitterlogin') }}"><i class="fi-social-twitter"></i> Login with twitter</a></p>
+             <p><a class="button google-btn medium-8 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Login with google</a></p>
              <span class="login-or">or</span>
              
                 {{ Form::open(array('route'=>'login')) }}

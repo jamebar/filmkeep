@@ -42,7 +42,7 @@
 		        		{
 		        			this_box.parents('.comment-con').show();
 		        			root.trigger('comments-added');
-		        			console.log("comment should be loaded");
+		        			
 		        		}
 
 		        	}

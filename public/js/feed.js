@@ -40,14 +40,14 @@ $(function(){
 					$('#load-more').css('display','block');
 					$container.append($newitems).isotope( 'appended', $newitems );
 					$('.trailer:not(.trailer-init)').trailer();
-					$('.comment-section:not(.comment-init').commentify();
+					$('.comment-section:not(.comment-init)').commentify();
 					$('.comment-section').on('comments-added', function(){
 						$container.isotope( 'reLayout');
-						console.log("relayout");
+						
 					});
 					$('.comment-section').on('comments-form-show', function(){
 						$container.isotope( 'reLayout');
-						console.log("relayout");
+						
 					});
 				}
 

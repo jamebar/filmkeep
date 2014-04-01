@@ -23,8 +23,19 @@
 				<div class="feed-item-bar">
 					<a href="javascript:;" class="comment-icon"><i class="fi-comment"></i> comments</a>
 					<div class="right">
+						@if($logged_in_user['username'] === $username)
+						<a href="javascript:;" class="edit-review" data-id="{{ $review_id }}" data-film_id="{{ $film_id }}" data-user_id="{{ $logged_in_user['id'] }}"><i class="fi-pencil"></i> edit</a>
+						@else
 						<a href=""><i class="fi-plus"></i>  watchlist</a>
-						<a href=""><i class="fi-page-add"></i> review</a>
+						@if(empty($user_review))
+
+							<a href="javascript:;" class="add-this" data-title="{{ $title }}" data-tmdbid="{{ $tmdb_id }}"><i class="fi-page-add"></i> review</a>
+						@endif
+
+						
+						
+						
+						@endif
 						<!--<a href=""><i class="fi-eye"></i> full context</a>-->
 
 					</div>

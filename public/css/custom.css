@@ -904,8 +904,7 @@ img.round-image-tiny{
 	margin-bottom:0px;
 }
 .add-remove-follow.following{
-	background-color: #5da423;
-	border-color: #457a1a;
+	
 }
 .add-remove-follow .fi-check{
 	display:none;
@@ -1452,7 +1451,7 @@ hr{
 
 .notes span{
 	position:relative;
-	
+	display: inline-block;
 }
 .notes span em{
 	font-family: "Georgia";
@@ -1464,7 +1463,7 @@ hr{
 	width:80px;
 }
 .notes span em.quote-close{
-	top:28px;
+	top:8px;
 	
 }
 .feed-item-content .notes span em.quote-close{
@@ -1472,7 +1471,7 @@ hr{
 	right: -53px;
 }
 .notes span em.quote-open{
-	top:18px;
+	top:0px;
 	left:-40px;
 }
 .feed-item-content .notes span em.quote-open{

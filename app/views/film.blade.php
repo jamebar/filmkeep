@@ -47,7 +47,7 @@ body{
                         <div class="fc-content">
                              @if(Auth::check())
                             
-                            <a href="javascript:;" class="add-remove-watchlist @if(array_key_exists($film['film_id'], $watchlist)) {{"onlist"}} @endif" data-film_id="{{ $film['film_id'] }}" data-user_id="{{ Auth::user()->id}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
+                            <a href="javascript:;" class="add-remove-watchlist @if(array_key_exists($film['id'], $watchlist)) {{"onlist"}} @endif" data-film_id="{{ $film['id'] }}" data-user_id="{{ Auth::user()->id}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
                             
                             @endif
                             <h2>{{ $film['title'] }}</h2>

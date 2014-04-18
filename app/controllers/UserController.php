@@ -354,6 +354,9 @@ class UserController extends BaseController
 		$data['review'] = $r->getReview($review_id);
 		$data['page_user'] = $r::find($review_id)->user;
 
+		$syn = new Synopsi();
+		$data['streaming'] = $syn->getStreamInfo( $data['review']['imdb_id'] );
+
 		if(Auth::check())
 		{
 			$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);

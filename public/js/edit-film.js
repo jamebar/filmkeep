@@ -53,7 +53,7 @@ $(function(){
         
         if(data['own'] === "1")
         {
-            console.log("own");
+            
             $('#edit_film_form #own_checkbox').prop('checked', true);
             $('#edit_film_form span.custom.checkbox').addClass('checked');
         }

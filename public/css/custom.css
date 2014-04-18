@@ -1,5 +1,5 @@
 body{
-	background-color:#fff;
+	background-color:#f4e8d0;
 	font-family: 'Lato',"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	color:#7b7171;
 	padding-top:50px;
@@ -1587,7 +1587,7 @@ ul#myfilmkeep li img{
 }
 
 .search input, .search input:focus{
-	background:#a53d3a;
+	background:#c8bba1;
 	color:#f4e8d0;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -1595,7 +1595,7 @@ ul#myfilmkeep li img{
 .search span.prefix, .search label.prefix{
 	border:none;
 	color:#f4e8d0;
-	background:#a53d3a;
+	background:#c8bba1;
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }

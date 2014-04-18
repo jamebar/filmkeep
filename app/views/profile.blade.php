@@ -42,7 +42,7 @@ select{
                          
                         <h2>@if (Auth::check() && Auth::user()->username === $page_user['username']) My @else {{ explode(' ',$page_user['name'])[0]."'s"}} @endif Filmkeep</h2>
                         @if(Auth::check() && $page_user['id'] != $logged_in_user['id'])
-                        <a href="javascript:;" class="add-remove-follow @if(in_array($page_user['id'], $following)) {{"following"}} @endif" data-user_id="{{ $page_user['id']}}"> <i class="step fi-check size-14" style="font-size:14px;color:#fff;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#fff;"></i> <span></span></a>
+                        <a href="javascript:;" class="add-remove-follow @if(in_array($page_user['id'], $following)) {{"following"}} @endif" data-user_id="{{ $page_user['id']}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
                         @endif
                     </div>
                 </div> 

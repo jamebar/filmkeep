@@ -132,6 +132,25 @@ body{
                         {{ date("M d, Y", strtotime($tmdb_info['release_date'] ))  }}</p>
                     @endif
                     <p> {{ Str::limit($tmdb_info['overview'], 200) }} </p>
+                    <!-- show streaming options -->
+                    @if(isset($streaming['relevant_results']))
+                        @foreach ($streaming['relevant_results'] as $results)
+                            <p>Stream:</p>
+                            @foreach($results['streaming'] as $s_results)
+                                
+                                @if( count($s_results['titles']) > 0)
+                                {{ link_to($s_results['titles'][0]['url'], $s_results['name'], $attributes = array('target'=>'_blank', 'class'=> $s_results['slug']), $secure = null); }} |
+                                
+                                @endif
+
+                            @endforeach
+
+                        @endforeach
+
+                        <!-- <br><a href="" class="small">streaming info provided by synopsi.tv</a> -->
+                   @else
+
+                   @endif
                 </div>
                 <div class="small-12 medium-3 columns f_stats">
                      @if($rotten && isset($rotten->ratings->critics_rating))
@@ -146,6 +165,8 @@ body{
                         {{ number_format( $tmdb_info['revenue'] ) }}</p>
                     @endif
                     
+
+
                 </div>
                 
                              

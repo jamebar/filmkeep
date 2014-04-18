@@ -7,7 +7,9 @@ class FilmController extends BaseController
 	{	
 		$film = new Film();
 		$data['film'] = $film->getFilm($film_id);
-		
+		$syn = new Synopsi();
+		$data['streaming'] = $syn->getStreamInfo( $data['film']['imdb_id'] );
+
 		if(Auth::check())
 		{
 			$data['watchlist'] = Watchlist::getWatchlist(Auth::user()->id);

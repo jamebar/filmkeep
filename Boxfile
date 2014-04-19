@@ -5,6 +5,8 @@ web1:
     - mbstring
     - mcrypt
     - pdo_mysql
+    - mysqli
+    - mysql
     - redis
     - zip
     - xcache

@@ -24,10 +24,11 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function()
-{
-    return $_SERVER['ENV'] ? : "local";
-});
+$env = $app->detectEnvironment(array(
+
+    'local' => array('JAMES-BARLOWs-MacBook-Pro-2.local'),
+
+));
 
 /*
 |--------------------------------------------------------------------------

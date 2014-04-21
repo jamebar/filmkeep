@@ -141,8 +141,8 @@ App::missing(function($exception)
 Route::get('film/{film_id}',  array('uses' => 'FilmController@film'));
 Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 
-Route::controller('ajax', 'ajax');
-Route::get('{username}', 'profileController@view');
-Route::get('{username}/watchlist', 'userController@showWatchlist');
-Route::get('{username}/lists', 'listController@viewAll');
-Route::get('{username}/lists/{list_id}', 'listController@viewList');
+Route::controller('ajax', 'Ajax');
+Route::get('{username}', 'ProfileController@view');
+Route::get('{username}/watchlist', 'UserController@showWatchlist');
+Route::get('{username}/lists', 'ListController@viewAll');
+Route::get('{username}/lists/{list_id}', 'ListController@viewList');

@@ -13,5 +13,10 @@ class MainController extends BaseController {
         return View::make( 'main',  $data );
  
     }
+
+    public function getIndexGuest()
+    {
+    	return View::make( 'mainguest' );
+    }
  
 }

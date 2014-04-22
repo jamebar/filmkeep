@@ -12,7 +12,7 @@ body{
         <div class="small-12 medium-12 columns">
             <div id="join-social">
                 <h3>Join with social</h3>
-                <p class="subheader">To get the most out of Filmkeep, use your Facebook or Twitter account to signup.</p>
+                <p class="subheader">To get the most out of Filmkeep, use your Facebook or Google account to signup.</p>
                  <p><a class="button fb-btn medium-8 large-6 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Join with facebook</a></p>
                  <p><a class="button google-btn medium-8 large-6 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Join with google</a></p>
                  
@@ -47,7 +47,7 @@ body{
                 </p>
 
                 <!-- submit button -->
-                <p>{{ Form::submit('Join', $attributes = array('class' => 'button')) }}</p>
+                <p>{{ Form::submit('Join', $attributes = array('class' => 'button small-6')) }}</p>
 
                 {{ Form::close() }}
 

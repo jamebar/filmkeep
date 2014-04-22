@@ -7,13 +7,13 @@ body{
     background-size: cover;
 }
 </style>
-<div class="login-box small-12 medium-8 large-6 centered">
+<div class="login-box small-12 medium-6 large-4 centered">
     <div class="row">
         <div class="small-12 medium-12 columns">
         
-        <p><a class="button fb-btn medium-8 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a></p>
-             <p><a class="button google-btn medium-8 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Login with google</a></p>
-             <span class="login-or">or</span>
+        <p><a class="button fb-btn medium-12 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a></p>
+             <p><a class="button google-btn medium-12 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Login with google</a></p>
+             <p>- OR -</p>
              
                 {{ Form::open(array('route'=>'login')) }}
 
@@ -30,7 +30,7 @@ body{
                 </p>
 
                 <!-- submit button -->
-                <p>{{ Form::submit('Login', $attributes = array('class' => 'button')) }}</p>
+                <p>{{ Form::submit('Login', $attributes = array('class' => 'button small-12')) }}</p>
 
                 {{ Form::close() }}
             <p> <a href="{{ route('password.remind') }}" class="">Forgot your password?</a></p>

@@ -61,6 +61,7 @@ Route::group(array('before' => 'Auth'), function()
 
 Route::group(array('before' => 'guest'), function()
 {
+    Route::get('/', array('as' => 'guesthome', 'uses' => 'MainController@getIndexGuest'));
 	Route::get('user/login', array('as' => 'login', 'uses' => 'UserController@login'));
 
 	Route::get('user/join', array('as' => 'join',  'uses' => 'UserController@join'));

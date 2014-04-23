@@ -53,11 +53,11 @@ class UserController extends BaseController
 				}
 				else
 				{
-					
+					$route = "home";
 					//check if email already exists
 					$user = User::where('email' , $result['email'] )->first();
 
-					//if email exists, add the google id and login the user
+					//if email exists, add the facebook id and login the user
 					if($user)
 					{
 						$user->fb_id 	  	= $result['id'];
@@ -78,11 +78,14 @@ class UserController extends BaseController
 						//append id to username to assure it's unique
 						$user->username = $user->username . "_" . $user->id;
 						$user->save();
+
+						//new user so redirect to tour
+						$route = "preproduction";
 					}
 
 					Auth::login( $user , true);
 
-					return Redirect::route('home')
+					return Redirect::route($route)
 	                			->with('flash_notice', 'Welcome to Filmkeep '.$result["name"]);
 				}
 				

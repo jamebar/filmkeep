@@ -43,9 +43,17 @@ Route::get('test', function(){
         dd($reviews);
 });
 
+Route::get('/', array('as' => 'home', 'uses' => (Auth::check() ? 'MainController@getIndex' : 'MainController@getIndexGuest' ) ) );
+
+/*
+* 
+* Routes within this group require authentication
+*
+*
+*/
 Route::group(array('before' => 'Auth'), function()
 {
-	Route::get('/', array('as' => 'home', 'uses' => 'MainController@getIndex'));
+	//Route::get('/', array('as' => 'home', 'uses' => 'MainController@getIndex'));
 	Route::get('admin/profile',  array('as' => 'profile', 'uses' => 'ProfileController@getIndex'));
 
 	Route::get('user/logout', array('as' => 'logout', function () {
@@ -55,19 +63,32 @@ Route::group(array('before' => 'Auth'), function()
 	        ->with('flash_notice', 'You are successfully logged out.');
 	}));
 
-    
+    Route::get('/preproduction', array('as' => 'preproduction', 'uses' => 'MainController@getPreproduction') );
 
 });
 
+
+/*
+* 
+* Routes within this group require that you are a guest
+*
+*
+*/
 Route::group(array('before' => 'guest'), function()
 {
-    Route::get('/', array('as' => 'guesthome', 'uses' => 'MainController@getIndexGuest'));
+    //Route::get('/', array('as' => 'guesthome', 'uses' => 'MainController@getIndexGuest'));
 	Route::get('user/login', array('as' => 'login', 'uses' => 'UserController@login'));
 
 	Route::get('user/join', array('as' => 'join',  'uses' => 'UserController@join'));
 
 });
 
+/*
+* 
+* Filters for guest and authentication
+*
+*
+*/
 Route::filter('guest', function()
 {
         if (Auth::check()) 
@@ -80,6 +101,18 @@ Route::filter('guest', function()
 
 });
 
+Route::filter('Auth', function()
+{
+        if (Auth::guest())
+                return Redirect::route('login')->with('flash_error', 'You must be logged in to view that page!');
+});
+
+/*
+* 
+* Routes for password reset
+*
+*
+*/
 Route::get('password/reset', array(
   'uses' => 'PasswordController@remind',
   'as' => 'password.remind'
@@ -100,13 +133,14 @@ Route::post('password/reset/{token}', array(
   'as' => 'password.update'
 ));
 
-Route::filter('Auth', function()
-{
-        if (Auth::guest())
-                return Redirect::route('login')->with('flash_error', 'You must be logged in to view that page!');
-});
 
 
+/*
+* 
+* Login/Signup routes
+*
+*
+*/
 Route::post('user/join', array('uses' => 'UserController@store'));
 
 Route::get('user/loginWithFacebook', array('as' => 'facebooklogin', 'uses' => 'UserController@loginWithFacebook'));

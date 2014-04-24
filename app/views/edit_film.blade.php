@@ -26,26 +26,7 @@
 								</select>
 							</div>
 						 
-									<div class="small-12 large-7 columns">
-											<label>Where did you see it?</label>
-											<select name="source" id="source-select" value="Choose" class="select-block">
-												<option value="theater">Theater</option>
-												<option value="dvd">DVD</option>
-												<option value="netflix">Netflix</option>
-												<option value="amazon">Amazon</option>
-												<option value="digital rental" >Digital Rental</option> 
-												<option value="tv" >On TV</option> 
-												<option value="other" >Other</option>  
-											</select>
-									</div>
-									<div class="small-12 large-5 columns">
-									<label class="show-for-medium-up">&nbsp;</label>
-									<label for="own_checkbox">
-										<input name="own" type="checkbox" id="own_checkbox" >
-										<span class="custom checkbox"></span> Do you own it?
-									</label>
-										
-									</div>
+									
 						 
 							
 									<div class="edit-ratings">

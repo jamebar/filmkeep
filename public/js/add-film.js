@@ -166,7 +166,6 @@ $(function(){
 						}
 
 						closeMatches += "<div class='film-dot' style='left:"+ Math.floor(r) +"%'></div>";
-						console.log("current:" + current_val + " = r:"+ r);
 						if(Math.floor(current_val) == Math.floor(r)){
 							$('.intercept-film').html(val['title']).show();
 						}

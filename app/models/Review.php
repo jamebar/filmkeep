@@ -61,17 +61,15 @@ class Review extends Eloquent {
             }
         }
         
-        $own = (Input::get('own') === "on") ? 1 : 0;
+       
         $hide  = (Input::get('hide') === "on") ? true : false;
         $user_id = Input::get('user_id');
 
         $review_data = array(
             'title' => Input::get('title'),
-            'source' => Input::get('source'),
             'tmdb_id' => Input::get('tmdb_id'),
             'user_id' => $user_id,
             'date_watched' => $date_watched->format( 'c' ),
-            'own' => $own,
             'comments' => Input::get('comments'),
             
         );
@@ -251,14 +249,10 @@ class Review extends Eloquent {
         
         
         $date_watched = $this->string_to_date(Input::get('date_watched'));
-        
-        $own = (Input::get('own') === "on") ? 1 : 0;
 
         $review_data = array(
-            'source' => Input::get('source'),
             'user_id' => Input::get('user_id'),
             'date_watched' => $date_watched->format( 'c' ),
-            'own' => $own,
             'comments' => Input::get('comments'),
             
         );

@@ -48,16 +48,7 @@ $(function(){
         date_select.val(data['date_string']);
 
         $('#edit-film').foundation('reveal', 'open');
-        $("#source-select").val(data['source']);
         
-        
-        if(data['own'] === "1")
-        {
-            
-            $('#edit_film_form #own_checkbox').prop('checked', true);
-            $('#edit_film_form span.custom.checkbox').addClass('checked');
-        }
-
         
 
         var r_text = "";

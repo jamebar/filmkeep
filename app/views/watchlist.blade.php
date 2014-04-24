@@ -40,7 +40,7 @@ body{
              
              @if(isset($same_user))
             <p class="hide-for-small" >Re-order your watchlist by dragging the <i class=" step fi-thumbnails size-14" style="font-size:14px;color:#888;"></i> icon</p>
-            <p><i class="step fi-check  size-14" style="font-size:14px;color:#333;"></i> Will be removed 48hrs after you add it to your filmkeep.</p>
+           
             @endif
         </div>
         @if(isset($same_user))

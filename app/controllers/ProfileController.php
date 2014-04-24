@@ -6,7 +6,7 @@ class ProfileController extends BaseController
 	public function getIndex()
 	{
 		$data['custom_types'] = RatingType::getCustomTypes($this->logged_in_user->id);
-		
+		$data['user'] = Auth::user();
 		// calculate time as member
 		$join_date = strtotime($this->logged_in_user->created_at);
 

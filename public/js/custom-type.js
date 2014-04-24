@@ -60,13 +60,13 @@
 	 			var c_item = this_item.parents('.c-item');
 	 			var c_value = c_item.find('span').text();
 
-	 			var ht = "<div class='row'><div class='medium-8 columns'>\
-	 				<form  data-value='" + c_value + "' id='update-custom-type' >\
+	 			var ht = "<div class='row'>\
+	 				<form  data-value='" + c_value + "' id='update-custom-type' ><div class='medium-8 columns'>\
 	 				<input type='text' name='type_name' value='" + c_value + "' />\
 	 				<input type='hidden' name='type_id' value='" + this_item.data('typeid') + "' />\
 	 				</div>\
 	 				<div class='medium-4 columns'>\
-	 				<input type=submit class='custom_type_save button tiny' value='save'/>\
+	 				<input type='submit' class='custom_type_save button tiny' value='save'/>\
 	 				</div></form></div>";
 	 			c_item.find('span').html( ht );
 	 			c_item.find('.custom_type_controls').hide();

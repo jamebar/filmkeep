@@ -405,4 +405,9 @@ class UserController extends BaseController
 	{
 		return View::make('join');
 	}
+
+	public function update()
+	{
+
+	}
 }

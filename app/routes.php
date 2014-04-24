@@ -64,7 +64,7 @@ Route::group(array('before' => 'Auth'), function()
 	}));
 
     Route::get('/preproduction', array('as' => 'preproduction', 'uses' => 'MainController@getPreproduction') );
-
+    Route::post('/admin/profile/user/update', array('as' => 'user.update', 'uses' => 'UserController@update' ));
 });
 
 

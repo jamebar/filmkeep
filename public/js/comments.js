@@ -137,7 +137,7 @@
 
 		if(data.username === username)
 		{
-			delete_btn = '<a href="javascript:;" class="delete_comment" data-id="'+ data.id+'"><i class="step fi-x" style="font-size:24px;color:#d2544c;" ></i></a>';
+			delete_btn = '<a href="javascript:;" class="delete_comment" data-id="'+ data.id+'"><i class="step fi-x" style="font-size:18px;" ></i></a>';
 		}
 		var my_html = '<div class="m_list_item">\
 			<div class="m_list_left">\

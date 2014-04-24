@@ -650,8 +650,9 @@ a.notif_parent:hover span.notif{
 .m_list_name{
 	font-size:.8em;
 }
-.m_list_item:hover .delete_comment{
-	display:block;
+.m_list_item:hover .delete_comment i{
+	
+	color:#d2544c;
 }
 .m_list_item{
 	clear:both;
@@ -818,7 +819,10 @@ a.notif_parent:hover span.notif{
 	position: absolute;
 	top:0px;
 	right:0px;
-	display:none;
+	
+}
+.delete_comment i{
+	color:#96886c;
 }
 .comment-box .m_list_right{
 	width:75%;

@@ -165,7 +165,7 @@ Route::post('user/login', function () {
             ->withInput();
 });
 
-
+Route::post('user/update', array('as' => 'userUpdate', 'uses' => 'AdminController@userUpdate'));
 
 
 App::missing(function($exception)

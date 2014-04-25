@@ -188,6 +188,15 @@
         <div id="flash_error" data-alert data-options="animation_speed:500;" class="alert-box warning">{{ Session::get('flash_error') }} <a href="#" class="close">&times;</a></div>
     @endif
 
+    @if ( count( $errors->all() ) > 0 )
+    	<div id="flash_error" data-alert data-options="animation_speed:500;" class="alert-box warning">
+       @foreach( $errors->all() as $error )
+
+       		{{ $error }}
+       @endforeach
+        <a href="#" class="close">&times;</a></div>
+    @endif
+
     @if (Session::has('flash_notice'))
         <div id="flash_notice" data-alert data-options="animation_speed:500;" class="alert-box ">{{ Session::get('flash_notice') }} <a href="#" class="close">&times;</a></div>
     @endif

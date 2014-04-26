@@ -383,12 +383,12 @@ class Ajax extends BaseController
         if($action == "add")
         {
 
-            return Response::json( follow::addFollow(Auth::user()->id, $follow_user_id) );
+            return Response::json( Follow::addFollow(Auth::user()->id, $follow_user_id) );
 
         }
         else 
         {
-            return Response::json( follow::removeFollow(Auth::user()->id, $follow_user_id) );
+            return Response::json( Follow::removeFollow(Auth::user()->id, $follow_user_id) );
         }
 
     }

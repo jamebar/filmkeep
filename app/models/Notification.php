@@ -106,7 +106,7 @@ class Notification extends Eloquent {
     public function clearNotifications($id)
     {
         
-        if(Auth::user()->id === $id)
+        if(Auth::user()->id == $id)
         {
             $data = array(
                 'seen' => 1

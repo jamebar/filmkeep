@@ -201,7 +201,7 @@ class Ajax extends BaseController
         $id = Input::get('id');
         $user_id = Input::get('user_id');
         
-        if(Auth::user()->id === $user_id)
+        if(Auth::user()->id == $user_id)
         {
             $c  = new Comment();
             return Response::json( $c->deleteComment( $id )); 

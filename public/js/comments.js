@@ -52,7 +52,7 @@
 		
 		$(this).parents('.feed-item').find('.comment-icon').on('click',function(){
 			var comment_con = root.parents('.comment-con');
-			comment_con.show();
+			comment_con.slideDown();
 			comment_con.find('.comment_form textarea').focus();
 			root.trigger('comments-form-show');
 

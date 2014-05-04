@@ -1,4 +1,4 @@
-<div class="feed-item small-12 medium-6 columns">
+<div class="feed-item small-12  columns">
 	<div class="row">
 		<div class="small-12 columns">
 			<div class=" feed-item-content-wrapper" style="background-image:url(/img/feed-bg-overlay.png), url({{ $image_path_config['images']['base_url'].$image_path_config['images']['backdrop_sizes'][2].$backdrop_path }}); background-repeat:repeat, no-repeat;background-size:cover;">

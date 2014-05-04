@@ -32,7 +32,7 @@
 <body>
 
 
-<div class="off-canvas-wrap">
+<div class="off-canvas-wrap @if(Auth::check()) feed-show @endif">
   <div class="inner-wrap">
 
 	<div id="header_all" >
@@ -200,27 +200,7 @@
     @if (Session::has('flash_notice'))
         <div id="flash_notice" data-alert data-options="animation_speed:500;" class="alert-box ">{{ Session::get('flash_notice') }} <a href="#" class="close">&times;</a></div>
     @endif
-	<!--
-	@if(Auth::guest() && Route::currentRouteName() !== 'join' && Route::currentRouteName() !== 'login')
-	<style>
-	body{
-		background-position: 0px 160px !important;
-	}
-	</style>
-	<div class="join-banner">
-		<div class="row">
-			<div class="small-12 medium-5 medium-offset-2 columns">
-			<h3>Rate. Compare. Discover</h3>
-				<p>Join now to start filmkeeping</p>
-
-			</div>
-			<div class="small-12 medium-5 columns">
-				<a href="{{ route('join') }}" class="button alert">Join Now</a>
-			</div>
-		</div>
-	</div>
-	@endif	
-	-->
+	
 	<div id="content">
 		@yield('content')
 	</div>
@@ -228,167 +208,71 @@
 <!-- Footer -->
 
 	<footer class="footer">
-	<div class="row">
-		 <div class="large-12 columns">
-			
-			<div class="row">
-			  <div class="large-6 columns">
-			  <ul class="inline-list">
-			  <li><a href="/p/about">ABOUT</a></li>
-			  <li><a href="/p/support">FEEDBACK</a></li>
-			  <li><a href="/p/faq">FAQS</a></li>
-			  <li><a href="/p/blog">BLOG</a></li>
-			  </ul>
-				<p>© FilmKeep 2013</p>
-			  </div>
-			  <div class="large-3 columns">
+		<div class="row full-width">
+			 <div class="large-12 columns">
 				
-			  </div>
-			  <div class="large-3 columns">
-				
-			  </div>
+				<div class="row">
+				  <div class="large-6 columns">
+				  <ul class="inline-list">
+				  <li><a href="/p/about">ABOUT</a></li>
+				  <li><a href="/p/support">FEEDBACK</a></li>
+				  <li><a href="/p/faq">FAQS</a></li>
+				  <li><a href="/p/blog">BLOG</a></li>
+				  </ul>
+					<p>© FilmKeep 2013</p>
+				  </div>
+				  <div class="large-3 columns">
+					
+				  </div>
+				  <div class="large-3 columns">
+					
+				  </div>
 
-			  
+				  
+			 </div>
 		 </div>
-	  </div>
 	</footer>
-<a class="exit-off-canvas"></a>
 
-@if (Auth::check()) 
-	
-	<aside id="main-menu" class="left-off-canvas-menu">
-	  <ul class="off-canvas-list">
-		<li>
-		  <a href="{{ route('home') }}"><i class="step fi-home size-24" style="font-size:24px;color:#aaa;" ></i>  &nbsp;Home</a>
-		</li>
-		<li>
-		  <a href="{{ route('home') }}/{{ $logged_in_user->username }}"><i class="step fi-video size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;My Filmkeep</a>
-		</li>
-		<li>
-		  <a href="{{ route('home') }}/{{ $logged_in_user->username }}/watchlist"><i class="step fi-list size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;My Watchlist</a>
-		</li>
-		
-		<li>
-		  <a href="{{ $button['url'] }}"><i class="step fi-minus-circle size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;{{  $button['text'] }}</a>
-		</li>
-	  </ul>
-	</aside>
+	<a class="exit-off-canvas"></a>
 
-	
-	<section id="add-film"  class="expand reveal-modal" data-reveal>
-	  <div class="row">
-		  <div class="small-12 columns">
-				<h2 alt="Add a film review">Add a film review</h2>
-				
-		  </div>
-	  </div>
-	  
-	  <form id="add_film_form" class="custom">
-	  <div style="height:10px"></div>
-		<div class="row">
-		  <div class="small-12 columns " id="film_title">
-			<input type="text" name="title" class="rtautocomplete"  placeholder="Start typing film title">
-			<input type="hidden" name="tmdb_id" id="tmdb_id" value=""/>
-			<input type="hidden" name="user_id" value="{{ $logged_in_user->id }}"/>
-			<div id="autocomplete_loader" class="small-12" ></div>
-			<div id="film_search_message" class="small-12" ></div>
-		  </div>
-		  
-		  <div id="add_film_step2" style="display:none;">
-			  <div class="small-12 columns">
-				<label>When did you watch it?</label>
-				<select name="date_watched" class="select-block">
-					<option value="Just recently" selected>Just recently</option>
-					<option value="Sometime this year">Sometime this year</option>
-					<option value="Last year">Last year</option>
-					<option value="Several years ago">Several years ago</option>
-				</select>
-			  </div>
-			  
-			  <div class="small-12 columns">
-			  
-			  @if (isset($rating_types))  
-					@foreach($rating_types as $r)
-						 	
-						  <div class="small-12 columns">
-							<label class="show-for-medium-up"><?php 
-							
-							if(strpos($r->label, '|') >-1){
-								$l = explode("|",$r->label);
-								echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-							}else {
-								echo $r->label;  
-							}?></label>
-							<label class="show-for-small"><?php 
-							
-							if(strpos($r->label_short, '|') >-1){
-								$l = explode("|",$r->label_short);
-								echo $l[0]."<span class='label-right'>".$l[1]."</span>";
-							}else {
-								echo $r->label_short; 
-							}?></label>
-							<div class="noUiSlider" data-rtype="{{ $r->id }}" name="rating[{{$r->id }}]"></div>
-							<input name="rating[{{ $r->id }}]" type="hidden" value="50" >
-
-						  </div>
-						  
-						  
-			   		@endforeach        
-			   @endif
-			   <div class="small-12 columns">
-			  <label for="hide_checkbox">
-			    <input name="hide" type="checkbox" id="hide_checkbox" >
-			    <span class="custom checkbox"></span> Hide from feed? <a data-options="disable-for-touch:true" data-tooltip class='has-tip ' title="If checked, your review will not appear in your friends' feed but will still be visible in your filmkeep"><i class="step fi-info size-36" style="font-size:22px;color:#c8bba1;" ></i></a>
-			  </label>
-				
-			  </div>
-			   <div class="small-12 columns">
-				  <label>Comments (AKA, your mini review)</label> 
-				  <textarea style="height:8em;" rows="4"  name="comments" class=""></textarea>
-			   </div>
-			   
-			    <div class="small-12 columns rec-input" id="film_rec">
-			    	<label>Recommend this film to a friend ( <em>enter nothing to skip</em> )</label> 
-				<input type="text" name="recommend_type" class="recautocomplete"  placeholder="Type a friend's name">
-				<input type="hidden" name="recommend" id="recommend_values" value="">
-				<div class="rec-con"></div>
-			</div>
-			  
-			   <div class="small-12 columns">
-				   <input type="submit" id="submit_add_film" class="large button expand" value="Add Film"/>
-			   </div>
-			   <div class="small-12 columns" id="rt_results">
-				 <p class="ajax-message">Watch this space after you click "Add Film"</p>
-			   </div>
-			</div><!-- end add_film_step2 -->
+	@if (Auth::check()) 
+		@include('feed')
+		<aside id="main-menu" class="left-off-canvas-menu">
+		  <ul class="off-canvas-list">
+			<li>
+			  <a href="{{ route('home') }}"><i class="step fi-home size-24" style="font-size:24px;color:#aaa;" ></i>  &nbsp;Home</a>
+			</li>
+			<li>
+			  <a href="{{ route('home') }}/{{ $logged_in_user->username }}"><i class="step fi-video size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;My Filmkeep</a>
+			</li>
+			<li>
+			  <a href="{{ route('home') }}/{{ $logged_in_user->username }}/watchlist"><i class="step fi-list size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;My Watchlist</a>
+			</li>
 			
-	  </div>
-	  </form>
-	  <a class="close-reveal-modal">&#215;</a>
-	</section>
-	<div class="tip small-12 columns">
-      		<div class="intercept-film"></div>              
-	    	<div class="tip-line small-12 columns">
-			<div class="tip-line-bg small-12 columns"></div>
-		 	<div class="dot-con"><div class="film-dot"></div></div>
-		</div>
-	</div>
-	@include('edit_film')
-  @endif
-</div>
+			<li>
+			  <a href="{{ $button['url'] }}"><i class="step fi-minus-circle size-24" style="font-size:24px;color:#aaa;" ></i> &nbsp;{{  $button['text'] }}</a>
+			</li>
+		  </ul>
+		</aside>
 
-<div id="myTrailer" class="reveal-modal" data-reveal style="background-color:#f4e8d0">
-  <span></span>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-<div id="add-film-result" class="reveal-modal" data-reveal style="background-color:#f4e8d0">
-  <h3><span class="result-title"></span> was added to your filmkeep</h3>
-  <div id="on-watchlist" style="display:none">
-  	<p>We noticed it is on your watchlist, would you like to remove it?</p>
-  	<a href="#" class="add-remove-watchlist button" data-film_id="" data-user_id="" >remove from watchlist</a>
-  </div>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
+		
+		@include('add_film')
+
+		<div class="tip small-12 columns">
+	      		<div class="intercept-film"></div>              
+		    	<div class="tip-line small-12 columns">
+				<div class="tip-line-bg small-12 columns"></div>
+			 	<div class="dot-con"><div class="film-dot"></div></div>
+			</div>
+		</div>
+
+		@include('edit_film')
+	  @endif
+	</div> <!-- end inner wrap -->
+
+	
+
+	@include('reveals')
 
 </div><!-- end off canvas wrap-->
 
@@ -400,14 +284,19 @@
 	<script src="{{ URL::asset('js/vendor/jquery.hammer.min.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/jquery.nouislider.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/spin.min.js') }}"></script>
-	<script src="{{ URL::asset('js/add-film.js?nocache='.rand(100,10000) ) }}"></script>
+	
 	@if(Auth::check())
+	<script src="{{ URL::asset('js/vendor/jquery.nanoscroller.min.js') }}"></script>
+	<script src="{{ URL::asset('js/add-film.js?nocache='.rand(100,10000) ) }}"></script>
 	<script src="{{ URL::asset('js/edit-film.js?nocache='.rand(100,10000) ) }}"></script>
 	<script src="{{ URL::asset('js/follow.js') }}"></script>
-	@endif
+	<script src="{{ URL::asset('js/feed.js') }}"></script>
 	<script src="{{ URL::asset('js/watchlist.js') }}"></script>
+	@endif
+	
 	<script src="{{ URL::asset('js/vendor/jquery.spin.js') }}"></script>
 	<script src="{{ URL::asset('js/trailer.js') }}"></script>
+	<script src="{{ URL::asset('js/comments.js') }}"></script>
 	@show
 	<script>
 	
@@ -490,11 +379,9 @@
 		*/
 
 		if ( $.isFunction($.fn.nanoScroller) ) {
-			var num_c = $('.nano .content').children().length;
-			if(num_c <4)
-			{
-				$('.nano').height(num_c * 90);
-			}
+			
+			$('.nano').height( $(window).height() );
+			
 
 			$(".nano").nanoScroller({ 
 

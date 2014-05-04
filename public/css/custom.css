@@ -4,9 +4,17 @@ body{
 	color:#7b7171;
 	padding-top:50px;
 }
+.row{
+	max-width:100rem;
+}
 body, input, select, textarea, button {
 -webkit-font-smoothing: antialiased;
 }
+
+.off-canvas-wrap.feed-show{
+	width:75%;
+}
+
 .button{
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -276,6 +284,12 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	
 	padding:10px;
 }
+#feed{
+	width:25%;
+	position: fixed;
+	top:0;
+	right:0;
+}
 #feed p{
 	margin-bottom:0em;
 }
@@ -283,6 +297,7 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	
 	line-height: 1em;
 }
+
 .remove-right-padding{
 	padding-right:0 !important;
 }
@@ -781,7 +796,6 @@ a.notif_parent:hover span.notif{
 }
 #feed .comment-con{
 	background:#e2d6c0;
-	margin:0 10px;
 	color:#6b6459;
 	padding-top: 1em;
 }
@@ -1207,7 +1221,7 @@ Scrollbar
   background : rgba(0,0,0,.25);
   position   : absolute;
   width      : 10px;
-  right      : 0;
+  left      : 0;
   top        : 0;
   bottom     : 0;
   visibility : hidden\9; /* Target only IE7 and IE8 with this hack */

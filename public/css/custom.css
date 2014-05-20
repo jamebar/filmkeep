@@ -12,7 +12,7 @@ body, input, select, textarea, button {
 }
 
 .off-canvas-wrap.feed-show{
-	width:75%;
+	width:100%;
 }
 
 .button{
@@ -284,11 +284,21 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	
 	padding:10px;
 }
+
 #feed{
 	width:25%;
 	position: fixed;
-	top:0;
+	top:50px;
 	right:0;
+	display:none;
+}
+@media only screen and (min-width: 64em) {
+	#feed{
+		display:block;
+	}
+	.off-canvas-wrap.feed-show{
+		width:75%;
+	}
 }
 #feed p{
 	margin-bottom:0em;
@@ -1236,7 +1246,7 @@ Scrollbar
 }
 .nano > .pane > .slider {
   background: #444;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,.3);
   position              : relative;
   margin                : 0 1px;
   -moz-border-radius    : 3px;
@@ -1250,7 +1260,7 @@ Scrollbar
 
 .nano {  width: 100%; height: 300px; }
 .nano .content { padding: 10px; }
-.nano .pane   { background: #333; }
+.nano .pane   { background: #ccc; }
 .nano .slider { background: #ccc; }
 
 .feed-loader{
@@ -1430,7 +1440,9 @@ border: 2px solid #f5f5f5;
 		padding-right:2em;
 	}
 }
-
+.light{
+	color:#f4e8d0;
+}
 .theme-beige{
 	background: #f4e8d0;
 	color:#7b7171;
@@ -1648,3 +1660,37 @@ ul#myfilmkeep li img{
 }
 
 
+ul.film-grid, ul.film-grid li{
+	padding:0;
+	margin:0;
+	list-style: none;
+}
+
+ul.film-grid li{
+	float:left;
+	width:50%;
+	
+	
+	box-sizing: border-box;
+    	position: relative;
+    	background-size: cover;
+}
+ul.film-grid li .filler{
+	padding-top:150%;
+}
+ul.film-grid li img{
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+@media only screen and (min-width: 40em) {
+	ul.film-grid li{
+		width:20%;
+	}
+}
+
+@media only screen and (min-width:40.063em) and (max-width:64em){
+	ul.film-grid li{
+		width:33%;
+	}
+}

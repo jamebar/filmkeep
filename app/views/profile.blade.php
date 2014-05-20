@@ -120,11 +120,12 @@ select{
     <div class="row">
         <div class="small-12 medium-12 columns spinner" >
             <span data-bind="with: feedData">
-            <ul  class="small-block-grid-3 large-block-grid-6" data-bind="foreach: items">
+            <ul class="film-grid" data-bind="foreach: items">
                                 
-                    <li>
+                    <li data-bind="style: { backgroundImage: 'url(' +  poster_base + poster_path() + ')' }">
+                    <div class="filler"></div>
                         <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
-                                    <img data-bind="attr:{src: poster_base + poster_path()}" src="" />
+                                   
                                     </a>
                         
                     </li>

@@ -62,12 +62,9 @@ select{
             </div>
         </div>
     </div>
-</div>
-<div class="full-width-section theme-beige" >
-
     <div class="row">
         <div class="small-12 medium-4  columns ">
-        <div class="row collapse search">
+                <div class="row collapse search">
                     <div class="small-2 large-2 columns">
                       <span class="prefix"><i class=" step fi-magnifying-glass " style="font-size:18px;color:#f4e8d0;"></i></span>
                     </div>
@@ -77,6 +74,14 @@ select{
                 </div>
             
         </div>
+         <div class="small-12 medium-8 columns">
+            <div class="my_pagination right"></div>
+        </div>
+    </div>
+</div>
+<div class="full-width-section theme-beige remove-padding" >
+
+    <div class="row">
         
         <div class="small-12 medium-5 columns hide">
             <select id="sort_dir" class="small-6 medium-6">
@@ -85,9 +90,7 @@ select{
             </select>
             
         </div>
-        <div class="small-12 medium-8 columns">
-            <div class="my_pagination right"></div>
-        </div>
+       
 
             
             <div class="hide">
@@ -118,7 +121,7 @@ select{
         
     </div>
     <div class="row">
-        <div class="small-12 medium-12 columns spinner" >
+        <div class="small-12 medium-12  spinner" >
             <span data-bind="with: feedData">
             <ul class="film-grid" data-bind="foreach: items">
                                 
@@ -135,11 +138,7 @@ select{
             </ul>
         </span>
             
-            <div class="row">
-                <div class="small-12 medium-12 columns">
-                    <div class="my_pagination right"></div>
-                </div>
-            </div>
+            
         </div>
     </div>          
 </div>

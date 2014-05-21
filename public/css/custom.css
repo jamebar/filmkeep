@@ -288,7 +288,7 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 #feed{
 	width:25%;
 	position: fixed;
-	top:50px;
+	top:0px;
 	right:0;
 	display:none;
 }
@@ -1694,3 +1694,13 @@ ul.film-grid li img{
 		width:33%;
 	}
 }
+@media only screen and (min-width: 64em) {
+	.header-bg{
+		width:75%;
+	}
+	.is-sticky .sub-menu{
+		width:75%;
+	}
+}
+
+

@@ -98,7 +98,7 @@ select{
     text-align:center;
     border-radius:50px;
     
-    padding-top: 20px;
+    
     display:block;
     color:#f4e8d0;
     font-weight: 300;
@@ -1231,7 +1231,7 @@ Scrollbar
   background : rgba(0,0,0,.25);
   position   : absolute;
   width      : 10px;
-  left      : 0;
+  right      : 0;
   top        : 0;
   bottom     : 0;
   visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
@@ -1617,7 +1617,7 @@ ul#myfilmkeep li img{
 }
 
 .search input, .search input:focus{
-	background:#c8bba1;
+	background:#e36e66;
 	color:#f4e8d0;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -1625,7 +1625,7 @@ ul#myfilmkeep li img{
 .search span.prefix, .search label.prefix{
 	border:none;
 	color:#f4e8d0;
-	background:#c8bba1;
+	background:#e36e66;
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
@@ -1691,7 +1691,7 @@ ul.film-grid li img{
 
 @media only screen and (min-width:40.063em) and (max-width:64em){
 	ul.film-grid li{
-		width:33%;
+		width:25%;
 	}
 }
 @media only screen and (min-width: 64em) {
@@ -1703,4 +1703,21 @@ ul.film-grid li img{
 	}
 }
 
+.profile-search-bar{
+	padding:1em;
+}
 
+.profile-search-bar input {
+	padding-top:0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top:0px;
+}
+
+.profile-info{
+	padding-top:100px;
+	background:#9f968f;
+}
+.profile-info .profile-img{
+	width:60px;
+}

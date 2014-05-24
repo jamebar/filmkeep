@@ -45,24 +45,24 @@ ul.simple-pagination {
 	padding: 0 7px;
 	margin: 0 5px 0 0;
 	border-radius: 3px;
-	background: #c8bba1; /* Old browsers */
+	background: #e36e66; /* Old browsers */
 	
 }
 
 .light-theme a:hover {
 	text-decoration: none;
-	background: #d47d55;
+	background: #c1453d;
 }
 
 .light-theme .current {
-	background: #d47d55;
+	background: #c1453d;
 	color: #f4e8d0;
 	
 	
 	cursor: default;
 }
 .light-theme .current.prev, .light-theme .current.next{
-	background: #d47d55;
+	background: #c1453d;
 	color:#c8bba1;
 }
 

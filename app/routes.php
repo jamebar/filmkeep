@@ -95,7 +95,7 @@ Route::filter('guest', function()
         {
         	$button['text'] = "logout";
             $button['url'] = route('logout');
-            return Redirect::route('home')->with('flash_notice', 'You are already logged in!');
+            return Redirect::to('/'. Auth::user()->username )->with('flash_notice', 'You are already logged in!');
         }
 
 
@@ -155,7 +155,7 @@ Route::post('user/login', function () {
         );
         
         if (Auth::attempt($user , true)) {
-            return Redirect::route('home')
+            return Redirect::to('/' . Auth::user()->username)
                 ->with('flash_notice', 'You are successfully logged in.');
         }
         

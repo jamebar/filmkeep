@@ -30,13 +30,13 @@ select{
     font-size:12px;
 }
 </style>
-<div class="film_cover_bg">
-    <div class="film_cover">
+<div class="profile-info">
+    
         <div class="row">
-            <div class="small-12  columns">
-                <div class="fc-title">
+            <div class="small-12  medium-6 columns">
+                
                     <div class="fc-profile">
-                        <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>
+                        <a  href="{{ url($page_user->username) }}"><img class="round-image-tiny profile-img"  src="{{ (strlen($page_user['profile_pic']) >1) ? $page_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" ></a>
                     </div>
                     <div class="fc-content">
                          
@@ -45,23 +45,23 @@ select{
                         <a href="javascript:;" class="add-remove-follow @if(in_array($page_user['id'], $following)) {{"following"}} @endif" data-user_id="{{ $page_user['id']}}"> <i class="step fi-check size-14" style="font-size:14px;color:#d2544c;"></i><i class="step fi-plus size-14" style="font-size:14px;color:#d2544c;"></i> <span></span></a>
                         @endif
                     </div>
-                </div> 
+               
             </div> 
                 
-        </div>
-    </div>
-</div>
-<div class="full-width-section theme-red remove-padding" >
-    <div class="row">
-        <div class="small-12 medium-6 columns"></div>
-        <div class="small-12 medium-6 columns ">
-            <div class="row">
-                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-video"  ></i> <em class="total"></em><br>films</span></div>
-                <div class="small-4  medium-4 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database"  ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
-                <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-torsos-all"  ></i> <em>{{ count($page_user_following) }}</em><br>following</span></div>
+        
+           
+            <div class="small-12 medium-6 columns ">
+                <div class="row">
+                    <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-video"  ></i> <em class="total"></em><br>films</span></div>
+                    <div class="small-4  medium-4 columns"><a href="/<?php echo $page_user['username'];?>/watchlist"><span class="stat"><i class="step fi-database"  ></i> <em>{{ $watchlist_total }}</em><br>Watchlist</span></a></div>
+                    <div class="small-4 medium-4  columns"><span class="stat"><i class="step fi-torsos-all"  ></i> <em>{{ count($page_user_following) }}</em><br>following</span></div>
+                </div>
             </div>
         </div>
-    </div>
+   
+</div>
+<div class="full-width-section theme-red profile-search-bar" >
+   
     <div class="row">
         <div class="small-12 medium-4  columns ">
                 <div class="row collapse search">
@@ -126,10 +126,8 @@ select{
             <ul class="film-grid" data-bind="foreach: items">
                                 
                     <li data-bind="style: { backgroundImage: 'url(' +  poster_base + poster_path() + ')' }">
-                    <div class="filler"></div>
-                        <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href="">
-                                   
-                                    </a>
+                        <a class="" data-bind="attr:{href: '{{url('r')}}/' + review_id() + '-' + slug()}" href=""><div class="filler"></div>
+                            </a>
                         
                     </li>
                     

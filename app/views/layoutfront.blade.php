@@ -87,9 +87,7 @@
 							@endforeach
 							@endif
 						</div>  
-						<li >
-							<a href="{{ route('home') }}">Feed</a>
-						</li>
+						
 						<li >
 							<a href="{{ route('home') }}/{{ $logged_in_user->username }}">My Filmkeep</a>
 						</li>
@@ -132,7 +130,7 @@
 						@if (Auth::check())
 						<a class="left-off-canvas-toggle"><i class="step fi-list size-36" style="font-size:28px;color:#fff; float:left" ></i></a> 
 						@endif
-						<a href="/" style="float: left; margin-top: 4px; margin-left: 8px;"><img src="{{ URL::asset('img/filmkeep_logo_top.png')}}" width="126" height="21"/></a>
+						<img src="{{ URL::asset('img/filmkeep_logo_top.png')}}" style="float: left; margin-top: 7px; margin-left: 8px;" width="126" height="21"/>
 					</div>
 				 <div class="small-4 columns">
 				     

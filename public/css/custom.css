@@ -299,6 +299,10 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	.off-canvas-wrap.feed-show{
 		width:75%;
 	}
+
+	.feed-show .header-bg{
+		width:75%;
+	}
 }
 #feed p{
 	margin-bottom:0em;
@@ -496,6 +500,7 @@ a.trailer-thumb:hover:after{
 	border-right:1px solid #fff;
 	padding-right:1em;
 	margin-right:1em;
+	margin-bottom: 1em;
 }
 .fc-profile img{
 	width:50px;
@@ -1695,9 +1700,7 @@ ul.film-grid li img{
 	}
 }
 @media only screen and (min-width: 64em) {
-	.header-bg{
-		width:75%;
-	}
+	
 	.is-sticky .sub-menu{
 		width:75%;
 	}
@@ -1717,6 +1720,9 @@ ul.film-grid li img{
 .profile-info{
 	padding-top:100px;
 	background:#9f968f;
+}
+.profile-info .fc-content h2{
+	color:#f4e8d0;
 }
 .profile-info .profile-img{
 	width:60px;

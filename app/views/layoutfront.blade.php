@@ -275,6 +275,9 @@
 </div><!-- end off canvas wrap-->
 
 <!-- <script src="http://code.jquery.com/jquery-1.9.1.js') }}"></script> -->
+	<script>
+		var user_reviews = "";
+	</script>
 	@section('scripts')
 	<script src="{{ URL::asset('js/vendor/jquery.js') }}"></script> 
 	<script src="{{ URL::asset('js/vendor/jquery-ui-1.10.3.custom.min.js') }}"></script> 
@@ -325,7 +328,7 @@
 	});
 
 	$(document).ready(function(){
-		var user_reviews = "";
+		
 		
 		$.fn.spin.presets.flower = {
 		  lines: 11,

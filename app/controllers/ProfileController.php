@@ -34,6 +34,9 @@ class ProfileController extends BaseController
 	        $data['diff'] = floor( $diff );
 	        $data['unit'] = $unit;
 
+	        //remove the feed on this page
+	        $data['show_feed'] = false;
+	        
 		return View::make('admin.profile', $data);
 
 	}

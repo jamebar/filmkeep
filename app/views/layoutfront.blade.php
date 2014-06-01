@@ -32,7 +32,7 @@
 <body>
 
 
-<div class="off-canvas-wrap @if(Auth::check()) feed-show @endif">
+<div class="off-canvas-wrap @if(Auth::check() && $show_feed ) feed-show @endif">
   <div class="inner-wrap">
 
 	<div id="header_all" >
@@ -234,7 +234,9 @@
 	<a class="exit-off-canvas"></a>
 
 	@if (Auth::check()) 
-		@include('feed')
+		@if( $show_feed )
+			@include('feed')
+		@endif
 		<aside id="main-menu" class="left-off-canvas-menu">
 		  <ul class="off-canvas-list">
 			<li>

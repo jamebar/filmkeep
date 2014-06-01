@@ -6,6 +6,9 @@ class BaseController extends Controller {
 	protected $image_path_config;
 
 	protected $logged_in_user;
+
+	protected $show_feed = true;
+
 	/**
 	 * Setup the layout used by the controller.
 	 *
@@ -40,7 +43,7 @@ class BaseController extends Controller {
 		}
 
 		View::share('button', $button);
-
+		View::share('show_feed', $this->show_feed);
 		//Get image path info for all poster and backdrop images
 		$t = new TheMovieDb();
     		$this->image_path_config = $t->getImgPath();

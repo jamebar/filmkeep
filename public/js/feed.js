@@ -1,7 +1,12 @@
 
 $(function(){
 		var last_date = "";
-		load_feed();
+
+		if( $('.feed-show').length >0 ) 
+		{
+			load_feed();
+		}
+		
 		$container = $('#activity-feed-items');
 		//Initialize isotope
 		/*$container.isotope({
@@ -18,7 +23,7 @@ $(function(){
 		$('#load-more').on('click',function(){
 			load_feed();
 		});
-		
+
 		function load_feed()
 		{
 			$('.feed-loader').show();

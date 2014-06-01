@@ -9,7 +9,7 @@ poster_base = "<?php echo $image_path_config['images']['base_url'].$image_path_c
 </script>
 <style>
 body{
-    padding-top:0px;
+    
 }
 .film_cover_bg{
     background:url({{ $latest_review_backdrop_small }}) 0px 0px  no-repeat;

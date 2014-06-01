@@ -47,7 +47,7 @@ class UserController extends BaseController
 							$user->profile_pic = "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
 							$user->save();
 						}
-					    	return Redirect::route('home')
+					    	return Redirect::to('/'. Auth::user()->username )
 	                			->with('flash_notice', 'You are successfully logged in.');
 					}
 				}
@@ -85,7 +85,7 @@ class UserController extends BaseController
 
 					Auth::login( $user , true);
 
-					return Redirect::route($route)
+					return Redirect::to('/'. $user->username )
 	                			->with('flash_notice', 'Welcome to Filmkeep '.$result["name"]);
 				}
 				
@@ -143,7 +143,7 @@ class UserController extends BaseController
                                 // login user
                                 Auth::login( $user , true);
 
-                                return Redirect::route('home')
+                                return Redirect::to('/'. Auth::user()->username )
 	                			->with('flash_notice', 'You are successfully logged in.');
 
                         }
@@ -182,7 +182,7 @@ class UserController extends BaseController
                                 $message_notice = 'Welcome to Filmkeep, your account is created.';
 
                                 // redirect to game page
-                                return Redirect::route( 'home' )
+                                return Redirect::to('/'. $user->username )
                                         ->with( 'flash_notice', $message_notice );
 
                         }
@@ -239,7 +239,7 @@ class UserController extends BaseController
 						$user->profile_pic = $result['picture'];
 						$user->save();
 					}
-				    	return Redirect::route('home')
+				    	return Redirect::to('/'. Auth::user()->username )
                 			->with('flash_notice', 'You are successfully logged in.');
 				}
 			}
@@ -276,7 +276,7 @@ class UserController extends BaseController
 
 				Auth::login( $user , true);
 
-				return Redirect::route('home')
+				return Redirect::to('/'. $user->username )
                 			->with('flash_notice', 'Welcome to Filmkeep '.$result["name"]);
 			}
 			

@@ -14,7 +14,7 @@ body{
     background:none;
 }
 </style>
-<div class="login-box small-12 medium-6 large-4 centered">
+<div class="login-box small-12 medium-6 large-4 xlarge-3 centered">
     <div class="row">
         <div class="small-12 medium-12 columns">
             <div id="join-social">
@@ -65,5 +65,5 @@ body{
         </div>
     </div>
 </div>
-
+@include('faqbottom')
 @stop

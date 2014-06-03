@@ -5,7 +5,7 @@ body{
 	
 }
 .row{
-	max-width:100rem;
+	max-width:100%;
 }
 body, input, select, textarea, button {
 -webkit-font-smoothing: antialiased;
@@ -384,7 +384,8 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	padding:2em;
 	margin:3em auto 7em auto;
 }
-.login-box h3{
+
+.login-box h3, .login-box p{
 	color:#fff;
 }
 .login-box hr{
@@ -1487,7 +1488,7 @@ border: 2px solid #f5f5f5;
 	background: #d2544c;
 	color:#f4e8d0;
 }
-.theme-red h4 a{
+.theme-red h4 a, .theme-red h4, .theme-red h2{
 	color:#f4e8d0;
 }
 .theme-red label{

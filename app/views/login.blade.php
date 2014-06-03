@@ -5,15 +5,15 @@
 html{
     background:url({{ DEFAULT_BACKGROUND_PIC }}) no-repeat center center fixed;
     -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 body{
     background:none;
 }
 </style>
-<div class="login-box small-12 medium-6 large-4 centered">
+<div class="login-box small-12 medium-6 large-4 xlarge-3 centered">
     <div class="row">
         <div class="small-12 medium-12 columns">
         <h3>Member Sign-in</h3>
@@ -47,5 +47,5 @@ body{
         </div>
     </div>
 </div>
-
+@include('faqbottom')
 @stop

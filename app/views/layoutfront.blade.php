@@ -133,19 +133,20 @@
 						<img src="{{ URL::asset('img/filmkeep_logo_top.png')}}" style="float: left; margin-top: 7px; margin-left: 8px;" width="126" height="21"/>
 					</div>
 				 <div class="small-4 columns">
-				     
+				    <ul class="right inline-list"> 
 				    @if (Auth::check())
-				     <ul class="right inline-list">
+				     
 				         <li>
 				         <a  href="javascript:;" data-dropdown='notif_list' class="notif_parent notif_top"> <i class="step fi-web size-26" style="font-size:26px;color:#f4e8d0;" ></i> @if(isset($new) && $new >0) <span class='notif notif_top_num'>{{ $new }}</span> @endif </a>
 				          
 				         </li>
 				         <li> <a href="javascript:;" data-reveal-id="add-film"> <i class="step fi-plus size-36" style="font-size:28px;color:#fff;" ></i></a></li>
 				         
-				     </ul>
 				     
-				      
+				    @else
+				      	<li><a href="{{ $button['url'] }}" class="button tiny" style="margin-bottom:0px;">login</a></li>
 				    @endif
+				    </ul>
 				 </div>
 
 				  <div id="notif_list" class="f-dropdown content small " data-dropdown-content>

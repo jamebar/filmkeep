@@ -76,6 +76,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/*
+	* A user has many invites
+	*/
+	public function invites()
+	{
+	return $this->hasMany('Invite', 'referrer_user_id');
+	}
+
+	/*
 	* A user has many lists
 	*/
 	public function lists()

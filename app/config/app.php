@@ -81,6 +81,7 @@ return array(
 	'providers' => array(
 		
 		'Artdarek\OAuth\OAuthServiceProvider',
+		'Doxxon\LaravelMandrillRequest\LaravelMandrillRequestServiceProvider',
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
@@ -158,6 +159,7 @@ return array(
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',
 		'Mail'            => 'Illuminate\Support\Facades\Mail',
+		'Mandrill' 	  => 'Doxxon\LaravelMandrillRequest\Facades\MandrillRequest',
 		'OAuth'		  => 'Artdarek\OAuth\Facade\OAuth',
 		'Paginator'       => 'Illuminate\Support\Facades\Paginator',
 		'Password'        => 'Illuminate\Support\Facades\Password',

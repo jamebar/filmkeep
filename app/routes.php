@@ -16,31 +16,16 @@
 });*/
 
 Route::get('test', function(){
-    $review = new Review();
-    dd($review->getReviewsFull(1));
-    $reviews = Review::with('ratings')->select('reviews.id as id','reviews.film_id as film_id', 'f.title as title','f.poster_path as poster_path', 'f.backdrop_path as backdrop_path')
-                    ->where('reviews.user_id', '=', 1)
-                    ->join('films as f', 'f.id', '=' , 'reviews.film_id')
-                    ->orderBy('reviews.created_at', 'DESC')
-                    ->take(5)
-                    ->get()->toArray();
-                    
-        
-        foreach($reviews as &$review)
-        {
-            
-            $ratings = array();
-            foreach($review['ratings'] as $res)
-            {
-              $ratings[$res['rating_type']] =  $res['rating'];    
-            }
+    $payload = array(
+        'message' => array(
+            'subject' => 'Transactional email via Mandrill',
+            'html' => 'It works!',
+            'from_email' => 'info@filmkeep.com',
+            'to' => array(array('email'=>'james@lemonblock.com'))
+        )
+    );
 
-            $review['ratings'] = $ratings;
-            $review['slug'] = Str::slug( $review['title'] );
-
-        }
-
-        dd($reviews);
+    $response = Mandrill::request('messages/send', $payload);
 });
 
 Route::get('/', array('as' => 'home', 'uses' => (Auth::check() ? 'MainController@getIndex' : 'MainController@getIndexGuest' ) ) );

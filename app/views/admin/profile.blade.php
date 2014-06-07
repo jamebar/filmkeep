@@ -19,10 +19,11 @@ body{
     <h3><img class="round-image"  src="{{ (strlen($logged_in_user['profile_pic']) >1) ? $logged_in_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"> My Settings</h3>
     {{ "Filmkeeping for about ". $diff ." ". $unit }}
     <p></p>
-    <dl class="tabs" data-tab>
+    <dl class="tabs" data-tab data-options="deep_linking:true;scroll_to_content: false">
         <dd class="active"><a href="#panel2-1"><i class="step fi-info"></i> <span class="show-for-medium-up">My Info</span></a></dd>
         <dd><a href="#panel2-2"><i class="step fi-graph-horizontal"></i> <span class="show-for-medium-up">Custom Criteria</span></a></dd>
         <dd><a href="#panel2-3"><i class="step fi-share"></i> <span class="show-for-medium-up">Social Networks</span></a></dd>
+        <dd><a href="#panel2-4"><i class="step fi-share"></i> <span class="show-for-medium-up">Invites</span></a></dd>
     </dl>
          
     
@@ -54,6 +55,12 @@ body{
                  <p><a class="button google-btn medium-6 large-6 small-12" href="{{ route('googlelogin') }}"><i class="fi-social-google-plus"></i> Connect with google</a></p>
 
             </div>
+        </div>
+
+        <div class="row content" id="panel2-4">
+            
+            @include('admin.invites')
+           
         </div>
 
     </div>

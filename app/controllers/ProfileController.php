@@ -7,6 +7,7 @@ class ProfileController extends BaseController
 	{
 		$data['custom_types'] = RatingType::getCustomTypes($this->logged_in_user->id);
 		$data['user'] = Auth::user();
+		$data['invites'] = Auth::user()->invites;
 		// calculate time as member
 		$join_date = strtotime($this->logged_in_user->created_at);
 

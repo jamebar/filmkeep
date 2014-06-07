@@ -416,4 +416,30 @@ class Ajax extends BaseController
 
         return RatingType::deleteCustomType($this->logged_in_user->id, $id);
     }
+
+    /*** INVITES ****/
+
+    public function postAddInvite()
+    {
+        $input = Input::all();
+
+        //make sure the request is valid
+        if( $this->logged_in_user->id == $input['referrer_user_id'] )
+        {
+            return Response::json( Invite::addInvite( $input )  );
+        }
+        else
+        {
+            return Response::json( array( 'responsetype' => 'error', 'response' => 'User is not valid' ));
+        }
+    }
+
+    public function postDeleteInvite()
+    {
+        $id = Input::get('id');
+
+        return Response::json( Invite::deleteInvite($this->logged_in_user->id, $id) );
+    }
+
+
 }

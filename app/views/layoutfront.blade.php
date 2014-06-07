@@ -440,6 +440,25 @@
 		});
 	});
 
+
+	function addAlert(message)
+	{
+		$(".alert-box").remove();
+
+		var t = '<div data-alert class="alert-box fixed-alert" data-options="animation_speed:500;">\
+		  	' + message + '\
+		</div>';
+
+		$('body').append(t);
+
+		window.setTimeout(function() {
+		    $(".alert-box").fadeTo(500, 0).slideUp(500, function(){
+		        $(this).remove(); 
+		    });
+		}, 3000);
+		
+	}
+
 	</script>
 </body>
 </html>

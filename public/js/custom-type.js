@@ -109,7 +109,6 @@
 
 	 	$(this).find('ul.custom-types').on('click' , '.delete-type', function(){
 
-
 	 		var this_item = $(this);
 	 		var type_id = this_item.data('typeid');
 	 		

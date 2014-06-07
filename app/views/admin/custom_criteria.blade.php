@@ -8,7 +8,7 @@
 	
 	<div id="custom-types" class="small-12 columns">
 	<p>Create custom criteria.  These will show up for you to use on all reviews, including past ones.</p>
-		<ul class="custom-types">
+		<ul class="custom-types c-list">
 		@foreach( $custom_types as $custom )
 
 		<li class="c-item">

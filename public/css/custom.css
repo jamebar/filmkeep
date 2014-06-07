@@ -1338,11 +1338,11 @@ span.spoiler:hover:after{
 	margin-bottom:0px;
 	margin-top:1em;
 }
-ul.custom-types{
+ul.c-list{
 	padding:0px;
 	margin:0px;
 }
-ul.custom-types > li{
+ul.c-list > li{
 	padding:0px;
 	list-style: none;
 	display: block;
@@ -1353,7 +1353,7 @@ ul.custom-types > li{
 	line-height: 2em;
 }
 
-ul.custom-types > li a:not(.add-type){
+ul.c-list > li a:not(.add-type){
 	margin-left:1em;
 }
 
@@ -1433,6 +1433,7 @@ ul.custom-types > li a:not(.add-type){
 	top:50px;
 	position: fixed;
 	width:100%;
+	text-align: center;
 }
 .feed-show .alert-box{
 	width:75%;

@@ -32,19 +32,10 @@ Route::get('test', function(){
         }
 */
 
-   $payload = array(
-        'message' => array(
-            'subject' => 'Transactional email via Mandrill',
-            'html' => 'It works!',
-            'from_email' => 'info@filmkeep.com',
-            'to' => array(array('email'=>'james@lemonblock.com'))
-        )
-    );
 
-    return Mandrill::request('messages/send', $payload);
 });
 
-Route::get('/', array('as' => 'home', 'uses' => (Auth::check() ? 'MainController@getIndex' : 'MainController@getIndexGuest' ) ) );
+Route::get('/', array('before' => 'Auth', 'as' => 'home', 'uses' => (Auth::check() ? 'MainController@getIndexGuest' : 'MainController@getIndexGuest' ) ) );
 
 /*
 * 
@@ -82,6 +73,7 @@ Route::group(array('before' => 'guest'), function()
 
 	Route::get('user/join', array('as' => 'join',  'uses' => 'UserController@join'));
 
+    Route::get('user/invite', array('as' => 'invite',  'uses' => 'UserController@invite'));
 });
 
 /*
@@ -174,11 +166,14 @@ App::missing(function($exception)
     return Response::view('404', array(), 404);
 });
 
-Route::get('film/{film_id}',  array('uses' => 'FilmController@film'));
-Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
+Route::group(array('before' => 'Auth'), function()
+{
+    Route::get('film/{film_id}',  array('uses' => 'FilmController@film'));
+    Route::get('r/{review_id}',  array('uses' => 'UserController@showReview'));
 
-Route::controller('ajax', 'Ajax');
-Route::get('{username}', 'ProfileController@view');
-Route::get('{username}/watchlist', 'UserController@showWatchlist');
-Route::get('{username}/lists', 'ListController@viewAll');
-Route::get('{username}/lists/{list_id}', 'ListController@viewList');
+    Route::controller('ajax', 'Ajax');
+    Route::get('{username}', 'ProfileController@view');
+    Route::get('{username}/watchlist', 'UserController@showWatchlist');
+    Route::get('{username}/lists', 'ListController@viewAll');
+    Route::get('{username}/lists/{list_id}', 'ListController@viewList');
+});

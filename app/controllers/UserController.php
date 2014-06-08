@@ -65,8 +65,8 @@ class UserController extends BaseController
 					}
 					else
 					{
-						//add user to database
-						// store
+						/*//add user to database
+						
 						$user = new User;
 						$user->name       	= $result['name'];
 						$user->username   	= $result['username'];
@@ -80,7 +80,18 @@ class UserController extends BaseController
 						$user->save();
 
 						//new user so redirect to tour
-						$route = "preproduction";
+						$route = "preproduction";*/
+						$new_user = array(
+							"name"       	=> $result['name'],
+							"username"   	=> $result['username'],
+							"email"      	=> $result['email'],
+							"fb_id" 	=> $result['id'],
+							"profile_pic"  	=> "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250"
+
+							);
+						Session::put('new_user', $new_user);
+						return Redirect::to('/user/invite' );
+	                			
 					}
 
 					Auth::login( $user , true);
@@ -409,5 +420,19 @@ class UserController extends BaseController
 	public function update()
 	{
 
+	}
+
+	public function invite()
+	{
+		if(Session::has('new_user'))
+		{
+			return View::make('invite', Session::get('new_user'));
+			
+		}
+		else
+		{
+			return Redirect::route('join');
+		}
+		
 	}
 }

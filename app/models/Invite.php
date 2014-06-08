@@ -24,7 +24,7 @@ class Invite extends Eloquent {
     /*
      * Add an invite
      */
-    public static function addInvite( $input)
+    public static function addInvite( $input, $logged_in_user_email = 'invite@filmkeep.com')
     {
         $validator = Validator::make(
             array(
@@ -56,6 +56,22 @@ class Invite extends Eloquent {
 
         //add token to the array
         $input['code'] = Invite::getToken( 10 );
+
+        //send email to invitee
+        $email_message = array(
+            'message' => array(
+                'subject' => 'Invitation to join Filmkeep',
+                'html' => $input['message'],
+                'from_email' => 'no-reply@filmkeep.com',
+                'to' => array(array('email'=> $input['email']))
+            )
+        );
+
+        Mandrill::request('messages/send', $email_message);
+
+
+        //remove message from input array
+        unset($input['message']);
 
         return array( 'responsetype' => 'success', 'response' => Invite::create( $input )->toArray() );
     }

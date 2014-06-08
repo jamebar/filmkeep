@@ -13,7 +13,7 @@ body{
 }
 </style>
 
-<div class="small-12 medium-10 large-8 centered white-box profile-settings">
+<div class="small-12 medium-10 large-8 centered profile-settings">
         
 
     <h3><img class="round-image"  src="{{ (strlen($logged_in_user['profile_pic']) >1) ? $logged_in_user['profile_pic'] : url(DEFAULT_PROFILE_PIC) }}" height="100" width="100"> My Settings</h3>
@@ -22,11 +22,12 @@ body{
     <dl class="tabs" data-tab data-options="deep_linking:true;scroll_to_content: false">
         <dd class="active"><a href="#panel2-1"><i class="step fi-info"></i> <span class="show-for-medium-up">My Info</span></a></dd>
         <dd><a href="#panel2-2"><i class="step fi-graph-horizontal"></i> <span class="show-for-medium-up">Custom Criteria</span></a></dd>
-        <dd><a href="#panel2-3"><i class="step fi-share"></i> <span class="show-for-medium-up">Social Networks</span></a></dd>
-        <dd><a href="#panel2-4"><i class="step fi-share"></i> <span class="show-for-medium-up">Invites</span></a></dd>
+        <dd><a href="#panel2-3"><i class="step fi-torsos-all"></i> <span class="show-for-medium-up">Invites</span></a></dd>
+
+        <dd><a href="#panel2-4"><i class="step fi-share"></i> <span class="show-for-medium-up">Social Networks</span></a></dd>
     </dl>
-         
-    
+</div>        
+<div class="small-12 medium-10 large-8 centered  white-box ">
      <div class="tabs-content">
       
         <div class="row content active" id="panel2-1">
@@ -46,8 +47,12 @@ body{
                 @include('admin.custom_criteria')
             </div>   
         </div>
-
         <div class="row content" id="panel2-3">
+            
+            @include('admin.invites')
+           
+        </div>
+        <div class="row content" id="panel2-4">
             <div class="small-12 columns">
                 <p>To experience the full affect of Filmkeep, connect your social networks here</p>
 
@@ -57,11 +62,7 @@ body{
             </div>
         </div>
 
-        <div class="row content" id="panel2-4">
-            
-            @include('admin.invites')
-           
-        </div>
+        
 
     </div>
      

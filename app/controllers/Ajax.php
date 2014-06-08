@@ -426,7 +426,7 @@ class Ajax extends BaseController
         //make sure the request is valid
         if( $this->logged_in_user->id == $input['referrer_user_id'] )
         {
-            return Response::json( Invite::addInvite( $input )  );
+            return Response::json( Invite::addInvite( $input , $this->logged_in_user->email )  );
         }
         else
         {

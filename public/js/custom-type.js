@@ -29,7 +29,7 @@
 				        		
 
 				        		$(typeTemplate(data)).appendTo('ul.custom-types').fadeIn('fast');
-				        		$(document).foundation();
+				        		$('document').foundation('reflow');
 				        	}
 				            	
 				  	}

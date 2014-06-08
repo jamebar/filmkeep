@@ -23,7 +23,19 @@ body, input, select, textarea, button {
 	padding:2em;
 }
 .profile-settings{
-
+	margin-top:100px;
+}
+.profile-settings .tabs dd>a{
+	background-color:rgba(50,50,50,.6);
+	color: #fff;
+}
+.profile-settings .tabs dd>a:hover{
+	background-color:rgba(255,255,255,.6);
+	color: #fff;
+}
+.profile-settings .tabs dd.active a {
+	background: #fff;
+	color:#333;
 }
 .button{
 	border-radius: 3px;
@@ -127,6 +139,9 @@ select{
 	padding-left:0px;
 	padding-right:0px;
 }
+#invites .stat, #invites .stat i{
+	color:#888;
+}
 @media only screen and (min-width: 40em) {
 	.stat em{
 		font-size:40px;
@@ -156,6 +171,7 @@ select{
 	width:100%;
 	display: block;
 	font-size: 1.3em;
+	border-bottom:1px solid #ececec;
 }
 #login-info-menu a:hover{
 	
@@ -1356,7 +1372,10 @@ ul.c-list > li{
 ul.c-list > li a:not(.add-type){
 	margin-left:1em;
 }
+.c-item small span{
+	font-size:130%;
 
+}
 .rating-line{
 	position: relative;
 	height:25px;
@@ -1430,10 +1449,13 @@ ul.c-list > li a:not(.add-type){
 	display:inline-block;
 }
 .alert-box{
-	top:50px;
+	top: 50px;
 	position: fixed;
-	width:100%;
+	width: 100%;
 	text-align: center;
+	background-color: #d2544c;
+	border: none;
+	font-size: 1em;
 }
 .feed-show .alert-box{
 	width:75%;

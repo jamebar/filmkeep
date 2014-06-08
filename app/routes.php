@@ -17,11 +17,11 @@
 
 Route::get('test', function(){
 
-    $input = array (
+    /*$input = array (
         'referrer_user_id'   => 1,
         'email'     => 'james5@lemonblock.com',
         );
-     //make sure the request is valid
+     
         if( 1 == $input['referrer_user_id'] )
         {
             return Response::json(  Invite::addInvite( $input )  );
@@ -30,9 +30,9 @@ Route::get('test', function(){
         {
             return Response::json(array( 'response-type' => 'error', 'response' => 'user is not valid' ));
         }
+*/
 
-
-    /*$payload = array(
+   $payload = array(
         'message' => array(
             'subject' => 'Transactional email via Mandrill',
             'html' => 'It works!',
@@ -41,7 +41,7 @@ Route::get('test', function(){
         )
     );
 
-    $response = Mandrill::request('messages/send', $payload);*/
+    return Mandrill::request('messages/send', $payload);
 });
 
 Route::get('/', array('as' => 'home', 'uses' => (Auth::check() ? 'MainController@getIndex' : 'MainController@getIndexGuest' ) ) );

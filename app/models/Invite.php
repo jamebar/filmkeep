@@ -43,13 +43,15 @@ class Invite extends Eloquent {
         }
 
         //check to see if this email has already been invited
-        if( !empty( Invite::where('email' , $input['email'])->first() ) )
+        $invite_exists = Invite::where('email' , $input['email'])->first();
+        if( !empty( $invite_exists ) )
         {
             return array( 'responsetype' => 'error', 'response' => 'That email has already been invited.' );
         }
 
         //check to see if this email is already a user
-        if( !empty( User::where('email' , $input['email'])->first() ) )
+        $user_exists = User::where('email' , $input['email'])->first();
+        if( !empty( $user_exists ) )
         {
             return array( 'responsetype' => 'error', 'response' => 'That email is already associated with a user on Filmkeep.' );
         }

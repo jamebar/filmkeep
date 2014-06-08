@@ -59,23 +59,30 @@ class Invite extends Eloquent {
         //add token to the array
         $input['code'] = Invite::getToken( 10 );
 
+
+        $link_message = "<br><br>To use your invite code and join Filmkeep, click on this link: <a href='http://dev.filmkeep.com:888/user/join/" . $input['code'] . "'>http://dev.filmkeep.com:888/user/join/" . $input['code'] . "</a>";
+
         //send email to invitee
         $email_message = array(
-            'message' => array(
-                'subject' => 'Invitation to join Filmkeep',
-                'html' => $input['message'],
-                'from_email' => 'no-reply@filmkeep.com',
-                'to' => array(array('email'=> $input['email']))
+            'template_name'     => 'invite',
+            'template_content'  => array(array(
+                'name'              => 'description',
+                'content'           => nl2br($input['message']) . $link_message,
+                
+            )),
+            'message'           => array(
+                'to'                => array(array('email'=> $input['email']))
             )
         );
 
-        Mandrill::request('messages/send', $email_message);
+
+        $email_response = Mandrill::request('messages/send-template', $email_message);
 
 
         //remove message from input array
         unset($input['message']);
 
-        return array( 'responsetype' => 'success', 'response' => Invite::create( $input )->toArray() );
+        return array( 'responsetype' => 'success', 'response' => Invite::create( $input )->toArray() , 'email_response' => $email_response);
     }
 
 

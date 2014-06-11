@@ -80,10 +80,11 @@ class UserController extends BaseController
 							$user->username = $user->username . "_" . $user->id;
 							$user->save();
 
-							//set invite to redeemed
+							//set invite to redeemed and update user
 							$my_invite = Session::get('invite_info');
 							$my_invite = Invite::find($my_invite['id']);
 							$my_invite->redeemed = 1;
+							$my_invite->redeemer_user_id = $user->id;
 							$my_invite->save();
 
 							// login user

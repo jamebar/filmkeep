@@ -17,6 +17,7 @@ body{
     <div class="row">
         <div class="small-12 medium-12 columns">
         <h3>Member Sign-in</h3>
+       
         <hr>
         <p><a class="button fb-btn medium-12 small-12" href="{{ route('facebooklogin') }}"><i class="fi-social-facebook"></i> Login with facebook</a>
 

@@ -33,8 +33,7 @@ class UserController extends BaseController
 			{
 				$user = User::where('fb_id' , $result['id'] )->first();
 
-				//print_r($user);
-				//Auth::loginUsingId($user['id']);
+				//If user is found in DB, log them in and update the profile pic
 				if($user)
 				{
 					Auth::login( $user , true);
@@ -65,22 +64,45 @@ class UserController extends BaseController
 					}
 					else
 					{
-						/*//add user to database
+						//This is a new user, check to see if invite info exists in session
+						if( Session::has('invite_info') )
+						{
+							//session info exists, add new user with facebook info
+							$user = new User;
+							$user->name       	= $result['name'];
+							$user->username   	= $result['username'];
+							$user->email      	= $result['email'];
+							$user->fb_id 	  	= $result['id'];
+							$user->profile_pic  	= "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
+							$user->save();
+
+							//append id to username to assure it's unique
+							$user->username = $user->username . "_" . $user->id;
+							$user->save();
+
+							//set invite to redeemed
+							$my_invite = Session::get('invite_info');
+							$my_invite = Invite::find($my_invite['id']);
+							$my_invite->redeemed = 1;
+							$my_invite->save();
+
+							// login user
+			                                Auth::login( $user , true);
+
+			                                // build message with some of the resultant data
+			                                $message_notice = 'Welcome to Filmkeep, your account is created.';
+
+			                                // redirect to profile page
+			                                return Redirect::to('/'. $user->username )
+			                                        ->with( 'flash_notice', $message_notice );
+						}
+
+
+
+						//This is a new user, we'll store their info in session
+						// and verify their invite code
+
 						
-						$user = new User;
-						$user->name       	= $result['name'];
-						$user->username   	= $result['username'];
-						$user->email      	= $result['email'];
-						$user->fb_id 	  	= $result['id'];
-						$user->profile_pic  	= "http://graph.facebook.com/".$result['username']."/picture?width=250&height=250";
-						$user->save();
-
-						//append id to username to assure it's unique
-						$user->username = $user->username . "_" . $user->id;
-						$user->save();
-
-						//new user so redirect to tour
-						$route = "preproduction";*/
 						$new_user = array(
 							"name"       	=> $result['name'],
 							"username"   	=> $result['username'],
@@ -412,8 +434,34 @@ class UserController extends BaseController
 		return View::make('login');
 	}
 
-	public function join()
+	public function join($invite_code =null)
 	{
+		//echo $invite_code;
+		$email = Input::get('email');
+
+		if($invite_code != null &&  $email != null )
+		{
+			$invite_info = Invite::where('code', $invite_code)
+					->where('email', $email)
+					->first();
+			//dd( $invite_info->toArray() );
+
+
+			if(empty($invite_info) || $invite_info->redeemed == 1)
+			{
+				//redirect to login page if invite isn't found or it's been redeemed already
+				Session::flash('flash_error', 'That invite code has already been redeemed or is not valid anymore.');
+				return View::make('join');
+			}
+			
+			//invite exists and has not been redeemed.  Store it in a session and send them to join
+			$invite_info = $invite_info->toArray();
+			Session::put('invite_info', $invite_info );
+			return View::make('join', $invite_info);
+		}
+		
+
+		Session::flush();
 		return View::make('join');
 	}
 

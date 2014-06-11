@@ -71,7 +71,7 @@ Route::group(array('before' => 'guest'), function()
     //Route::get('/', array('as' => 'guesthome', 'uses' => 'MainController@getIndexGuest'));
 	Route::get('user/login', array('as' => 'login', 'uses' => 'UserController@login'));
 
-	Route::get('user/join', array('as' => 'join',  'uses' => 'UserController@join'));
+	Route::get('user/join/{invite_code?}', array('as' => 'join',  'uses' => 'UserController@join'));
 
     Route::get('user/invite', array('as' => 'invite',  'uses' => 'UserController@invite'));
 });

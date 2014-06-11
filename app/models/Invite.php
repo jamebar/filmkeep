@@ -60,7 +60,7 @@ class Invite extends Eloquent {
         $input['code'] = Invite::getToken( 10 );
 
 
-        $link_message = "<br><br>To use your invite code and join Filmkeep, click on this link: <a href='http://dev.filmkeep.com:888/user/join/" . $input['code'] . "'>http://dev.filmkeep.com:888/user/join/" . $input['code'] . "</a>";
+        $link_message = "<br><br>To use your invite code and join Filmkeep, click on this link: <a href='http://dev.filmkeep.com:888/user/join/" . $input['code'] . "'>http://dev.filmkeep.com:8888/user/join/" . $input['code'] . "?email=" . urlencode( $input['email'] ) . "</a>";
 
         //send email to invitee
         $email_message = array(

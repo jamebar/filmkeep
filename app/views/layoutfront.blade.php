@@ -32,7 +32,7 @@
 <body>
 
 
-<div class="off-canvas-wrap @if(Auth::check() && $show_feed ) feed-show @endif">
+<div class="off-canvas-wrap @if(Auth::check() && $show_feed ) feed-show @endif" data-offcanvas>
   <div class="inner-wrap">
 
 	<div id="header_all" >

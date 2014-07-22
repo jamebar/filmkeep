@@ -1152,6 +1152,7 @@ form.custom .custom.checkbox:before {
       background:none;
       display: inline; }
       .top-bar-section ul li {
+      	background:none;
         float: left; }
         .top-bar-section ul li .js-generated {
           display: none; }
